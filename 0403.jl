@@ -14,437 +14,260 @@ macro bind(def, element)
     end
 end
 
-# ╔═╡ af7c221f-dfb4-4253-ae96-2af5e87b1ec8
-using Plots,Distributions,PlutoUI,Random
+# ╔═╡ c257500f-16c9-4c6f-adda-23a33e99c9e3
+using Distributions, Plots,PlutoUI,Random
 
-# ╔═╡ 37e0b2ce-2300-471a-b62c-78e733757ee0
+# ╔═╡ 77c76b86-f72c-4a2e-bb29-d7a508c446b5
 md"""
-## Usings
+## usings 
 """
 
-# ╔═╡ 5cf1050c-e3d1-41c6-908a-7a3d926bf5e5
-PlutoUI.TableOfContents()
-
-# ╔═╡ baa3599d-271f-4b52-8975-47137cac1c29
-Plots.plotly()
-
-# ╔═╡ f9d431cb-3cac-4be7-b0f0-b8a37ec48f30
+# ╔═╡ 565c11ec-b261-11ec-2a62-3d55737ffcef
 md"""
-## 지난시간 강의, 보충 및 정정내용 
+## test 
 """
 
-# ╔═╡ b108695d-4998-4db0-8166-b622d7bfc80d
+# ╔═╡ fa28a8b6-ccf3-4064-a9d5-86608e01d35b
 md"""
-- 이항분포에서 포아송을 뽑는게 아니고 특정한 조건에서 이항분포와 포아송이 비슷해짐 
-- `try_until_you_succeed(p)`는 기하분포 뽑는 함수 맞아요! 
-- `sample_size`를 의미하는 기호를 `N`으로 통일. (`n`은 이항분포의 `n`)
-- 포아송의 역수로 지수분포를 못뽑는이유? (1) 0이 나오니까 역수가 되지 않음 (2) 지수분포는 임의의 양의값이 가능해야하는데 $\frac{1}{0.5}, \frac{1}{1.5}$와 같은 값은 포아송의 역수로 구할 수 없음.  
-- 강의노트 테이블 추가, 제목수준 조금씩 조정
+### 상황극
 """
 
-# ╔═╡ e9e8517f-ff77-4ba2-90ef-679f1fa39170
+# ╔═╡ a505b347-ec86-45e5-a3bc-b5fdc999b8d6
 md"""
-## 지수분포 
+`-` 의심
+- 참치캔의 무게가 45g 보다 적은것 같다. 
 """
 
-# ╔═╡ ba83da1f-e1da-46cb-882f-2bb8401fc546
+# ╔═╡ 91604671-55a1-4a35-a62f-e7723ecf055f
 md"""
-### How to generate it 
+`-` 문의 
+- 참치캔이 45g보다 적다 $\to$ 참치캔의 무게 $\sim N(45,1)$ 
+- 실제는 45g보다 작을 수 있음.
 """
 
-# ╔═╡ 93401fc8-68dd-44d5-9158-cbc835f24ff4
+# ╔═╡ 52556ac2-53a4-458f-b26e-4a68939acba5
 md"""
-(방법1) 모듈사용
+`-` 실험
+- 미심쩍어서 한 박스(30개가 들어가 있음)를 사서 모두 무게를 재보았다. 
+- 30개의 평균무게를 계산하니까 44.50였다. 
 """
 
-# ╔═╡ 1127ec60-7789-4941-a70c-3517536ba4a1
-
-
-# ╔═╡ 17ff99ef-0bc2-4aab-a53d-82cb13da0beb
+# ╔═╡ fae82783-2ef9-4225-9f0b-44f811e22cf1
 md"""
-(방법2) 포아송프로세스 이용
+`-` 고민 
+- 참치회사에 항의해봤자 운이 없는 케이스라고 둘러댈것 같음. 
 """
 
-# ╔═╡ 3b1f0777-019f-4547-a19c-5e25e4763a31
+# ╔═╡ d57dfc8a-aa06-4720-af37-c72fdff2be1e
 md"""
-(방법3) inverse cdf method
+`-` 아이디어 
+- 생각해보니까 참치캔의 무게가 10g이 나와도 운이 없다고 둘러대면 그만일 것 같다. 
+- 얼마나 운이 없는 케이스인지 시뮬레이션해보고 숫자를 제시하자.
 """
 
-# ╔═╡ 68e7eeed-c893-4bc6-a3b6-15abf4ff1e21
+# ╔═╡ ac1962ce-4e2e-4243-8860-703b89aba151
 md"""
-##### Inverse cdf method motive 
+`-` 시뮬레이션을 해보자
+- 참치회사의 주장이 참이라는 전제하에 나보다 운이 없는 케이스가 몇프로인지 세어보자. 
+- 숫자가 작을수록 참치회사의 주장이 틀렸다는 증거가 될 것이다.
 """
 
-# ╔═╡ dcc01171-2e27-4c75-8ac5-4638f26bbab8
+# ╔═╡ 9c8056ba-a447-4f4a-b599-7db2e59c5886
+rand(Normal(45,1),1) # 참치캔 하나의 무게 
+
+# ╔═╡ 25b096cb-a6ad-471e-9dc4-20ca9f4aaf49
+rand(Normal(45,1),30) # 참치캔 30개의 무게들 
+
+# ╔═╡ 9ef3b1dd-0a47-4e9c-9baf-b13eedde49d5
+rand(Normal(45,1),30) |> mean # 참치캔 1박스의 평균무게 
+
+# ╔═╡ 61ed0a08-bdc3-41db-b62d-b598c72097bf
+([rand(Normal(45,1),30) |> mean for i in 1:100000] .< 44.5 ) |> mean # p-value
+
+# ╔═╡ 625d6633-4a92-4b7d-9593-e25fa4733923
 md"""
-`-` 아래와 같은 2개의 지수분포를 고려하자.
-- 평균이 1인 지수분포
-- 평균이 5인 지수분포
+`-` 자취생의 반론
+- 보세요! 제가 $p$-value가 한 0.05정도만 되었어도 그냥 넘어가려고 했어요! 뭐 내가 운이 억세게 나쁜건가보다 하고요. 그런데 계산해보니까 $p$-value가 0.003입니다. 이건 당신들이 사기친다고 볼 수 밖에 없어요!
 """
 
-# ╔═╡ a71ff440-fb6d-4d14-8451-a5af8d0e4725
+# ╔═╡ d92def31-d505-4cbe-8ed8-aef6d64a33e2
 md"""
-`-` 각각의 cdf를 그러보면 아래와 같다. 
+### 이론 
 """
 
-# ╔═╡ 4e02747c-bbba-4763-979d-b297b6b3e281
-let
-	p1 = plot(x-> -exp(-x)+1, 0, 20)
-	p2 = plot(x-> -exp(-x/5)+1, 0, 20)
-	plot(p1,p2,layout=(1,2))
+# ╔═╡ 7e4c2f2f-620d-4070-9f63-82098e58190b
+
+
+# ╔═╡ 0daf9bd1-db32-4477-8f3b-b51b4a5644c8
+
+
+# ╔═╡ ebd837ff-e071-4484-a6bc-21866994fc9c
+radius = @bind r Slider(0.01:0.01:1,show_value=true)
+
+# ╔═╡ dc89437c-a877-4d67-a540-c982490aebbe
+begin
+	p1=scatter(Xbox,Xbox .* 0,alpha=0.5,xlim=(44,46),ylim=(-1,1))
+	index = (Xbox .- 45).^2 .< r^2
+	scatter!(Xbox[index],Xbox[index] .* 0,color="red")	
+	θ= 0:0.01:2π
+	plot!(r.*cos.(θ).+45,r.*sin.(θ),color="red")
 end
 
-# ╔═╡ 27de3a62-066a-41f6-9bb6-1e6c77fe5b6e
+# ╔═╡ aaa6f575-8829-4384-8bf5-3b942f9b0075
 md"""
-`-` cdf의 y축에서 랜덤변수를 발생시킨다음에 $\rightarrow \downarrow$ 와 같이 이동하여 $x$축에 내린다고 생각해보자. 
-- 왼쪽: 대부분 5이하에 떨어진다! 
-- 오른쪽: 대략 60퍼정도가 5이하에 떨어지고 나머지는 5이상에 떨어질것이다
+`-` 45를 중심으로 원을 그려보자. 
+- 반지름이 $r 이면 $N 개 중에서 $(sum(index)) 개는 원안에 들어온다. 
 """
 
-
-# ╔═╡ e5470c4f-9cca-40dd-a3fb-50726ee94bf9
+# ╔═╡ e1bb4f9e-da68-404f-83b2-26e70be59d7e
 md"""
-`-` 구현
+`-` 그렇다면 참치회사의 주장이 맞다면 한박스를 뜯어서 평균을 구하고 그 평균을 기준으로 반지름이 0.37이 원을 그었을때 95%는 45g이 원안에 포함되어야 한다. 
 """
 
-# ╔═╡ b44af793-c718-4848-98d6-fbdc007c0395
-let
-	Finv(x) = -log(1-x) # 평균이 1인 지수분포cdf의 역함수
-	Ginv(x) = -5log(1-x) # 평균이 5인 지수분포cdf의 역함수 
-	u = rand(5) # 5개의 샘플을 유니폼에서 추출 
-	zeros = u .* 0	# (추후생성) 시각화를 위한 0벡터 
-	p1= plot(x-> -exp(-x)+1,0,20) # F의 cdf를 시각화 
-	scatter!(zeros, u) # y축에 생성된 u를 점으로 찍음 
-	scatter!(Finv.(u),zeros) #y축에 생성된 u -> F(x)를 타고 x축에 내림 
-	p2= plot(x-> -exp(-x/5)+1,0,20)	# G의 cdf를 시각화 
-	scatter!(zeros, u) 
-	scatter!(Ginv.(u),zeros) #y축에 생성된 u -> G(x)를 타고 x축에 내림 	
-	plot(p1,p2,layout=(1,2))
+# ╔═╡ d8d3aa40-ce59-4cd0-bac2-568f88d9ef9a
+openbox = @bind i Slider(1:N)
+
+# ╔═╡ f7d3f6f4-317a-4d9f-af2e-4dac12d3808a
+begin
+	scatter([45],[0],color="red",xlim=(44,46),ylim=(-1,1))
+	scatter!([Xbox[i]],[0],color="blue")	
+	plot!(r.*cos.(θ).+Xbox[i],r.*sin.(θ),color="red")
 end
 
-# ╔═╡ de32f170-6878-43df-8e40-6ccdbb5a4f8f
+# ╔═╡ 2d49c3a8-03bc-4c70-b7bc-0c8c76a547ec
 md"""
-- 빨간색: 균등분포 
-- 초록색: 이게 지수분포 같은데? 
+`-` 자취생의 경우는 박스를 까서 평균이 44.5가 나왔으므로 아래의 상황이다.
 """
 
-# ╔═╡ 294ef10b-eb99-4966-bd01-7665f72c2933
-md"""
-##### inverse cdf method 알고리즘정리 
-
-확률변수 $X_1,X_2,\dots,X_n \overset{iid}{\sim} F$ 을 생성하고 싶다면? 
-
-1.  균등분포에서 $n$개의 난수를 독립적으로 생성한다. 이를 $U_1,\dots,U_n$이라고 하자. 
-2.  $X_1 = F^{-1}(U_1), \dots, X_n=F^{-1}(U_n)$ 이라고 놓는다.
-"""
-
-# ╔═╡ af301f81-f5a1-4ec0-9274-42174f13db6a
-md"""
-`-` 예제1: inverse sampling을 이용하여 평균이 1인 지수분포를 10000개 생성하라. 
-"""
-
-# ╔═╡ b7ac2e90-6000-46a7-9f2e-828073277fb4
-md"""
-(풀이) 
-"""
-
-# ╔═╡ e1b10a88-a4d9-49c1-a2a0-238d84d68899
-rand(10000) # 유니폼에서 샘플추출
-
-# ╔═╡ 222fda62-8656-4ac6-baf2-5843fc25ef80
-rand(10000) .|> x-> -log(1-x) # inverse cdf에 넣음
-
-# ╔═╡ f7a3532d-1ea8-4996-a0a6-386d58ff57d4
-let 
-	X= rand(10000) .|> x-> -log(1-x) # inverse cdf에 넣음
-	Y= rand(Exponential(1),10000)
-	p1= histogram(X) 
-	p2= histogram(Y)
-	plot(p1,p2,layout=(2,1))
-end 
-
-# ╔═╡ 7231b9ee-5b5f-4b9d-8afe-d903fb8d48af
-md"""
-### 지수분포의 무기억성 
-"""
-
-# ╔═╡ d60eba44-e4db-4630-8230-121d0ea942b4
-md"""
-`-` 이론: $X \sim Exp(1/\lambda) \Rightarrow$ 모든 $s,t > 0$ 에 대하여 $P(X>t)=P(X>t+s | X>s)$가 성립 
-
-`-` 개념: 
-- 이해를 위해서 $t=1,s=9$ 대입 => $P(X>1) = P(X>10|X>9)$ 
-- 좌변: 시간1 기다려서 이벤트가 발생안할 확률  
-- 우변: 시간9 기다렸는데 안왔음 -> 시간10 기다려서 이벤트가 발생안할 확률
-- 예를들어서 $\lambda=0.1$ 이면 한번 이벤트 발생하는데 평균 시간10걸린다는 의미임 => (1) 좌변은 이제 시간1 기다림 (2) 우변은 시간9를 기다림. 곧 "약속된" 시간 10이 완성됨 => 우변이 더 확률이 크지 않을까? => 아니라는 거에요! 
-
-`-` 이해: 지수분포의 근본? 포아송 프로세스 
-- 엄청 짧은 시간
-- 엄청 작은 확률
-- 엄청 많은 베르누이 시행이 "독립적"으로 수행 $\to$ 지금까지 실패했다고 해서 이후에 성공확률이 높아지는건 아님. 
-- 우변은 이미 시간 9동안 무수히 많은 시행을 놓침. 그 이후의 시행은 독립임. 
-"""
-
-# ╔═╡ 7f2e42c1-45f8-4c62-aa16-2b4097fea1af
-md"""
-`-` 시뮬레이션으로 확인해보자. 
-"""
-
-# ╔═╡ f142099d-f2b9-4e75-be5c-591408ee6a18
-md"t= $@bind t Slider(1:0.01:5)"
-
-# ╔═╡ 2e72e3f2-0d75-4eda-b2dc-522f59b35329
-md"s= $@bind s Slider(1:0.1:5)"
-
-# ╔═╡ 9f9a700d-7b61-4c0d-97ea-01c562369624
-let 
-	N=5000
-	X = rand(Exponential(1),N) # 일단지수분포 뽑자? 
-	p1 = length(X[X.>t])/length(X) # 분모: 전체 X의 수, 분자: X>t를 만족하는 X의 수 
-	p2 = length(X[X.>t+s])/length(X[X.>s]) # 분모: X>s를 만족하는 X의 수, 분자: X>t+s를 만족하는 X의 수 
-	md""" 
-	-  $t=$ $t
-	-  $s=$ $s. 
-	-  $P(X>t)=$ $(p1)
-	-  $P(X>t+s| X>s)=$ $(p2)
-	"""
+# ╔═╡ 25e64c8b-2009-464c-9aea-7b6ee3ed411b
+begin
+	p2=scatter([45],[0],color="red",xlim=(44,46),ylim=(-1,1))
+	scatter!([44.5],[0],color="blue")	
+	plot!(r.*cos.(θ).+44.5,r.*sin.(θ),color="red")
 end
 
-# ╔═╡ 76a3f416-e7a6-4c22-b55d-850292fa1a1f
+# ╔═╡ 8ec17ad3-bdef-469f-ba9a-8a3bfbd28171
 md"""
-`-` 무기억성 = 과거는 중요하지 않음! => $P(X>1)=P(X>2|X>1)=P(X>3|X=2)=...$ 
+`-` 자취생의 주장: 실제 참치의 평균은 얼마인지 모르나 저 원안에 있을 확률이 95%이다. 그런데 지금은 저 원안에 $45$가 없다. 따라서 참치회사의 주장은 틀린것 같다.  
 """
 
-# ╔═╡ 5ea1ee81-0b5d-4b50-a369-82d13b2cdc39
-let 	
-	N = 5000
-	X = rand(Exponential(1),N)
-	p1 = length(X[X.>1])/length(X[X.>0])
-	p2 = length(X[X.>2])/length(X[X.>1])
-	p3 = length(X[X.>3])/length(X[X.>2])
-	p4 = length(X[X.>4])/length(X[X.>3])
-	p5 = length(X[X.>5])/length(X[X.>4])
-	md""" 
-	-  $P(X>1)$ = $(p1)	
-	-  $P(X>2|X>1)$ = $(p2)
-	-  $P(X>3|X>2)$ = $(p3)
-	-  $P(X>4|X>3)$ = $(p4)
-	-  $P(X>5|X>4)$ = $(p5)
-	"""
-end
-
-# ╔═╡ 7a5c933f-4116-4f5c-857e-5b502656d125
+# ╔═╡ 2c45123f-a28f-431f-9f54-bf57a6ce549c
 md"""
-### 몬테카를로적분
+`-` 참치회사 주장: 자취생이 5%의 재수없는 case일 뿐이다. 
 """
 
-# ╔═╡ aa056adf-c498-47d8-8ccc-0fa2bd97010e
+# ╔═╡ 80df41e9-6d09-4b5a-83c6-0a35d4a1ad0c
 md"""
-##### 예제1: 아래를 계산하라. 
-$\int_{0}^{\infty} xe^{-x}dx=?$
+`-` 우리의 생각: 자취생이 5퍼도 안되는 재수없는 케이스이거나, 참치회사가 거짓말을 하는것 같다. 
 """
 
-# ╔═╡ a59bccb7-5623-4906-9068-6e73dacf5852
+# ╔═╡ 26e13ce5-9d8a-484e-a872-6c698f827954
 md"""
-(손풀이)
-
-$\int_{0}^{\infty} xe^{-x}dx=??=1$
-
+`-` 엄밀히 말하면 자취생은 5퍼보다도 더 재수없는 캐이스이다. 얼마나 재수없는 케이스인지 알아보자. 
 """
 
-# ╔═╡ b333446d-e8dd-44ea-b63b-bc45f8f5eca7
+# ╔═╡ 0af7e67b-a483-40fb-a12e-fda0f6e82f3a
 md"""
-(손풀이2)
-$\int_{0}^{\infty} x\times e^{-x}dx$는 $\lambda=1$인 지수분포의 평균이다. 따라서 답은 1.
+`-` 45를 중심으로 원을 그려보자. 
+- 반지름이 $r 이면 $N 개 중에서 $(sum(index)) 개는 원안에 들어온다. 
 """
 
-# ╔═╡ 65bdb6e8-84ad-4b6b-a16f-33a21da09376
+# ╔═╡ 94f07f65-c07f-4ec3-a1a7-401e72c094d3
+radius
+
+# ╔═╡ d2e42d61-85c1-4acf-bfa5-ae042a175182
+paper = @bind side Radio(["앞면","뒷면"])
+
+# ╔═╡ c55c707a-0fcc-4f1e-b38d-5dff3bd3cb24
+if side=="앞면" p1 else p2 end 
+
+# ╔═╡ b9717424-186d-4c0e-a15d-a0469b199c3c
 md"""
-(컴퓨터를 이용한 풀이)
+`-` 자취생은 $N 명중에 $(N-sum(index)) 번째로 재수없는 경우라는 참치회사의 주장 => 자취생보다 더 극단적인 경우가 나올 확률은 $((N-sum(index))/N) 이라는 의미
 """
 
-# ╔═╡ ee02feb2-0fdd-4b3c-a59d-5fbc6f17409c
-rand(Exponential(1),10000) |> mean
-
-# ╔═╡ 73bbbf02-2054-4ec1-ba67-969db35af489
+# ╔═╡ 270fd9c5-05f3-4ff7-b163-76c633474c39
 md"""
-##### 예제2: 아래를 계산하라. 
-$\int_{0}^{\infty} x^2e^{-x}dx=?$
+### 판결
 """
 
-# ╔═╡ 9180da41-a441-4547-9c33-47c95c045e1b
+# ╔═╡ e2873eed-3072-4a39-b92a-e0088c8bac95
 md"""
-(컴퓨터를 이용한 풀이)
+`-` 참치회사의 주장이 맞을수는 이겠지만 이쯤되면 자취생의 손을 들어주는 것이 옳은것 같다. 참치회사의 주장이 맞다면 우리는 지금 확률 $((N-sum(index))/N)의 기적을 목격하고 있다는 것인데 이건 너무 작은 숫자이다. 현재상황이 확률 $((N-sum(index))/N)의 기적이라고 주장하는것 보다 참치회사가 거짓말을 한다고 믿는게 더 타당하다. 숫자 $((N-sum(index))/N) 이 더 작으면 작을수록 참치회사가 거짓말을 한다고 생각할 수 있다. 
 """
 
-# ╔═╡ 0ed97c22-e119-4edc-a970-98747035492a
-rand(Exponential(1),10000) .|> (x->x^2) |> mean
-
-# ╔═╡ 7e537936-5662-4f0a-bc07-fc0ba3bd7162
+# ╔═╡ 26a071e9-81f8-431f-bba2-168782d16796
 md"""
-- 참고로 답 2 맞아요
-- 분산 = 제곱의평균 - 평균의제곱 => 제곱의평균 = 분산 + 평균의제곱 = 1 + 1²
+`-` 여기에서 확률 $((N-sum(index))/N) 을 p-value라고 부른다. 
 """
 
-# ╔═╡ 91ce3042-3b47-492c-8f6d-6ee5b45c785b
+# ╔═╡ 8ae5185d-b004-4501-927a-f61a11a616f4
 md"""
-##### 예제3: 아래를 계산하라. 
-$\int_{0}^{1}e^{-x}dx=?$
+`-` 현실생활에서는 p-value가 얼마나 작아야 참치회사의 주장이 거짓이라 판단할 수 있을까? 일반적으로 0.05보다 작으면 그렇다고 본다. 
 """
 
-# ╔═╡ 2ee4264b-1ff9-4d8f-81b3-6d3b12f13cd7
+# ╔═╡ 46b2ce9c-88fd-4af2-b05b-86bbd2bc4dd7
 md"""
-(컴퓨터를 이용한 풀이) 
-
-구하는것은 $\int_0^\infty I(x\leq 1) e^{-x} dx=E\big(I(X\leq 1)\big)=P(X\leq 1),~ X\sim Exp(1)$ 로 볼 수 있다.
+`-` 따라서 이 경우 자취생의 주장이 옳다고 볼 수 있다. (통계를 알고 있기 때문에 이루어진 쾌거)
 """
 
-# ╔═╡ 6fa0e978-2ad7-4b2c-b01f-253270b3356a
-let 
-	N=10000
-	X = rand(Exponential(1),N) 
-	f = x ->  (x<1)
-	X .|> f |> mean
-end 
-
-# ╔═╡ 2649299a-49f3-47fb-8936-68c94cd8ae7d
-let 
-	N=10000
-	X = rand(Exponential(1),N) 
-	length(X[X.<1])/N # length(X[X.<1])/length(X)
-end 
-
-# ╔═╡ 54e67315-cf86-4717-b6d8-2d0f786e89c0
+# ╔═╡ a8f621c5-6fc6-4215-aaf7-be88524f98c5
 md"""
-(컴퓨터를 이용한 풀이2)
-구하는것은 $E\big(e^{-X}\big),~ X\sim U(0,1)$ 로 볼 수 있다. 
+## 검정의 형식논리 
 """
 
-# ╔═╡ 19c32e9b-d571-451e-af09-cab30b059735
-let 
-	N=10000
-	X = rand(N)
-	exp.(-X) |> mean
-end 
-
-# ╔═╡ f560097a-3303-4720-a973-edd07ec1b1a4
+# ╔═╡ d81dcb05-e48e-435d-afee-68ec7dd59bf9
 md"""
-### 박스뮬러변환 
+#### 단계0: 공통적으로 인정하는 부분 수식화 
+- 참치캔은 서로 독립이고 평균이 $\mu$이고 분산이 1인 정규분포를 따른다고 하자. 
+- 즉 $X_i \overset{iid}{\sim} N(\mu,1)$.
 """
 
-# ╔═╡ d3955f6e-cfeb-463d-b46d-8cc8169ce60b
+# ╔═╡ ef2c0229-5d4c-492d-a52d-69d3c60f640d
 md"""
-`-` 이론: $\begin{cases} R^2/2 \sim Exp(1) \\ \Theta \sim (-\pi,\pi) \end{cases} \Rightarrow \begin{bmatrix} R\cos\Theta \\ R \sin \Theta \end{bmatrix} \sim N\left(\begin{bmatrix} 0 \\ 0 \end{bmatrix} , \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} \right)$
+#### 단계1: 귀무가설과 대립가설설정 
+- 귀무가설 = 참치회사의 주장 $\Rightarrow H_0 : \mu=45$
+- 대립가설 = 자취생의 주장 $\Rightarrow H_1 : \mu < 45$
 """
 
-# ╔═╡ 2b5b304a-1d29-4d72-b7a7-eb102e6416ae
+# ╔═╡ 3027676a-b852-43ec-afd8-15f793e628d3
 md"""
-- 의미? 
+#### 단계2: 검정통계량 확보 
+- 자취생은 실험을 하여 $\bar{X} = \frac{1}{30}\sum_{i=1}^{30} X_i=44.5$ 임을 알았다.
 """
 
-# ╔═╡ fda45bc2-3d11-40ef-b1d3-1355d6220c0d
-@bind i Slider(1:10000)
-
-# ╔═╡ d59232cd-86af-4536-a9e6-fc2274ec7699
-let 
-	Random.seed!(1234)
-	X = randn(10000)
-	Y = randn(10000)
-	plot(X,Y,alpha=0.1,seriestype = :scatter,xlim=(-3.5,3.5),ylim=(-3.5,3.5))
-	plot!([0,X[i]],[0,Y[i]])
-end
-
-# ╔═╡ c546aeda-1700-49b0-a427-7dbdb93f3432
-let
-	X = rand(Normal(0,1),10000)
-	Y = rand(Normal(0,1),10000)
-	p1= (X.^2+Y.^2)./2 |> histogram
-	p2= rand(Exponential(1),10000) |> histogram
-	plot(p1,p2,layout=(2,1))
-end 
-
-# ╔═╡ 15858dd2-8c38-42c9-9ca8-daa550151bb8
+# ╔═╡ ecb39cb9-3643-453c-ac77-036242fa1b70
 md"""
-`-` 그렇다면 위를 이용하여 정규분포를 생성할 수 있겠다.
+#### 단계3: 검정통계량의 분포를 추정 
+- 실험: 시뮬레이션. 
+- 이론: $\bar{X} \sim N(\mu,\frac{1}{n})$
 """
 
-# ╔═╡ d2e1456f-eb12-40f4-8163-e6e51bd4908b
-let 
-	N=10000000
-	R = .√(2*rand(Exponential(1),N))
-	Θ = rand(N).*2π .- π
-	T = (R,Θ) -> [R*sin(2π*Θ),R*cos(2π*Θ)]
-	XY = T.(R,Θ)
-	X = [XY[i][1] for i in 1:N]
-	Y = [XY[i][2] for i in 1:N]
-	scatter(X,Y)
-	p1 = histogram(X)
-	p2 = randn(N) |> histogram
-	plot(p1,p2,layout=(2,1))
-end
-
-# ╔═╡ 5d91922a-163e-4f20-8b31-8d1e13ee47fc
+# ╔═╡ f8168b3b-0ba8-4f90-adee-664ee750434c
 md"""
-`-` inverse cdf 기법과 합치면 아래와 같이 정리가능하다. 
-
-$$\begin{cases}
-X=\sqrt{-2\log(1-U_1)} \cos(2\pi U_2-\pi)\\
-Y=\sqrt{-2\log(1-U_1)} \sin(2\pi U_2-\pi)
-\end{cases}, \quad U_1,U_2 \overset{iid}{\sim} U(0,1)$$
+(확인)
 """
 
-# ╔═╡ 828b3e86-1b21-4818-8608-5f3b423253c4
-let 
-	N=1000
-	U₁ = rand(N)
-	U₂ = rand(N)
-	X= @. √(-2log(1-U₁))*cos(2π*U₂-π)
-	p1 = histogram(X)
-	p2 = randn(N) |> histogram
-	plot(p1,p2,layout=(2,1))
-end
+# ╔═╡ 672628f4-444f-4bef-b341-53fd728c317f
+[rand(Normal(45,1),30) |> mean for i in 1:100000] |> var
 
-# ╔═╡ d8d0c372-a42f-4f85-925d-10f0839e3652
+# ╔═╡ ff0c23b7-e9a3-4c6e-a9eb-7cf52aa77958
+1/30
+
+# ╔═╡ 7bcda4c4-16e1-45e2-981e-46157a5e9cb9
 md"""
-(보충학습) 브로드캐스팅 매크로
+#### 단계4: 채택역/기각역 설정
+- 적당한 $r$을 설정하여 $\mu$를 중심으로 95%의 관측치가 원안에 들어오도록 한다. (종이앞면)
+- 위에서 구한 집합을 채택역이라고 하고 채택역 이외의 집합을 기각역이라고 한다. 
 """
 
-# ╔═╡ 40cddce5-c28a-4ae5-b2c1-3ffcc78ee422
-[1,2] .+ [1,2] .+ [1,2] .+ [1,2]
-
-# ╔═╡ 54c5a333-d8a5-421f-bff3-64ff6ba09fea
-@. [1,2] + [1,2] + [1,2] + [1,2]
-
-# ╔═╡ 443995d4-4882-498e-a5ed-d1e8a3da8bc8
+# ╔═╡ 15cb0b3e-1eb1-469b-bb5c-d1ef73a71b9e
 md"""
-### $\lambda$에 따른 포아송과 지수분포의 히스토그램변화 관찰 
+`-` 이론: $X_i \sim N(45,1) \Rightarrow \frac{1}{30}\sum_{i=1}^{30}X_i \sim N(45,\frac{1}{35})$
 """
 
-# ╔═╡ 2050105f-6d3d-42be-9106-b0bcb5b40e2b
-lambda = @bind λ Slider(0.1:0.01:50,show_value=true)
+# ╔═╡ e630bd6a-c6bb-4f4e-93e8-8e577b9d0872
 
-# ╔═╡ 2255d3f7-6b73-41c9-b381-1d68074edcc4
-histogram(rand(Poisson(λ),10000),title="포아송, λ=$λ")
-
-# ╔═╡ a346b856-3479-455a-a85d-9f1fb37194cb
-histogram(rand(Exponential(1/λ),10000),title="지수분포, λ=$λ")
-
-# ╔═╡ 258a090b-153e-4dce-bb64-8a73e28dbe96
-md"""
-## Inverse CDF의 이론적 근거 
-"""
-
-# ╔═╡ 79c44ff3-3299-4dba-956c-bd34018eaac7
-md"""
-`-` 수리통계이론: 확률변수 $X$가 연속형이고 그 누적분포함수 $F$가 순증가함수일때 아래가 성립한다. 
-
-(i) $X \sim F \Rightarrow F(X) \sim U(0,1)$
-
-(ii) $Y \sim U(0,1) \Rightarrow F^{-1}(U) \sim F$
-"""
-
-# ╔═╡ 0859395a-67af-4b7d-a1e3-c42b8602b6df
-### 
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -455,9 +278,9 @@ PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [compat]
-Distributions = "~0.25.52"
-Plots = "~1.27.2"
-PlutoUI = "~0.7.37"
+Distributions = "~0.25.53"
+Plots = "~1.27.4"
+PlutoUI = "~0.7.38"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -588,9 +411,9 @@ uuid = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 
 [[deps.Distributions]]
 deps = ["ChainRulesCore", "DensityInterface", "FillArrays", "LinearAlgebra", "PDMats", "Printf", "QuadGK", "Random", "SparseArrays", "SpecialFunctions", "Statistics", "StatsBase", "StatsFuns", "Test"]
-git-tree-sha1 = "c43e992f186abaf9965cc45e372f4693b7754b22"
+git-tree-sha1 = "5a4168170ede913a2cd679e53c2123cb4b889795"
 uuid = "31c24e10-a181-5473-b8eb-7969acd0382f"
-version = "0.25.52"
+version = "0.25.53"
 
 [[deps.DocStringExtensions]]
 deps = ["LibGit2"]
@@ -616,9 +439,9 @@ version = "2.2.3+0"
 
 [[deps.Expat_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
-git-tree-sha1 = "ae13fcbc7ab8f16b0856729b050ef0c446aa3492"
+git-tree-sha1 = "bad72f730e9e91c08d9427d5e8db95478a3c323d"
 uuid = "2e619515-83b5-522b-bb60-26c02a35a201"
-version = "2.4.4+0"
+version = "2.4.8+0"
 
 [[deps.FFMPEG]]
 deps = ["FFMPEG_jll"]
@@ -676,15 +499,15 @@ version = "3.3.6+0"
 
 [[deps.GR]]
 deps = ["Base64", "DelimitedFiles", "GR_jll", "HTTP", "JSON", "Libdl", "LinearAlgebra", "Pkg", "Printf", "Random", "RelocatableFolders", "Serialization", "Sockets", "Test", "UUIDs"]
-git-tree-sha1 = "9f836fb62492f4b0f0d3b06f55983f2704ed0883"
+git-tree-sha1 = "af237c08bda486b74318c8070adb96efa6952530"
 uuid = "28b8d3ca-fb5f-59d9-8090-bfdbd6d07a71"
-version = "0.64.0"
+version = "0.64.2"
 
 [[deps.GR_jll]]
 deps = ["Artifacts", "Bzip2_jll", "Cairo_jll", "FFMPEG_jll", "Fontconfig_jll", "GLFW_jll", "JLLWrappers", "JpegTurbo_jll", "Libdl", "Libtiff_jll", "Pixman_jll", "Pkg", "Qt5Base_jll", "Zlib_jll", "libpng_jll"]
-git-tree-sha1 = "a6c850d77ad5118ad3be4bd188919ce97fffac47"
+git-tree-sha1 = "cd6efcf9dc746b06709df14e462f0a3fe0786b1e"
 uuid = "d2c73de3-f751-5644-a686-071e5b155ba9"
-version = "0.64.0+0"
+version = "0.64.2+0"
 
 [[deps.GeometryBasics]]
 deps = ["EarCut_jll", "IterTools", "LinearAlgebra", "StaticArrays", "StructArrays", "Tables"]
@@ -823,9 +646,9 @@ version = "1.3.0"
 
 [[deps.Latexify]]
 deps = ["Formatting", "InteractiveUtils", "LaTeXStrings", "MacroTools", "Markdown", "Printf", "Requires"]
-git-tree-sha1 = "4f00cc36fede3c04b8acf9b2e2763decfdcecfa6"
+git-tree-sha1 = "6f14549f7760d84b2db7a9b10b88cd3cc3025730"
 uuid = "23fbe1c1-3f47-55db-b15f-69d7ec21a316"
-version = "0.15.13"
+version = "0.15.14"
 
 [[deps.LibCURL]]
 deps = ["LibCURL_jll", "MozillaCACerts_jll"]
@@ -1003,9 +826,9 @@ version = "0.11.7"
 
 [[deps.Parsers]]
 deps = ["Dates"]
-git-tree-sha1 = "85b5da0fa43588c75bb1ff986493443f821c70b7"
+git-tree-sha1 = "621f4f3b4977325b9128d5fae7a8b4829a0c2222"
 uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
-version = "2.2.3"
+version = "2.2.4"
 
 [[deps.Pixman_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1031,15 +854,15 @@ version = "1.2.0"
 
 [[deps.Plots]]
 deps = ["Base64", "Contour", "Dates", "Downloads", "FFMPEG", "FixedPointNumbers", "GR", "GeometryBasics", "JSON", "Latexify", "LinearAlgebra", "Measures", "NaNMath", "Pkg", "PlotThemes", "PlotUtils", "Printf", "REPL", "Random", "RecipesBase", "RecipesPipeline", "Reexport", "Requires", "Scratch", "Showoff", "SparseArrays", "Statistics", "StatsBase", "UUIDs", "UnicodeFun", "Unzip"]
-git-tree-sha1 = "90021b03a38f1ae9dbd7bf4dc5e3dcb7676d302c"
+git-tree-sha1 = "edec0846433f1c1941032385588fd57380b62b59"
 uuid = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
-version = "1.27.2"
+version = "1.27.4"
 
 [[deps.PlutoUI]]
 deps = ["AbstractPlutoDingetjes", "Base64", "ColorTypes", "Dates", "Hyperscript", "HypertextLiteral", "IOCapture", "InteractiveUtils", "JSON", "Logging", "Markdown", "Random", "Reexport", "UUIDs"]
-git-tree-sha1 = "bf0a1121af131d9974241ba53f601211e9303a9e"
+git-tree-sha1 = "670e559e5c8e191ded66fa9ea89c97f10376bb4c"
 uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
-version = "0.7.37"
+version = "0.7.38"
 
 [[deps.Preferences]]
 deps = ["TOML"]
@@ -1154,9 +977,9 @@ version = "2.1.4"
 
 [[deps.StaticArrays]]
 deps = ["LinearAlgebra", "Random", "Statistics"]
-git-tree-sha1 = "6976fab022fea2ffea3d945159317556e5dad87c"
+git-tree-sha1 = "4f6ec5d99a28e1a749559ef7dd518663c5eca3d5"
 uuid = "90137ffa-7385-5640-81b9-e52037218182"
-version = "1.4.2"
+version = "1.4.3"
 
 [[deps.Statistics]]
 deps = ["LinearAlgebra", "SparseArrays"]
@@ -1453,75 +1276,56 @@ version = "0.9.1+5"
 """
 
 # ╔═╡ Cell order:
-# ╠═37e0b2ce-2300-471a-b62c-78e733757ee0
-# ╠═af7c221f-dfb4-4253-ae96-2af5e87b1ec8
-# ╠═5cf1050c-e3d1-41c6-908a-7a3d926bf5e5
-# ╠═baa3599d-271f-4b52-8975-47137cac1c29
-# ╠═f9d431cb-3cac-4be7-b0f0-b8a37ec48f30
-# ╠═b108695d-4998-4db0-8166-b622d7bfc80d
-# ╠═e9e8517f-ff77-4ba2-90ef-679f1fa39170
-# ╠═ba83da1f-e1da-46cb-882f-2bb8401fc546
-# ╠═93401fc8-68dd-44d5-9158-cbc835f24ff4
-# ╠═1127ec60-7789-4941-a70c-3517536ba4a1
-# ╠═17ff99ef-0bc2-4aab-a53d-82cb13da0beb
-# ╠═3b1f0777-019f-4547-a19c-5e25e4763a31
-# ╠═68e7eeed-c893-4bc6-a3b6-15abf4ff1e21
-# ╠═dcc01171-2e27-4c75-8ac5-4638f26bbab8
-# ╠═a71ff440-fb6d-4d14-8451-a5af8d0e4725
-# ╠═4e02747c-bbba-4763-979d-b297b6b3e281
-# ╠═27de3a62-066a-41f6-9bb6-1e6c77fe5b6e
-# ╠═e5470c4f-9cca-40dd-a3fb-50726ee94bf9
-# ╠═b44af793-c718-4848-98d6-fbdc007c0395
-# ╠═de32f170-6878-43df-8e40-6ccdbb5a4f8f
-# ╠═294ef10b-eb99-4966-bd01-7665f72c2933
-# ╠═af301f81-f5a1-4ec0-9274-42174f13db6a
-# ╠═b7ac2e90-6000-46a7-9f2e-828073277fb4
-# ╠═e1b10a88-a4d9-49c1-a2a0-238d84d68899
-# ╠═222fda62-8656-4ac6-baf2-5843fc25ef80
-# ╠═f7a3532d-1ea8-4996-a0a6-386d58ff57d4
-# ╠═7231b9ee-5b5f-4b9d-8afe-d903fb8d48af
-# ╠═d60eba44-e4db-4630-8230-121d0ea942b4
-# ╠═7f2e42c1-45f8-4c62-aa16-2b4097fea1af
-# ╠═f142099d-f2b9-4e75-be5c-591408ee6a18
-# ╠═2e72e3f2-0d75-4eda-b2dc-522f59b35329
-# ╠═9f9a700d-7b61-4c0d-97ea-01c562369624
-# ╠═76a3f416-e7a6-4c22-b55d-850292fa1a1f
-# ╠═5ea1ee81-0b5d-4b50-a369-82d13b2cdc39
-# ╠═7a5c933f-4116-4f5c-857e-5b502656d125
-# ╠═aa056adf-c498-47d8-8ccc-0fa2bd97010e
-# ╠═a59bccb7-5623-4906-9068-6e73dacf5852
-# ╠═b333446d-e8dd-44ea-b63b-bc45f8f5eca7
-# ╠═65bdb6e8-84ad-4b6b-a16f-33a21da09376
-# ╠═ee02feb2-0fdd-4b3c-a59d-5fbc6f17409c
-# ╠═73bbbf02-2054-4ec1-ba67-969db35af489
-# ╠═9180da41-a441-4547-9c33-47c95c045e1b
-# ╠═0ed97c22-e119-4edc-a970-98747035492a
-# ╠═7e537936-5662-4f0a-bc07-fc0ba3bd7162
-# ╠═91ce3042-3b47-492c-8f6d-6ee5b45c785b
-# ╠═2ee4264b-1ff9-4d8f-81b3-6d3b12f13cd7
-# ╠═6fa0e978-2ad7-4b2c-b01f-253270b3356a
-# ╠═2649299a-49f3-47fb-8936-68c94cd8ae7d
-# ╠═54e67315-cf86-4717-b6d8-2d0f786e89c0
-# ╠═19c32e9b-d571-451e-af09-cab30b059735
-# ╠═f560097a-3303-4720-a973-edd07ec1b1a4
-# ╠═d3955f6e-cfeb-463d-b46d-8cc8169ce60b
-# ╠═2b5b304a-1d29-4d72-b7a7-eb102e6416ae
-# ╠═fda45bc2-3d11-40ef-b1d3-1355d6220c0d
-# ╠═d59232cd-86af-4536-a9e6-fc2274ec7699
-# ╠═c546aeda-1700-49b0-a427-7dbdb93f3432
-# ╠═15858dd2-8c38-42c9-9ca8-daa550151bb8
-# ╠═d2e1456f-eb12-40f4-8163-e6e51bd4908b
-# ╠═5d91922a-163e-4f20-8b31-8d1e13ee47fc
-# ╠═828b3e86-1b21-4818-8608-5f3b423253c4
-# ╠═d8d0c372-a42f-4f85-925d-10f0839e3652
-# ╠═40cddce5-c28a-4ae5-b2c1-3ffcc78ee422
-# ╠═54c5a333-d8a5-421f-bff3-64ff6ba09fea
-# ╠═443995d4-4882-498e-a5ed-d1e8a3da8bc8
-# ╠═2050105f-6d3d-42be-9106-b0bcb5b40e2b
-# ╠═2255d3f7-6b73-41c9-b381-1d68074edcc4
-# ╠═a346b856-3479-455a-a85d-9f1fb37194cb
-# ╠═258a090b-153e-4dce-bb64-8a73e28dbe96
-# ╠═79c44ff3-3299-4dba-956c-bd34018eaac7
-# ╠═0859395a-67af-4b7d-a1e3-c42b8602b6df
+# ╠═77c76b86-f72c-4a2e-bb29-d7a508c446b5
+# ╠═c257500f-16c9-4c6f-adda-23a33e99c9e3
+# ╠═565c11ec-b261-11ec-2a62-3d55737ffcef
+# ╠═fa28a8b6-ccf3-4064-a9d5-86608e01d35b
+# ╠═a505b347-ec86-45e5-a3bc-b5fdc999b8d6
+# ╠═91604671-55a1-4a35-a62f-e7723ecf055f
+# ╠═52556ac2-53a4-458f-b26e-4a68939acba5
+# ╠═fae82783-2ef9-4225-9f0b-44f811e22cf1
+# ╠═d57dfc8a-aa06-4720-af37-c72fdff2be1e
+# ╠═ac1962ce-4e2e-4243-8860-703b89aba151
+# ╠═9c8056ba-a447-4f4a-b599-7db2e59c5886
+# ╠═25b096cb-a6ad-471e-9dc4-20ca9f4aaf49
+# ╠═9ef3b1dd-0a47-4e9c-9baf-b13eedde49d5
+# ╠═61ed0a08-bdc3-41db-b62d-b598c72097bf
+# ╠═625d6633-4a92-4b7d-9593-e25fa4733923
+# ╠═d92def31-d505-4cbe-8ed8-aef6d64a33e2
+# ╠═7e4c2f2f-620d-4070-9f63-82098e58190b
+# ╠═0daf9bd1-db32-4477-8f3b-b51b4a5644c8
+# ╠═aaa6f575-8829-4384-8bf5-3b942f9b0075
+# ╠═ebd837ff-e071-4484-a6bc-21866994fc9c
+# ╠═dc89437c-a877-4d67-a540-c982490aebbe
+# ╠═e1bb4f9e-da68-404f-83b2-26e70be59d7e
+# ╠═d8d3aa40-ce59-4cd0-bac2-568f88d9ef9a
+# ╠═f7d3f6f4-317a-4d9f-af2e-4dac12d3808a
+# ╠═2d49c3a8-03bc-4c70-b7bc-0c8c76a547ec
+# ╠═25e64c8b-2009-464c-9aea-7b6ee3ed411b
+# ╠═8ec17ad3-bdef-469f-ba9a-8a3bfbd28171
+# ╠═2c45123f-a28f-431f-9f54-bf57a6ce549c
+# ╠═80df41e9-6d09-4b5a-83c6-0a35d4a1ad0c
+# ╠═26e13ce5-9d8a-484e-a872-6c698f827954
+# ╠═0af7e67b-a483-40fb-a12e-fda0f6e82f3a
+# ╠═94f07f65-c07f-4ec3-a1a7-401e72c094d3
+# ╠═d2e42d61-85c1-4acf-bfa5-ae042a175182
+# ╠═c55c707a-0fcc-4f1e-b38d-5dff3bd3cb24
+# ╠═b9717424-186d-4c0e-a15d-a0469b199c3c
+# ╠═270fd9c5-05f3-4ff7-b163-76c633474c39
+# ╠═e2873eed-3072-4a39-b92a-e0088c8bac95
+# ╠═26a071e9-81f8-431f-bba2-168782d16796
+# ╠═8ae5185d-b004-4501-927a-f61a11a616f4
+# ╠═46b2ce9c-88fd-4af2-b05b-86bbd2bc4dd7
+# ╠═a8f621c5-6fc6-4215-aaf7-be88524f98c5
+# ╠═d81dcb05-e48e-435d-afee-68ec7dd59bf9
+# ╠═ef2c0229-5d4c-492d-a52d-69d3c60f640d
+# ╠═3027676a-b852-43ec-afd8-15f793e628d3
+# ╠═ecb39cb9-3643-453c-ac77-036242fa1b70
+# ╠═f8168b3b-0ba8-4f90-adee-664ee750434c
+# ╠═672628f4-444f-4bef-b341-53fd728c317f
+# ╠═ff0c23b7-e9a3-4c6e-a9eb-7cf52aa77958
+# ╠═7bcda4c4-16e1-45e2-981e-46157a5e9cb9
+# ╠═15cb0b3e-1eb1-469b-bb5c-d1ef73a71b9e
+# ╠═e630bd6a-c6bb-4f4e-93e8-8e577b9d0872
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

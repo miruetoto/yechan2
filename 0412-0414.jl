@@ -14,450 +14,398 @@ macro bind(def, element)
     end
 end
 
-# ╔═╡ af7c221f-dfb4-4253-ae96-2af5e87b1ec8
-using Plots,Distributions,PlutoUI,Random
+# ╔═╡ 7656a6b5-d412-4c22-b5a2-52d65ccca41a
+using PlutoUI, Plots,Distributions
 
-# ╔═╡ 37e0b2ce-2300-471a-b62c-78e733757ee0
+# ╔═╡ 0ccba826-e6ff-4cd1-9063-140b71fa5e3f
+using ForwardDiff
+
+# ╔═╡ 31fe08b2-b792-11ec-3df9-d1e8165f0b21
 md"""
-## Usings
+# 4월12일 ~ 4월14일 강의노트 
 """
 
-# ╔═╡ 5cf1050c-e3d1-41c6-908a-7a3d926bf5e5
+# ╔═╡ fe221c1f-05ea-4139-83de-4f735a71cee8
+md"""
+## usings
+"""
+
+# ╔═╡ f4b54675-c4d7-4571-939d-b5d8c2d587ec
 PlutoUI.TableOfContents()
 
-# ╔═╡ baa3599d-271f-4b52-8975-47137cac1c29
+# ╔═╡ 573c71f1-ade1-43bf-9461-9f54563166ab
 Plots.plotly()
 
-# ╔═╡ f9d431cb-3cac-4be7-b0f0-b8a37ec48f30
+# ╔═╡ 83e5fd15-f94d-409d-8a5b-364ffe92cf36
 md"""
-## 지난시간 강의, 보충 및 정정내용 
+## 정규분포 
 """
 
-# ╔═╡ b108695d-4998-4db0-8166-b622d7bfc80d
+# ╔═╡ ba95e2fd-7ab2-43b1-a0dd-1b57b13cf2b9
 md"""
-- 이항분포에서 포아송을 뽑는게 아니고 특정한 조건에서 이항분포와 포아송이 비슷해짐 
-- `try_until_you_succeed(p)`는 기하분포 뽑는 함수 맞아요! 
-- `sample_size`를 의미하는 기호를 `N`으로 통일. (`n`은 이항분포의 `n`)
-- 포아송의 역수로 지수분포를 못뽑는이유? (1) 0이 나오니까 역수가 되지 않음 (2) 지수분포는 임의의 양의값이 가능해야하는데 $\frac{1}{0.5}, \frac{1}{1.5}$와 같은 값은 포아송의 역수로 구할 수 없음.  
-- 강의노트 테이블 추가, 제목수준 조금씩 조정
+### note3: delta method 
+`-` 이론: $\sqrt{n}(X_n-\theta) \overset{d}{\to} N(0,\sigma^2) \Rightarrow \sqrt{n}(g(X_n)-g(\theta)) \overset{d}{\to} g'(\theta)  N(0,\sigma^2)$
+- 여기에서 $Z_n \overset{d}{\to} N(0,\sigma^2)$의 의미는 $Z_n \overset{d}{\to} Z, Z \sim N(0,1)$을 의미한다. 
+- 마지막의 $g'(\theta)N(0,\sigma^2)$은 평균이 $0$이고 분산이 $\big(g'(\theta)\big)^2\sigma^2$인 정규분포를 의미한다. 
 """
 
-# ╔═╡ e9e8517f-ff77-4ba2-90ef-679f1fa39170
+# ╔═╡ 5aa586a5-66db-4251-b393-4c5966064a58
 md"""
-## 지수분포 
+`-` 참고: 앞부분의 가정은 대부분 중심극한 정리를 이용하여 만족시킬 수 있음. 
+
+- CLT: $\frac{\bar{X} - \mu}{\sqrt{\sigma^2/n}} \overset{d}{\to} N(0,1)$
+- 그런데 $\frac{\bar{X} - \mu}{\sqrt{\sigma^2/n}}=\sqrt{n}(\bar{X} - \mu)\frac{1}{\sigma}$이다. $\sqrt{n}(\bar{X} - \mu)\frac{1}{\sigma}$가 표준정규분포로 수렴하므로 $\sqrt{n}(\bar{X} - \mu)\frac{1}{\sigma}$에서 $\sigma$를 곱한것은 $N(0,\sigma^2)$으로 수렴할 것이다. 즉 
+$$\sqrt{n}(\bar{X} - \mu ) \overset{d}{\to} N(0,\sigma^2)$$
+- 이제 $Y_n=\bar{X}=\frac{1}{n}\sum_{i=1}^{n}X_i$라고 두면 
+$$\sqrt{n}(Y_n - \mu ) \overset{d}{\to} N(0,\sigma^2)$$
+- 따라서 델타메소드의 가정은 "CLT가 성립할때~" 정도의 언어로 바꿔서 기억해도 무방하다.
 """
 
-# ╔═╡ ba83da1f-e1da-46cb-882f-2bb8401fc546
+# ╔═╡ 1d5f28ff-7297-454c-9587-c65f1af2209a
 md"""
-### How to generate it 
+`-` 델타메소드의 앞부분은 이해되었음. 델타메소드의 뒷부분을 이해하기 위해서는 테일러정리를 이해해야 한다.
 """
 
-# ╔═╡ 93401fc8-68dd-44d5-9158-cbc835f24ff4
+# ╔═╡ 2bf4ca04-a32f-4da4-849d-6e0929faef6b
 md"""
-(방법1) 모듈사용
+`-` 예비학습1 (테일러정리)
+- 이론: $f(x) \approx f(a)+f'(a)(x-a)+f''(a)\frac{(x-a)^2}{2!}+\dots+\frac{f^{(n)}(a)}{n!}(x-a)^n$
+- 조건: $f(x)$는 $a$에서 $n$번 미분가능해야함. 
+- 주의: 테일러정리에 대한 정확한 state는 아니며 자세한 내용은 추후 스스로 확인
 """
 
-# ╔═╡ 1127ec60-7789-4941-a70c-3517536ba4a1
-
-
-# ╔═╡ 17ff99ef-0bc2-4aab-a53d-82cb13da0beb
+# ╔═╡ c4d5625b-0e21-4427-9756-4d8a99f90a50
 md"""
-(방법2) 포아송프로세스 이용
+`-` 예비학습2: ForwardDiff 패키지 이용하여 미분연산
 """
 
-# ╔═╡ 3b1f0777-019f-4547-a19c-5e25e4763a31
+# ╔═╡ d16d0663-05ed-4d19-b843-1bd15f965f12
 md"""
-(방법3) inverse cdf method
+(예제1) $f(x)=x^2$일때 $f'(2)$를 구하라. 
 """
 
-# ╔═╡ 68e7eeed-c893-4bc6-a3b6-15abf4ff1e21
-md"""
-##### Inverse cdf method motive 
-"""
-
-# ╔═╡ dcc01171-2e27-4c75-8ac5-4638f26bbab8
-md"""
-`-` 아래와 같은 2개의 지수분포를 고려하자.
-- 평균이 1인 지수분포
-- 평균이 5인 지수분포
-"""
-
-# ╔═╡ a71ff440-fb6d-4d14-8451-a5af8d0e4725
-md"""
-`-` 각각의 cdf를 그러보면 아래와 같다. 
-"""
-
-# ╔═╡ 4e02747c-bbba-4763-979d-b297b6b3e281
-let
-	p1 = plot(x-> -exp(-x)+1, 0, 20)
-	p2 = plot(x-> -exp(-x/5)+1, 0, 20)
-	plot(p1,p2,layout=(1,2))
-end
-
-# ╔═╡ 27de3a62-066a-41f6-9bb6-1e6c77fe5b6e
-md"""
-`-` cdf의 y축에서 랜덤변수를 발생시킨다음에 $\rightarrow \downarrow$ 와 같이 이동하여 $x$축에 내린다고 생각해보자. 
-- 왼쪽: 대부분 5이하에 떨어진다! 
-- 오른쪽: 대략 60퍼정도가 5이하에 떨어지고 나머지는 5이상에 떨어질것이다
-"""
-
-
-# ╔═╡ e5470c4f-9cca-40dd-a3fb-50726ee94bf9
-md"""
-`-` 구현
-"""
-
-# ╔═╡ b44af793-c718-4848-98d6-fbdc007c0395
-let
-	Finv(x) = -log(1-x) # 평균이 1인 지수분포cdf의 역함수
-	Ginv(x) = -5log(1-x) # 평균이 5인 지수분포cdf의 역함수 
-	u = rand(5) # 5개의 샘플을 유니폼에서 추출 
-	zeros = u .* 0	# (추후생성) 시각화를 위한 0벡터 
-	p1= plot(x-> -exp(-x)+1,0,20) # F의 cdf를 시각화 
-	scatter!(zeros, u) # y축에 생성된 u를 점으로 찍음 
-	scatter!(Finv.(u),zeros) #y축에 생성된 u -> F(x)를 타고 x축에 내림 
-	p2= plot(x-> -exp(-x/5)+1,0,20)	# G의 cdf를 시각화 
-	scatter!(zeros, u) 
-	scatter!(Ginv.(u),zeros) #y축에 생성된 u -> G(x)를 타고 x축에 내림 	
-	plot(p1,p2,layout=(1,2))
-end
-
-# ╔═╡ de32f170-6878-43df-8e40-6ccdbb5a4f8f
-md"""
-- 빨간색: 균등분포 
-- 초록색: 이게 지수분포 같은데? 
-"""
-
-# ╔═╡ 294ef10b-eb99-4966-bd01-7665f72c2933
-md"""
-##### inverse cdf method 알고리즘정리 
-
-확률변수 $X_1,X_2,\dots,X_n \overset{iid}{\sim} F$ 을 생성하고 싶다면? 
-
-1.  균등분포에서 $n$개의 난수를 독립적으로 생성한다. 이를 $U_1,\dots,U_n$이라고 하자. 
-2.  $X_1 = F^{-1}(U_1), \dots, X_n=F^{-1}(U_n)$ 이라고 놓는다.
-"""
-
-# ╔═╡ af301f81-f5a1-4ec0-9274-42174f13db6a
-md"""
-`-` 예제1: inverse sampling을 이용하여 평균이 1인 지수분포를 10000개 생성하라. 
-"""
-
-# ╔═╡ b7ac2e90-6000-46a7-9f2e-828073277fb4
-md"""
-(풀이) 
-"""
-
-# ╔═╡ e1b10a88-a4d9-49c1-a2a0-238d84d68899
-rand(10000) # 유니폼에서 샘플추출
-
-# ╔═╡ 222fda62-8656-4ac6-baf2-5843fc25ef80
-rand(10000) .|> x-> -log(1-x) # inverse cdf에 넣음
-
-# ╔═╡ f7a3532d-1ea8-4996-a0a6-386d58ff57d4
+# ╔═╡ 5193e35a-3222-4ee0-9d65-4a59a4412dd9
 let 
-	X= rand(10000) .|> x-> -log(1-x) # inverse cdf에 넣음
-	Y= rand(Exponential(1),10000)
-	p1= histogram(X) 
-	p2= histogram(Y)
-	plot(p1,p2,layout=(2,1))
+	f(x)=x^2 
+	ForwardDiff.derivative(f,2)
+end
+
+# ╔═╡ a6bb8cd7-0be1-4fec-bb1b-69330e77fee1
+md"""
+(예제2) $f(x)=\sin(x)$일때 $f'(x)$를 plot하라 
+"""
+
+# ╔═╡ de7e6a84-1f31-46c4-815f-d800845a69d9
+let
+	f(x)= sin(x)
+	plot(f,-π,π)
+	f′ = x-> ForwardDiff.derivative(f,x) 
+	plot!(f′)	
 end 
 
-# ╔═╡ 7231b9ee-5b5f-4b9d-8afe-d903fb8d48af
+# ╔═╡ e4b971ca-255c-41b0-a3b3-8fa05cb83c1e
 md"""
-### 지수분포의 무기억성 
+`-` 예비학습3: Forward diff로 테일러정리구현
 """
 
-# ╔═╡ d60eba44-e4db-4630-8230-121d0ea942b4
+# ╔═╡ 52fe4c7b-f314-4439-b621-93eddfd73c71
 md"""
-`-` 이론: $X \sim Exp(1/\lambda) \Rightarrow$ 모든 $s,t > 0$ 에 대하여 $P(X>t)=P(X>t+s | X>s)$가 성립 
-
-`-` 개념: 
-- 이해를 위해서 $t=1,s=9$ 대입 => $P(X>1) = P(X>10|X>9)$ 
-- 좌변: 시간1 기다려서 이벤트가 발생안할 확률  
-- 우변: 시간9 기다렸는데 안왔음 -> 시간10 기다려서 이벤트가 발생안할 확률
-- 예를들어서 $\lambda=0.1$ 이면 한번 이벤트 발생하는데 평균 시간10걸린다는 의미임 => (1) 좌변은 이제 시간1 기다림 (2) 우변은 시간9를 기다림. 곧 "약속된" 시간 10이 완성됨 => 우변이 더 확률이 크지 않을까? => 아니라는 거에요! 
-
-`-` 이해: 지수분포의 근본? 포아송 프로세스 
-- 엄청 짧은 시간
-- 엄청 작은 확률
-- 엄청 많은 베르누이 시행이 "독립적"으로 수행 $\to$ 지금까지 실패했다고 해서 이후에 성공확률이 높아지는건 아님. 
-- 우변은 이미 시간 9동안 무수히 많은 시행을 놓침. 그 이후의 시행은 독립임. 
+$f(x) \approx f(a)+f'(a)(x-a)+f''(a)\frac{(x-a)^2}{2!}+\dots+\frac{f^{(n)}(a)}{n!}(x-a)^n$
 """
 
-# ╔═╡ 7f2e42c1-45f8-4c62-aa16-2b4097fea1af
+# ╔═╡ c59e0fe6-478e-422e-a810-182825441eb4
+md"m= $(@bind m Slider(0:8,show_value=true))" #n은 샘플에 쓸 변수라서요.. m으로 바꿨어요
+
+# ╔═╡ dfeceef7-0fcc-4182-9769-2d24c76cd6f8
+md"a= $(@bind a Slider(-4:0.1:4,show_value=true))"
+
+# ╔═╡ 6369bd58-115f-4407-9751-9f751152e60e
+f(x)=exp(0.5*x)
+
+# ╔═╡ ca48dafd-a82c-4372-bcd6-bd913bd6b87d
+∂f(m) = m ≤ 0 ? f : x-> ForwardDiff.derivative(∂f(m-1),x) # m차 미분의 정의 
+
+# ╔═╡ 28fc0fd5-132a-449b-aa10-a54fe1eca3a9
+function f̃(x) 
+	∂fa = a .|> [∂f(i) for i in 0:m] # [f(a), f'(a),f''(a),....,f⁽ᵐ⁾(a)] 를 계산 
+	coefs = [(x-a)^i/factorial(i) for i in 0:m] # [1, (x-a), ... (x-a)^m/m!]
+	return sum(coefs .* ∂fa) # 우변의 정의 
+end
+
+# ╔═╡ 2ca860b8-1896-465d-8643-cfafa0df30c5
+begin
+	plot(f, -4,4,ylim=(-3,10))
+	plot!(f̃)
+	scatter!([a],[f(a)])
+end
+
+# ╔═╡ 1bf946c3-30f5-487d-9465-695a6388e2cc
 md"""
-`-` 시뮬레이션으로 확인해보자. 
+`-` 델타메소드 느낌
+
+(가정) $\sqrt{n}(X_n-\theta) \overset{d}{\to} N(0,\sigma^2)$
+
+(결론) $\sqrt{n}(g(X_n)-g(\theta)) \overset{d}{\to} g'(\theta) \cdot N(0,\sigma^2)$
+
+(왜??) 
+-  $g(x) \approx g(\theta)+ g'(\theta)(x-\theta)$
+-  $g(X_n) \approx g(\theta)+ g'(\theta)(X_n-\theta)$
+-  $\sqrt{n}(g(X_n) - g(\theta)) \approx g'(\theta)\sqrt{n}(X_n-\theta) \overset{d}{\to} g'(\theta) \cdot N(0,\sigma^2)$
 """
 
-# ╔═╡ f142099d-f2b9-4e75-be5c-591408ee6a18
-md"t= $@bind t Slider(1:0.01:5)"
+# ╔═╡ 01e51d0f-c42b-4962-ad48-31f9a2cd9ecd
+md"""
+#### 예제
 
-# ╔═╡ 2e72e3f2-0d75-4eda-b2dc-522f59b35329
-md"s= $@bind s Slider(1:0.1:5)"
+(베르누이분포의 평균과 분산추정) $X_1,\dots,X_n \sim Ber(p)$이라고 하자. 모수 $p$에 대한 추정은 $\hat{p}=\bar{X}_n$로 할 수 있다. 베르누이 분포는 $\mu=p$ 이고 $\sigma^2=p(1-p)$이므로 이 경우 평균은 $\hat{p}$로 추정하고 분산은 $\hat{p}(1-\hat{p})$로 추정할 수 있다. 이때 $\mu$와 $\sigma^2$의 점근적 신뢰구간을 구하여라. 
+"""
 
-# ╔═╡ 9f9a700d-7b61-4c0d-97ea-01c562369624
-let 
-	N=5000
-	X = rand(Exponential(1),N) # 일단지수분포 뽑자? 
-	p1 = length(X[X.>t])/length(X) # 분모: 전체 X의 수, 분자: X>t를 만족하는 X의 수 
-	p2 = length(X[X.>t+s])/length(X[X.>s]) # 분모: X>s를 만족하는 X의 수, 분자: X>t+s를 만족하는 X의 수 
-	md""" 
-	-  $t=$ $t
-	-  $s=$ $s. 
-	-  $P(X>t)=$ $(p1)
-	-  $P(X>t+s| X>s)=$ $(p2)
+# ╔═╡ 9e6cd7f2-f058-4b0d-90d6-19eb9a189e3f
+p_slider = @bind p Slider(0.1:0.1:0.9,show_value=true)
+
+# ╔═╡ f8fb44eb-b7bd-464b-8b84-c3e13c7044aa
+n_slider = @bind n Slider([100,1000,10000,100000],show_value=true)
+
+# ╔═╡ e771de58-70e5-450c-aaa1-a3aad13e7542
+md"""
+(풀이1) 시뮬레이션을 이용한 풀이
+"""
+
+# ╔═╡ 03606359-7267-4c40-8a0a-5398a03aebfb
+begin
+	N=1000 
+	mean_ests = [rand(Bernoulli(p),n) |> mean  for i in 1:N] 
+
+	# 분산의 추정치들 : 통조림의 평균무게에 g(x)=x(1-x) 함수를 취함 
+	g(p̂)= p̂*(1-p̂)
+	var_ests = mean_ests .|> g
+
+	# 그림 
+	# p1 = histogram(mean_ests)
+	# p2 = histogram(var_ests) 
+	# plot(p1,p2,layout=(1,2))
+	
+	# 신뢰구간 
+	l1,u1 = quantile(mean_ests,0.025), quantile(mean_ests,0.975)
+	l2,u2 = quantile(var_ests,0.025), quantile(var_ests,0.975)
+
+	# 수정된그림 
+	p1 = histogram(mean_ests); histogram!(mean_ests[l1 .≤ mean_ests .≤ u1])
+	p2 = histogram(var_ests); histogram!(var_ests[l2 .≤ var_ests .≤ u2])
+	pp = plot(p1,p2,layout=(1,2))
+
+	# 요약 
+	md"""
+	요약 
+	-  $(\mu,\sigma^2)=$ $(p,p*(1-p))
+	-  $\mu$의 신뢰구간: $(l1,u1)
+	-  $\sigma$의 신뢰구간: $(l2,u2)
+	- 히스토그램 $pp
 	"""
 end
 
-# ╔═╡ 76a3f416-e7a6-4c22-b55d-850292fa1a1f
+# ╔═╡ bc838677-3b97-44e0-9703-bc35a5823af7
 md"""
-`-` 무기억성 = 과거는 중요하지 않음! => $P(X>1)=P(X>2|X>1)=P(X>3|X=2)=...$ 
+- 그런데 p=0.5일때는 왜이러지? 코드를 잘못짰나?
 """
 
-# ╔═╡ 5ea1ee81-0b5d-4b50-a369-82d13b2cdc39
-let 	
-	N = 5000
-	X = rand(Exponential(1),N)
-	p1 = length(X[X.>1])/length(X[X.>0])
-	p2 = length(X[X.>2])/length(X[X.>1])
-	p3 = length(X[X.>3])/length(X[X.>2])
-	p4 = length(X[X.>4])/length(X[X.>3])
-	p5 = length(X[X.>5])/length(X[X.>4])
-	md""" 
-	-  $P(X>1)$ = $(p1)	
-	-  $P(X>2|X>1)$ = $(p2)
-	-  $P(X>3|X>2)$ = $(p3)
-	-  $P(X>4|X>3)$ = $(p4)
-	-  $P(X>5|X>4)$ = $(p5)
+# ╔═╡ 0d3d5845-c236-4b83-bb5d-82ed15eaa394
+md"""
+(풀이2) 델타메소드를 이용한 풀이
+"""
+
+# ╔═╡ d1602c32-97cb-42cb-88e8-e0c246ed537c
+md"""
+`-` CLT: $\sqrt{n}(\bar{X}_n-p) \to N(0,p(1-p))$
+- 이때 $\bar{X}_n=\frac{1}{n}\sum_{i=1}^{n}X_i$ 임. 즉 우리가 맨날 사용하던 샘플평균임. 보통 $\bar{X}$로 표현하지만 이 경우는 $n$에 대한 수열임을 강조하기 위해서 $\bar{X}_n$으로 표현함. 
+- 참고로 예제의 경우 $\bar{X}_n = \hat{p}$ 임. 
+
+`-` Delta method: $\sqrt{n}(g(\bar{X}_n)-g(p)) \overset{d}{\to} g'(p)\cdot N(0,p(1-p))$
+
+`-` Plug in $g(x)=x(1-x)$ and $g'(x)=1-2x$.
+
+$$\sqrt{n}(\hat{p}(1-\hat{p})- p(1-p)) \overset{d}{\to} N\big\{0,p(1-p)(1-2p)^2\big\}$$ 
+"""
+
+# ╔═╡ 6aa06c25-11ba-4e1d-bbbb-aa1f4b58264d
+md"""
+`-` !!!! $p=\frac{1}{2}$ 일 경우는 분산이 정의되지 않음.
+"""
+
+# ╔═╡ 8a4913f6-e3de-4c73-82d0-9975f7c4a0b2
+md"""
+`-` $\mu$에 대한 신뢰구간
+"""
+
+# ╔═╡ 7701474e-cbcc-4b23-808f-ea2ad6be6840
+let
+	# CLT 의 결과이용 
+	μ=p 
+	σ=√(p*(1-p)/n)
+	l=quantile(Normal(μ,σ),0.025) |> x -> round(x,digits=5)
+	u=quantile(Normal(μ,σ),0.975) |> x -> round(x,digits=5)
+	md"""
+	-  $\mu=$ $p
+	-  $\mu$의 신뢰구간 $(l,u)
+	- 시뮬레이션값: $(l1,u1)
 	"""
 end
 
-# ╔═╡ 7a5c933f-4116-4f5c-857e-5b502656d125
+# ╔═╡ 50de7484-d3f0-4071-9ff6-1900ff10c892
 md"""
-### 몬테카를로적분
+`-` $\sigma^2$에 대한 신뢰구간
 """
 
-# ╔═╡ aa056adf-c498-47d8-8ccc-0fa2bd97010e
-md"""
-##### 예제1: 아래를 계산하라. 
-$\int_{0}^{\infty} xe^{-x}dx=?$
-"""
-
-# ╔═╡ a59bccb7-5623-4906-9068-6e73dacf5852
-md"""
-(손풀이)
-
-$\int_{0}^{\infty} xe^{-x}dx=??=1$
-
-"""
-
-# ╔═╡ b333446d-e8dd-44ea-b63b-bc45f8f5eca7
-md"""
-(손풀이2)
-$\int_{0}^{\infty} x\times e^{-x}dx$는 $\lambda=1$인 지수분포의 평균이다. 따라서 답은 1.
-"""
-
-# ╔═╡ 65bdb6e8-84ad-4b6b-a16f-33a21da09376
-md"""
-(컴퓨터를 이용한 풀이)
-"""
-
-# ╔═╡ ee02feb2-0fdd-4b3c-a59d-5fbc6f17409c
-rand(Exponential(1),10000) |> mean
-
-# ╔═╡ 73bbbf02-2054-4ec1-ba67-969db35af489
-md"""
-##### 예제2: 아래를 계산하라. 
-$\int_{0}^{\infty} x^2e^{-x}dx=?$
-"""
-
-# ╔═╡ 9180da41-a441-4547-9c33-47c95c045e1b
-md"""
-(컴퓨터를 이용한 풀이)
-"""
-
-# ╔═╡ 0ed97c22-e119-4edc-a970-98747035492a
-rand(Exponential(1),10000) .|> (x->x^2) |> mean
-
-# ╔═╡ 7e537936-5662-4f0a-bc07-fc0ba3bd7162
-md"""
-- 참고로 답 2 맞아요
-- 분산 = 제곱의평균 - 평균의제곱 => 제곱의평균 = 분산 + 평균의제곱 = 1 + 1²
-"""
-
-# ╔═╡ 91ce3042-3b47-492c-8f6d-6ee5b45c785b
-md"""
-##### 예제3: 아래를 계산하라. 
-$\int_{0}^{1}e^{-x}dx=?$
-"""
-
-# ╔═╡ 2ee4264b-1ff9-4d8f-81b3-6d3b12f13cd7
-md"""
-(컴퓨터를 이용한 풀이) 
-
-구하는것은 $\int_0^\infty I(x\leq 1) e^{-x} dx=E\big(I(X\leq 1)\big)=P(X\leq 1),~ X\sim Exp(1)$ 로 볼 수 있다.
-"""
-
-# ╔═╡ 6fa0e978-2ad7-4b2c-b01f-253270b3356a
-let 
-	N=10000
-	X = rand(Exponential(1),N) 
-	f = x ->  (x<1)
-	X .|> f |> mean
-end 
-
-# ╔═╡ 2649299a-49f3-47fb-8936-68c94cd8ae7d
-let 
-	N=10000
-	X = rand(Exponential(1),N) 
-	length(X[X.<1])/N # length(X[X.<1])/length(X)
-end 
-
-# ╔═╡ 54e67315-cf86-4717-b6d8-2d0f786e89c0
-md"""
-(컴퓨터를 이용한 풀이2)
-구하는것은 $E\big(e^{-X}\big),~ X\sim U(0,1)$ 로 볼 수 있다. 
-"""
-
-# ╔═╡ 19c32e9b-d571-451e-af09-cab30b059735
-let 
-	N=10000
-	X = rand(N)
-	exp.(-X) |> mean
-end 
-
-# ╔═╡ f560097a-3303-4720-a973-edd07ec1b1a4
-md"""
-### 박스뮬러변환 
-"""
-
-# ╔═╡ d3955f6e-cfeb-463d-b46d-8cc8169ce60b
-md"""
-`-` 이론: $\begin{cases} R^2/2 \sim Exp(1) \\ \Theta \sim (-\pi,\pi) \end{cases} \Rightarrow \begin{bmatrix} R\cos\Theta \\ R \sin \Theta \end{bmatrix} \sim N\left(\begin{bmatrix} 0 \\ 0 \end{bmatrix} , \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} \right)$
-"""
-
-# ╔═╡ 2b5b304a-1d29-4d72-b7a7-eb102e6416ae
-md"""
-- 의미? 
-"""
-
-# ╔═╡ fda45bc2-3d11-40ef-b1d3-1355d6220c0d
-@bind i Slider(1:10000)
-
-# ╔═╡ d59232cd-86af-4536-a9e6-fc2274ec7699
-let 
-	Random.seed!(1234)
-	X = randn(10000)
-	Y = randn(10000)
-	plot(X,Y,alpha=0.1,seriestype = :scatter,xlim=(-3.5,3.5),ylim=(-3.5,3.5))
-	plot!([0,X[i]],[0,Y[i]])
-end
-
-# ╔═╡ c546aeda-1700-49b0-a427-7dbdb93f3432
+# ╔═╡ 9f3be9f6-ed17-46a8-aed3-a40655777ff7
 let
-	X = rand(Normal(0,1),10000)
-	Y = rand(Normal(0,1),10000)
-	p1= (X.^2+Y.^2)./2 |> histogram
-	p2= rand(Exponential(1),10000) |> histogram
-	plot(p1,p2,layout=(2,1))
+	μ = p*(1-p)
+	σ = √(p*(1-p)*(1-2p)^2/n)
+	l=quantile(Normal(μ,σ),0.025) |> x -> round(x,digits=5)
+	u=quantile(Normal(μ,σ),0.975) |> x -> round(x,digits=5)
+	md"""
+	-  $\sigma^2=$ $(p*(1-p))
+	-  $\sigma^2$의 신뢰구간 $(l,u)
+	- 시뮬레이션값: $( (l2,u2) .|> x-> round(x,digits=5) )
+	"""
 end 
 
-# ╔═╡ 15858dd2-8c38-42c9-9ca8-daa550151bb8
+# ╔═╡ 21a4ef88-05c7-452b-b995-52a9a4e02323
 md"""
-`-` 그렇다면 위를 이용하여 정규분포를 생성할 수 있겠다.
+`-` 궁금: $p=0.5$에서 어떤일이 일어나는 걸까? 
 """
 
-# ╔═╡ d2e1456f-eb12-40f4-8163-e6e51bd4908b
-let 
-	N=10000000
-	R = .√(2*rand(Exponential(1),N))
-	Θ = rand(N).*2π .- π
-	T = (R,Θ) -> [R*sin(2π*Θ),R*cos(2π*Θ)]
-	XY = T.(R,Θ)
-	X = [XY[i][1] for i in 1:N]
-	Y = [XY[i][2] for i in 1:N]
-	scatter(X,Y)
-	p1 = histogram(X)
-	p2 = randn(N) |> histogram
-	plot(p1,p2,layout=(2,1))
+# ╔═╡ ba886831-fc24-4a2c-bbdf-5a0b47023e90
+md"""
+- p= $p_slider
+- n= $n_slider
+"""
+
+# ╔═╡ 0204b8d9-ee1b-4dce-9f4d-d9e982d8b95f
+begin
+	# g(p̂)= p̂*(1-p̂)
+	plot(g, 0,1, ylim=(-0.01,0.26))
+	scatter!(mean_ests,mean_ests.*0)
+	scatter!(mean_ests,g.(mean_ests))
+	scatter!(mean_ests.*0,g.(mean_ests))
+	g′ = x -> ForwardDiff.derivative(g,x)
+	plot!(x-> g′(p)*(x-p)+g(p),color="red") # 점(p,g(p))를 지나고 기울기가 g′(p)인 직선 
 end
 
-# ╔═╡ 5d91922a-163e-4f20-8b31-8d1e13ee47fc
+# ╔═╡ 65d2da5d-34e4-434b-b8e4-229a5f8f149b
 md"""
-`-` inverse cdf 기법과 합치면 아래와 같이 정리가능하다. 
+`-` 델타메소드의 식과 위의 그림을 비교하면서 다시 정리
 
-$$\begin{cases}
-X=\sqrt{-2\log(1-U_1)} \cos(2\pi U_2-\pi)\\
-Y=\sqrt{-2\log(1-U_1)} \sin(2\pi U_2-\pi)
-\end{cases}, \quad U_1,U_2 \overset{iid}{\sim} U(0,1)$$
+$\sqrt{n}(\bar{X}_n-\theta) \overset{d}{\to} N(0,\sigma^2) \Rightarrow \sqrt{n}(g(\bar{X}_n)-g(\theta)) \overset{d}{\to} g'(\theta) \cdot N(0,\sigma^2)$
+
+- x축: $\bar{X}_n$
+- y축: $g(\bar{X}_n)$
+- 근사: $y$축은 실제로는 곡선에 의한 상이지만 근사적으로는 직선에 의한 상이라고 봐도 무방 
+- x축의 분포는 CLT에 의하여 정규분포로 간다고 가정 
+- y축의 분포는 x축의 분포에서 $g'(p)$를 타고 맵팽되는 분포로 생각가능. (n이 커질수록 x축은 거의 한점으로 몰리니까!)
+- y축의 분폰느 평균이 $g(p)$이고 분산은 원래 x축의 분산에 기울기 $g'(p)$의 제곱을 곱한것임. 
 """
 
-# ╔═╡ 828b3e86-1b21-4818-8608-5f3b423253c4
-let 
-	N=1000
-	U₁ = rand(N)
-	U₂ = rand(N)
-	X= @. √(-2log(1-U₁))*cos(2π*U₂-π)
-	p1 = histogram(X)
-	p2 = randn(N) |> histogram
-	plot(p1,p2,layout=(2,1))
+# ╔═╡ 7ce29e7e-c3f0-4299-86b9-7a20b0470897
+md"""
+### 평균과 분산의 추정
+"""
+
+# ╔═╡ f68fffc1-6e4c-4c8d-9cd4-0d61830c4653
+let
+	N = 1000 
+	[rand(Normal(0,1),30) |> x -> sum((x .-mean(x)).^2 )/length(x) for i in 1:1000000] |> mean 
 end
 
-# ╔═╡ d8d0c372-a42f-4f85-925d-10f0839e3652
+# ╔═╡ 71c65e11-eea3-4ff1-93ae-e5147d69995d
+29/30
+
+# ╔═╡ c458bc88-edc5-4c59-8840-3668b36c6d74
 md"""
-(보충학습) 브로드캐스팅 매크로
+### 분산추정의 비교
 """
 
-# ╔═╡ 40cddce5-c28a-4ae5-b2c1-3ffcc78ee422
-[1,2] .+ [1,2] .+ [1,2] .+ [1,2]
-
-# ╔═╡ 54c5a333-d8a5-421f-bff3-64ff6ba09fea
-@. [1,2] + [1,2] + [1,2] + [1,2]
-
-# ╔═╡ 443995d4-4882-498e-a5ed-d1e8a3da8bc8
+# ╔═╡ 41644bdc-5f1c-4516-8488-8c1e068f97d5
 md"""
-### $\lambda$에 따른 포아송과 지수분포의 히스토그램변화 관찰 
+### 히스토그램 
 """
 
-# ╔═╡ 2050105f-6d3d-42be-9106-b0bcb5b40e2b
-lambda = @bind λ Slider(0.1:0.01:50,show_value=true)
-
-# ╔═╡ 2255d3f7-6b73-41c9-b381-1d68074edcc4
-histogram(rand(Poisson(λ),10000),title="포아송, λ=$λ")
-
-# ╔═╡ a346b856-3479-455a-a85d-9f1fb37194cb
-histogram(rand(Exponential(1/λ),10000),title="지수분포, λ=$λ")
-
-# ╔═╡ 258a090b-153e-4dce-bb64-8a73e28dbe96
+# ╔═╡ 9c393a1a-3255-4881-a043-03e045479a7d
 md"""
-## Inverse CDF의 이론적 근거 
+## 카이제곱분포 
 """
 
-# ╔═╡ 79c44ff3-3299-4dba-956c-bd34018eaac7
+# ╔═╡ 5e14d545-8328-4882-a489-61252c56f0d6
 md"""
-`-` 수리통계이론: 확률변수 $X$가 연속형이고 그 누적분포함수 $F$가 순증가함수일때 아래가 성립한다. 
-
-(i) $X \sim F \Rightarrow F(X) \sim U(0,1)$
-
-(ii) $Y \sim U(0,1) \Rightarrow F^{-1}(U) \sim F$
+### how to generate it 
 """
 
-# ╔═╡ 0859395a-67af-4b7d-a1e3-c42b8602b6df
-### 
+# ╔═╡ a8e7b787-44a2-486b-a5f9-3187300669d5
+rand(Chisq(2),1000)
+
+# ╔═╡ d48a9182-25f4-4028-bb9d-04d721cf49ac
+[rand(Normal(0,1),2).^2 |> sum for i in 1:1000] 
+
+# ╔═╡ 7745dc2d-bd6c-4601-8add-3c1f81669b4b
+let 
+	histogram(rand(Chisq(2),10000), alpha=0.5)
+	histogram!([rand(Normal(0,1),2).^2 |> sum for i in 1:10000], alpha=0.5)
+	histogram!(rand(Exponential(1),10000)*2, alpha=0.5)
+end
+
+# ╔═╡ add67c1e-54aa-40d2-9e8f-c8c77c6bc573
+let 
+	histogram(rand(Exponential(6),10000))
+	histogram!(rand(6*Exponential(1),10000))
+	histogram!(rand(Exponential(3),10000)+rand(Exponential(3),10000))
+	histogram!(rand(Exponential(2),10000)+rand(Exponential(4),10000))
+end 
+
+# ╔═╡ 4d89b46d-b934-440e-9f21-bcf2160f5d68
+md"""
+### note1: 정규분포의 제곱
+"""
+
+# ╔═╡ 61b699c8-7796-4b9d-88ad-c046ec209073
+md"""
+### 등분산의 test 
+"""
+
+# ╔═╡ a2be3094-0d31-4432-a1eb-f13a39067fdc
+md"""
+## 감마분포 
+"""
+
+# ╔═╡ 27498a5a-73ff-405f-887a-1aed575b58d2
+md"""
+## $t$ 분포 
+"""
+
+# ╔═╡ 4ca49762-cb20-4954-a497-cc0ed1e322e0
+md"""
+## F분포 
+"""
+
+# ╔═╡ 1579c37a-8a72-4079-9faa-302f56554104
+md"""
+### 극한분포는 카이제곱분포가 된다.
+"""
+
+# ╔═╡ a20b1880-ae80-4ef6-b9bc-7412339f8346
+
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
+ForwardDiff = "f6369f11-7733-5829-9624-2563aa707210"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
-Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [compat]
-Distributions = "~0.25.52"
-Plots = "~1.27.2"
-PlutoUI = "~0.7.37"
+Distributions = "~0.25.53"
+ForwardDiff = "~0.10.25"
+Plots = "~1.27.5"
+PlutoUI = "~0.7.38"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -500,12 +448,6 @@ git-tree-sha1 = "4b859a208b2397a7a623a03449e4636bdb17bcf2"
 uuid = "83423d85-b0ee-5818-9007-b63ccbeb887a"
 version = "1.16.1+1"
 
-[[deps.Calculus]]
-deps = ["LinearAlgebra"]
-git-tree-sha1 = "f641eb0a4f00c343bbc32346e1217b86f3ce9dad"
-uuid = "49dc2e85-a5d0-5ad3-a950-438e2897f1b9"
-version = "0.5.1"
-
 [[deps.ChainRulesCore]]
 deps = ["Compat", "LinearAlgebra", "SparseArrays"]
 git-tree-sha1 = "9950387274246d08af38f6eef8cb5480862a435f"
@@ -535,6 +477,12 @@ deps = ["ColorTypes", "FixedPointNumbers", "Reexport"]
 git-tree-sha1 = "417b0ed7b8b838aa6ca0a87aadf1bb9eb111ce40"
 uuid = "5ae59095-9a9b-59fe-a467-6f913c188581"
 version = "0.12.8"
+
+[[deps.CommonSubexpressions]]
+deps = ["MacroTools", "Test"]
+git-tree-sha1 = "7b8a93dba8af7e3b42fecabf646260105ac373f7"
+uuid = "bbf7d656-a473-5ed7-a52c-81e309532950"
+version = "0.3.0"
 
 [[deps.Compat]]
 deps = ["Base64", "Dates", "DelimitedFiles", "Distributed", "InteractiveUtils", "LibGit2", "Libdl", "LinearAlgebra", "Markdown", "Mmap", "Pkg", "Printf", "REPL", "Random", "SHA", "Serialization", "SharedArrays", "Sockets", "SparseArrays", "Statistics", "Test", "UUIDs", "Unicode"]
@@ -582,15 +530,27 @@ git-tree-sha1 = "80c3e8639e3353e5d2912fb3a1916b8455e2494b"
 uuid = "b429d917-457f-4dbc-8f4c-0cc954292b1d"
 version = "0.4.0"
 
+[[deps.DiffResults]]
+deps = ["StaticArrays"]
+git-tree-sha1 = "c18e98cba888c6c25d1c3b048e4b3380ca956805"
+uuid = "163ba53b-c6d8-5494-b064-1a9d43ac40c5"
+version = "1.0.3"
+
+[[deps.DiffRules]]
+deps = ["IrrationalConstants", "LogExpFunctions", "NaNMath", "Random", "SpecialFunctions"]
+git-tree-sha1 = "dd933c4ef7b4c270aacd4eb88fa64c147492acf0"
+uuid = "b552c78f-8df3-52c6-915a-8e097449b14b"
+version = "1.10.0"
+
 [[deps.Distributed]]
 deps = ["Random", "Serialization", "Sockets"]
 uuid = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 
 [[deps.Distributions]]
 deps = ["ChainRulesCore", "DensityInterface", "FillArrays", "LinearAlgebra", "PDMats", "Printf", "QuadGK", "Random", "SparseArrays", "SpecialFunctions", "Statistics", "StatsBase", "StatsFuns", "Test"]
-git-tree-sha1 = "c43e992f186abaf9965cc45e372f4693b7754b22"
+git-tree-sha1 = "5a4168170ede913a2cd679e53c2123cb4b889795"
 uuid = "31c24e10-a181-5473-b8eb-7969acd0382f"
-version = "0.25.52"
+version = "0.25.53"
 
 [[deps.DocStringExtensions]]
 deps = ["LibGit2"]
@@ -602,12 +562,6 @@ version = "0.8.6"
 deps = ["ArgTools", "LibCURL", "NetworkOptions"]
 uuid = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
 
-[[deps.DualNumbers]]
-deps = ["Calculus", "NaNMath", "SpecialFunctions"]
-git-tree-sha1 = "5837a837389fccf076445fce071c8ddaea35a566"
-uuid = "fa6b7ba4-c1ee-5f82-b5fc-ecf0adba8f74"
-version = "0.6.8"
-
 [[deps.EarCut_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "3f3a2501fa7236e9b911e0f7a588c657e822bb6d"
@@ -616,9 +570,9 @@ version = "2.2.3+0"
 
 [[deps.Expat_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
-git-tree-sha1 = "ae13fcbc7ab8f16b0856729b050ef0c446aa3492"
+git-tree-sha1 = "bad72f730e9e91c08d9427d5e8db95478a3c323d"
 uuid = "2e619515-83b5-522b-bb60-26c02a35a201"
-version = "2.4.4+0"
+version = "2.4.8+0"
 
 [[deps.FFMPEG]]
 deps = ["FFMPEG_jll"]
@@ -656,6 +610,12 @@ git-tree-sha1 = "8339d61043228fdd3eb658d86c926cb282ae72a8"
 uuid = "59287772-0a20-5a39-b81b-1366585eb4c0"
 version = "0.4.2"
 
+[[deps.ForwardDiff]]
+deps = ["CommonSubexpressions", "DiffResults", "DiffRules", "LinearAlgebra", "LogExpFunctions", "NaNMath", "Preferences", "Printf", "Random", "SpecialFunctions", "StaticArrays"]
+git-tree-sha1 = "1bd6fc0c344fc0cbee1f42f8d2e7ec8253dda2d2"
+uuid = "f6369f11-7733-5829-9624-2563aa707210"
+version = "0.10.25"
+
 [[deps.FreeType2_jll]]
 deps = ["Artifacts", "Bzip2_jll", "JLLWrappers", "Libdl", "Pkg", "Zlib_jll"]
 git-tree-sha1 = "87eb71354d8ec1a96d4a7636bd57a7347dde3ef9"
@@ -676,15 +636,15 @@ version = "3.3.6+0"
 
 [[deps.GR]]
 deps = ["Base64", "DelimitedFiles", "GR_jll", "HTTP", "JSON", "Libdl", "LinearAlgebra", "Pkg", "Printf", "Random", "RelocatableFolders", "Serialization", "Sockets", "Test", "UUIDs"]
-git-tree-sha1 = "9f836fb62492f4b0f0d3b06f55983f2704ed0883"
+git-tree-sha1 = "af237c08bda486b74318c8070adb96efa6952530"
 uuid = "28b8d3ca-fb5f-59d9-8090-bfdbd6d07a71"
-version = "0.64.0"
+version = "0.64.2"
 
 [[deps.GR_jll]]
 deps = ["Artifacts", "Bzip2_jll", "Cairo_jll", "FFMPEG_jll", "Fontconfig_jll", "GLFW_jll", "JLLWrappers", "JpegTurbo_jll", "Libdl", "Libtiff_jll", "Pixman_jll", "Pkg", "Qt5Base_jll", "Zlib_jll", "libpng_jll"]
-git-tree-sha1 = "a6c850d77ad5118ad3be4bd188919ce97fffac47"
+git-tree-sha1 = "cd6efcf9dc746b06709df14e462f0a3fe0786b1e"
 uuid = "d2c73de3-f751-5644-a686-071e5b155ba9"
-version = "0.64.0+0"
+version = "0.64.2+0"
 
 [[deps.GeometryBasics]]
 deps = ["EarCut_jll", "IterTools", "LinearAlgebra", "StaticArrays", "StructArrays", "Tables"]
@@ -726,12 +686,6 @@ deps = ["Artifacts", "Cairo_jll", "Fontconfig_jll", "FreeType2_jll", "Glib_jll",
 git-tree-sha1 = "129acf094d168394e80ee1dc4bc06ec835e510a3"
 uuid = "2e76f6c2-a576-52d4-95c1-20adfe4de566"
 version = "2.8.1+1"
-
-[[deps.HypergeometricFunctions]]
-deps = ["DualNumbers", "LinearAlgebra", "SpecialFunctions", "Test"]
-git-tree-sha1 = "65e4589030ef3c44d3b90bdc5aac462b4bb05567"
-uuid = "34004b35-14d8-5ef3-9330-4cdb6864b03a"
-version = "0.3.8"
 
 [[deps.Hyperscript]]
 deps = ["Test"]
@@ -823,9 +777,9 @@ version = "1.3.0"
 
 [[deps.Latexify]]
 deps = ["Formatting", "InteractiveUtils", "LaTeXStrings", "MacroTools", "Markdown", "Printf", "Requires"]
-git-tree-sha1 = "4f00cc36fede3c04b8acf9b2e2763decfdcecfa6"
+git-tree-sha1 = "6f14549f7760d84b2db7a9b10b88cd3cc3025730"
 uuid = "23fbe1c1-3f47-55db-b15f-69d7ec21a316"
-version = "0.15.13"
+version = "0.15.14"
 
 [[deps.LibCURL]]
 deps = ["LibCURL_jll", "MozillaCACerts_jll"]
@@ -945,9 +899,9 @@ uuid = "a63ad114-7e13-5084-954f-fe012c677804"
 uuid = "14a3606d-f60d-562e-9121-12d972cd8159"
 
 [[deps.NaNMath]]
-git-tree-sha1 = "737a5957f387b17e74d4ad2f440eb330b39a62c5"
+git-tree-sha1 = "b086b7ea07f8e38cf122f5016af580881ac914fe"
 uuid = "77ba4419-2d1f-58cd-9bb1-8ffee604a2e3"
-version = "1.0.0"
+version = "0.3.7"
 
 [[deps.NetworkOptions]]
 uuid = "ca575930-c2e3-43a9-ace4-1e988b2c1908"
@@ -1003,9 +957,9 @@ version = "0.11.7"
 
 [[deps.Parsers]]
 deps = ["Dates"]
-git-tree-sha1 = "85b5da0fa43588c75bb1ff986493443f821c70b7"
+git-tree-sha1 = "621f4f3b4977325b9128d5fae7a8b4829a0c2222"
 uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
-version = "2.2.3"
+version = "2.2.4"
 
 [[deps.Pixman_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1018,10 +972,10 @@ deps = ["Artifacts", "Dates", "Downloads", "LibGit2", "Libdl", "Logging", "Markd
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 
 [[deps.PlotThemes]]
-deps = ["PlotUtils", "Requires", "Statistics"]
-git-tree-sha1 = "a3a964ce9dc7898193536002a6dd892b1b5a6f1d"
+deps = ["PlotUtils", "Statistics"]
+git-tree-sha1 = "8162b2f8547bc23876edd0c5181b27702ae58dce"
 uuid = "ccf2f8ad-2431-5c83-bf29-c5338b663b6a"
-version = "2.0.1"
+version = "3.0.0"
 
 [[deps.PlotUtils]]
 deps = ["ColorSchemes", "Colors", "Dates", "Printf", "Random", "Reexport", "Statistics"]
@@ -1031,15 +985,15 @@ version = "1.2.0"
 
 [[deps.Plots]]
 deps = ["Base64", "Contour", "Dates", "Downloads", "FFMPEG", "FixedPointNumbers", "GR", "GeometryBasics", "JSON", "Latexify", "LinearAlgebra", "Measures", "NaNMath", "Pkg", "PlotThemes", "PlotUtils", "Printf", "REPL", "Random", "RecipesBase", "RecipesPipeline", "Reexport", "Requires", "Scratch", "Showoff", "SparseArrays", "Statistics", "StatsBase", "UUIDs", "UnicodeFun", "Unzip"]
-git-tree-sha1 = "90021b03a38f1ae9dbd7bf4dc5e3dcb7676d302c"
+git-tree-sha1 = "88ee01b02fba3c771ac4dce0dfc4ecf0cb6fb772"
 uuid = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
-version = "1.27.2"
+version = "1.27.5"
 
 [[deps.PlutoUI]]
 deps = ["AbstractPlutoDingetjes", "Base64", "ColorTypes", "Dates", "Hyperscript", "HypertextLiteral", "IOCapture", "InteractiveUtils", "JSON", "Logging", "Markdown", "Random", "Reexport", "UUIDs"]
-git-tree-sha1 = "bf0a1121af131d9974241ba53f601211e9303a9e"
+git-tree-sha1 = "670e559e5c8e191ded66fa9ea89c97f10376bb4c"
 uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
-version = "0.7.37"
+version = "0.7.38"
 
 [[deps.Preferences]]
 deps = ["TOML"]
@@ -1154,9 +1108,9 @@ version = "2.1.4"
 
 [[deps.StaticArrays]]
 deps = ["LinearAlgebra", "Random", "Statistics"]
-git-tree-sha1 = "6976fab022fea2ffea3d945159317556e5dad87c"
+git-tree-sha1 = "4f6ec5d99a28e1a749559ef7dd518663c5eca3d5"
 uuid = "90137ffa-7385-5640-81b9-e52037218182"
-version = "1.4.2"
+version = "1.4.3"
 
 [[deps.Statistics]]
 deps = ["LinearAlgebra", "SparseArrays"]
@@ -1175,10 +1129,10 @@ uuid = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 version = "0.33.16"
 
 [[deps.StatsFuns]]
-deps = ["ChainRulesCore", "HypergeometricFunctions", "InverseFunctions", "IrrationalConstants", "LogExpFunctions", "Reexport", "Rmath", "SpecialFunctions"]
-git-tree-sha1 = "25405d7016a47cf2bd6cd91e66f4de437fd54a07"
+deps = ["ChainRulesCore", "InverseFunctions", "IrrationalConstants", "LogExpFunctions", "Reexport", "Rmath", "SpecialFunctions"]
+git-tree-sha1 = "5950925ff997ed6fb3e985dcce8eb1ba42a0bbe7"
 uuid = "4c63d2b9-4356-54db-8cca-17b64c39e42c"
-version = "0.9.16"
+version = "0.9.18"
 
 [[deps.StructArrays]]
 deps = ["Adapt", "DataAPI", "StaticArrays", "Tables"]
@@ -1453,75 +1407,65 @@ version = "0.9.1+5"
 """
 
 # ╔═╡ Cell order:
-# ╠═37e0b2ce-2300-471a-b62c-78e733757ee0
-# ╠═af7c221f-dfb4-4253-ae96-2af5e87b1ec8
-# ╠═5cf1050c-e3d1-41c6-908a-7a3d926bf5e5
-# ╠═baa3599d-271f-4b52-8975-47137cac1c29
-# ╠═f9d431cb-3cac-4be7-b0f0-b8a37ec48f30
-# ╠═b108695d-4998-4db0-8166-b622d7bfc80d
-# ╠═e9e8517f-ff77-4ba2-90ef-679f1fa39170
-# ╠═ba83da1f-e1da-46cb-882f-2bb8401fc546
-# ╠═93401fc8-68dd-44d5-9158-cbc835f24ff4
-# ╠═1127ec60-7789-4941-a70c-3517536ba4a1
-# ╠═17ff99ef-0bc2-4aab-a53d-82cb13da0beb
-# ╠═3b1f0777-019f-4547-a19c-5e25e4763a31
-# ╠═68e7eeed-c893-4bc6-a3b6-15abf4ff1e21
-# ╠═dcc01171-2e27-4c75-8ac5-4638f26bbab8
-# ╠═a71ff440-fb6d-4d14-8451-a5af8d0e4725
-# ╠═4e02747c-bbba-4763-979d-b297b6b3e281
-# ╠═27de3a62-066a-41f6-9bb6-1e6c77fe5b6e
-# ╠═e5470c4f-9cca-40dd-a3fb-50726ee94bf9
-# ╠═b44af793-c718-4848-98d6-fbdc007c0395
-# ╠═de32f170-6878-43df-8e40-6ccdbb5a4f8f
-# ╠═294ef10b-eb99-4966-bd01-7665f72c2933
-# ╠═af301f81-f5a1-4ec0-9274-42174f13db6a
-# ╠═b7ac2e90-6000-46a7-9f2e-828073277fb4
-# ╠═e1b10a88-a4d9-49c1-a2a0-238d84d68899
-# ╠═222fda62-8656-4ac6-baf2-5843fc25ef80
-# ╠═f7a3532d-1ea8-4996-a0a6-386d58ff57d4
-# ╠═7231b9ee-5b5f-4b9d-8afe-d903fb8d48af
-# ╠═d60eba44-e4db-4630-8230-121d0ea942b4
-# ╠═7f2e42c1-45f8-4c62-aa16-2b4097fea1af
-# ╠═f142099d-f2b9-4e75-be5c-591408ee6a18
-# ╠═2e72e3f2-0d75-4eda-b2dc-522f59b35329
-# ╠═9f9a700d-7b61-4c0d-97ea-01c562369624
-# ╠═76a3f416-e7a6-4c22-b55d-850292fa1a1f
-# ╠═5ea1ee81-0b5d-4b50-a369-82d13b2cdc39
-# ╠═7a5c933f-4116-4f5c-857e-5b502656d125
-# ╠═aa056adf-c498-47d8-8ccc-0fa2bd97010e
-# ╠═a59bccb7-5623-4906-9068-6e73dacf5852
-# ╠═b333446d-e8dd-44ea-b63b-bc45f8f5eca7
-# ╠═65bdb6e8-84ad-4b6b-a16f-33a21da09376
-# ╠═ee02feb2-0fdd-4b3c-a59d-5fbc6f17409c
-# ╠═73bbbf02-2054-4ec1-ba67-969db35af489
-# ╠═9180da41-a441-4547-9c33-47c95c045e1b
-# ╠═0ed97c22-e119-4edc-a970-98747035492a
-# ╠═7e537936-5662-4f0a-bc07-fc0ba3bd7162
-# ╠═91ce3042-3b47-492c-8f6d-6ee5b45c785b
-# ╠═2ee4264b-1ff9-4d8f-81b3-6d3b12f13cd7
-# ╠═6fa0e978-2ad7-4b2c-b01f-253270b3356a
-# ╠═2649299a-49f3-47fb-8936-68c94cd8ae7d
-# ╠═54e67315-cf86-4717-b6d8-2d0f786e89c0
-# ╠═19c32e9b-d571-451e-af09-cab30b059735
-# ╠═f560097a-3303-4720-a973-edd07ec1b1a4
-# ╠═d3955f6e-cfeb-463d-b46d-8cc8169ce60b
-# ╠═2b5b304a-1d29-4d72-b7a7-eb102e6416ae
-# ╠═fda45bc2-3d11-40ef-b1d3-1355d6220c0d
-# ╠═d59232cd-86af-4536-a9e6-fc2274ec7699
-# ╠═c546aeda-1700-49b0-a427-7dbdb93f3432
-# ╠═15858dd2-8c38-42c9-9ca8-daa550151bb8
-# ╠═d2e1456f-eb12-40f4-8163-e6e51bd4908b
-# ╠═5d91922a-163e-4f20-8b31-8d1e13ee47fc
-# ╠═828b3e86-1b21-4818-8608-5f3b423253c4
-# ╠═d8d0c372-a42f-4f85-925d-10f0839e3652
-# ╠═40cddce5-c28a-4ae5-b2c1-3ffcc78ee422
-# ╠═54c5a333-d8a5-421f-bff3-64ff6ba09fea
-# ╠═443995d4-4882-498e-a5ed-d1e8a3da8bc8
-# ╠═2050105f-6d3d-42be-9106-b0bcb5b40e2b
-# ╠═2255d3f7-6b73-41c9-b381-1d68074edcc4
-# ╠═a346b856-3479-455a-a85d-9f1fb37194cb
-# ╠═258a090b-153e-4dce-bb64-8a73e28dbe96
-# ╠═79c44ff3-3299-4dba-956c-bd34018eaac7
-# ╠═0859395a-67af-4b7d-a1e3-c42b8602b6df
+# ╟─31fe08b2-b792-11ec-3df9-d1e8165f0b21
+# ╟─fe221c1f-05ea-4139-83de-4f735a71cee8
+# ╠═7656a6b5-d412-4c22-b5a2-52d65ccca41a
+# ╠═f4b54675-c4d7-4571-939d-b5d8c2d587ec
+# ╠═573c71f1-ade1-43bf-9461-9f54563166ab
+# ╟─83e5fd15-f94d-409d-8a5b-364ffe92cf36
+# ╟─ba95e2fd-7ab2-43b1-a0dd-1b57b13cf2b9
+# ╠═5aa586a5-66db-4251-b393-4c5966064a58
+# ╠═1d5f28ff-7297-454c-9587-c65f1af2209a
+# ╠═2bf4ca04-a32f-4da4-849d-6e0929faef6b
+# ╠═c4d5625b-0e21-4427-9756-4d8a99f90a50
+# ╠═0ccba826-e6ff-4cd1-9063-140b71fa5e3f
+# ╠═d16d0663-05ed-4d19-b843-1bd15f965f12
+# ╠═5193e35a-3222-4ee0-9d65-4a59a4412dd9
+# ╠═a6bb8cd7-0be1-4fec-bb1b-69330e77fee1
+# ╠═de7e6a84-1f31-46c4-815f-d800845a69d9
+# ╠═e4b971ca-255c-41b0-a3b3-8fa05cb83c1e
+# ╠═52fe4c7b-f314-4439-b621-93eddfd73c71
+# ╠═c59e0fe6-478e-422e-a810-182825441eb4
+# ╠═dfeceef7-0fcc-4182-9769-2d24c76cd6f8
+# ╠═6369bd58-115f-4407-9751-9f751152e60e
+# ╠═ca48dafd-a82c-4372-bcd6-bd913bd6b87d
+# ╠═28fc0fd5-132a-449b-aa10-a54fe1eca3a9
+# ╠═2ca860b8-1896-465d-8643-cfafa0df30c5
+# ╟─1bf946c3-30f5-487d-9465-695a6388e2cc
+# ╠═01e51d0f-c42b-4962-ad48-31f9a2cd9ecd
+# ╠═9e6cd7f2-f058-4b0d-90d6-19eb9a189e3f
+# ╠═f8fb44eb-b7bd-464b-8b84-c3e13c7044aa
+# ╟─e771de58-70e5-450c-aaa1-a3aad13e7542
+# ╠═03606359-7267-4c40-8a0a-5398a03aebfb
+# ╟─bc838677-3b97-44e0-9703-bc35a5823af7
+# ╠═0d3d5845-c236-4b83-bb5d-82ed15eaa394
+# ╠═d1602c32-97cb-42cb-88e8-e0c246ed537c
+# ╟─6aa06c25-11ba-4e1d-bbbb-aa1f4b58264d
+# ╠═8a4913f6-e3de-4c73-82d0-9975f7c4a0b2
+# ╠═7701474e-cbcc-4b23-808f-ea2ad6be6840
+# ╠═50de7484-d3f0-4071-9ff6-1900ff10c892
+# ╠═9f3be9f6-ed17-46a8-aed3-a40655777ff7
+# ╠═21a4ef88-05c7-452b-b995-52a9a4e02323
+# ╠═ba886831-fc24-4a2c-bbdf-5a0b47023e90
+# ╠═0204b8d9-ee1b-4dce-9f4d-d9e982d8b95f
+# ╟─65d2da5d-34e4-434b-b8e4-229a5f8f149b
+# ╠═7ce29e7e-c3f0-4299-86b9-7a20b0470897
+# ╠═f68fffc1-6e4c-4c8d-9cd4-0d61830c4653
+# ╠═71c65e11-eea3-4ff1-93ae-e5147d69995d
+# ╠═c458bc88-edc5-4c59-8840-3668b36c6d74
+# ╠═41644bdc-5f1c-4516-8488-8c1e068f97d5
+# ╠═9c393a1a-3255-4881-a043-03e045479a7d
+# ╠═5e14d545-8328-4882-a489-61252c56f0d6
+# ╠═a8e7b787-44a2-486b-a5f9-3187300669d5
+# ╠═d48a9182-25f4-4028-bb9d-04d721cf49ac
+# ╠═7745dc2d-bd6c-4601-8add-3c1f81669b4b
+# ╠═add67c1e-54aa-40d2-9e8f-c8c77c6bc573
+# ╠═4d89b46d-b934-440e-9f21-bcf2160f5d68
+# ╠═61b699c8-7796-4b9d-88ad-c046ec209073
+# ╠═a2be3094-0d31-4432-a1eb-f13a39067fdc
+# ╠═27498a5a-73ff-405f-887a-1aed575b58d2
+# ╠═4ca49762-cb20-4954-a497-cc0ed1e322e0
+# ╠═1579c37a-8a72-4079-9faa-302f56554104
+# ╠═a20b1880-ae80-4ef6-b9bc-7412339f8346
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
