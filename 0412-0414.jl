@@ -319,12 +319,6 @@ end
 # ╔═╡ 71c65e11-eea3-4ff1-93ae-e5147d69995d
 29/30
 
-# ╔═╡ 83c45f1b-5bcf-40cd-b108-7aae0bb03fbc
-
-
-# ╔═╡ 35c54526-d556-4d71-8e20-ffa1b2e99294
-
-
 # ╔═╡ c458bc88-edc5-4c59-8840-3668b36c6d74
 md"""
 ### 분산추정의 비교
@@ -339,6 +333,32 @@ md"""
 md"""
 ## 카이제곱분포 
 """
+
+# ╔═╡ 5e14d545-8328-4882-a489-61252c56f0d6
+md"""
+### how to generate it 
+"""
+
+# ╔═╡ a8e7b787-44a2-486b-a5f9-3187300669d5
+rand(Chisq(2),1000)
+
+# ╔═╡ d48a9182-25f4-4028-bb9d-04d721cf49ac
+[rand(Normal(0,1),2).^2 |> sum for i in 1:1000] 
+
+# ╔═╡ 7745dc2d-bd6c-4601-8add-3c1f81669b4b
+let 
+	histogram(rand(Chisq(2),10000), alpha=0.5)
+	histogram!([rand(Normal(0,1),2).^2 |> sum for i in 1:10000], alpha=0.5)
+	histogram!(rand(Exponential(1),10000)*2, alpha=0.5)
+end
+
+# ╔═╡ add67c1e-54aa-40d2-9e8f-c8c77c6bc573
+let 
+	histogram(rand(Exponential(6),10000))
+	histogram!(rand(6*Exponential(1),10000))
+	histogram!(rand(Exponential(3),10000)+rand(Exponential(3),10000))
+	histogram!(rand(Exponential(2),10000)+rand(Exponential(4),10000))
+end 
 
 # ╔═╡ 4d89b46d-b934-440e-9f21-bcf2160f5d68
 md"""
@@ -357,7 +377,7 @@ md"""
 
 # ╔═╡ 27498a5a-73ff-405f-887a-1aed575b58d2
 md"""
-### $t$ 분포 
+## $t$ 분포 
 """
 
 # ╔═╡ 4ca49762-cb20-4954-a497-cc0ed1e322e0
@@ -1432,11 +1452,14 @@ version = "0.9.1+5"
 # ╠═7ce29e7e-c3f0-4299-86b9-7a20b0470897
 # ╠═f68fffc1-6e4c-4c8d-9cd4-0d61830c4653
 # ╠═71c65e11-eea3-4ff1-93ae-e5147d69995d
-# ╠═83c45f1b-5bcf-40cd-b108-7aae0bb03fbc
-# ╠═35c54526-d556-4d71-8e20-ffa1b2e99294
 # ╠═c458bc88-edc5-4c59-8840-3668b36c6d74
 # ╠═41644bdc-5f1c-4516-8488-8c1e068f97d5
 # ╠═9c393a1a-3255-4881-a043-03e045479a7d
+# ╠═5e14d545-8328-4882-a489-61252c56f0d6
+# ╠═a8e7b787-44a2-486b-a5f9-3187300669d5
+# ╠═d48a9182-25f4-4028-bb9d-04d721cf49ac
+# ╠═7745dc2d-bd6c-4601-8add-3c1f81669b4b
+# ╠═add67c1e-54aa-40d2-9e8f-c8c77c6bc573
 # ╠═4d89b46d-b934-440e-9f21-bcf2160f5d68
 # ╠═61b699c8-7796-4b9d-88ad-c046ec209073
 # ╠═a2be3094-0d31-4432-a1eb-f13a39067fdc
