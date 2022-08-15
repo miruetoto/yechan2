@@ -23,8 +23,8 @@ using PlutoUI
 # ╔═╡ 9287ccbd-4e8e-4ac8-bd79-6f3aef420d62
 @bind x Slider(50:100,show_value=true)
 
-# ╔═╡ c3c3b6f3-3f22-4c35-935e-74bbe7fb354c
-x
+# ╔═╡ 80ac69b6-707d-490b-aaf6-a70d8ce445c4
+x+1
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -251,6 +251,6 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═b7cc045e-1c4a-11ed-33d5-97aad6776dc2
 # ╠═0e2c5942-29d9-45bf-a635-299273e07c43
 # ╠═9287ccbd-4e8e-4ac8-bd79-6f3aef420d62
-# ╠═c3c3b6f3-3f22-4c35-935e-74bbe7fb354c
+# ╠═80ac69b6-707d-490b-aaf6-a70d8ce445c4
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
