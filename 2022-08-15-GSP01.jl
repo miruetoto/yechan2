@@ -24,7 +24,7 @@ using PlutoUI
 @bind x Slider(50:100,show_value=true)
 
 # ╔═╡ 80ac69b6-707d-490b-aaf6-a70d8ce445c4
-x+1
+print(x+1)
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
