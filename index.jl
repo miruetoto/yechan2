@@ -15,7 +15,7 @@ md"""
 # ╔═╡ 9859ece5-5f79-48f0-9312-382bd4d04533
 md"""
 ## Graph Signal Processing
-`-` [Test](https://miruetoto.github.io/yechan2/2022-08-15-GraphSignal.html)
+`-` [Test](https://miruetoto.github.io/yechan2/2022-08-15-GSP01.html)
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
