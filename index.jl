@@ -6,12 +6,16 @@ using InteractiveUtils
 
 # ╔═╡ 9c5d6224-1c4a-11ed-24aa-895284173cfa
 md"""
-# 2022년 줄리아 개인 홈페이지
+# 신록예찬2
 """
+
+# ╔═╡ 666e205e-53e0-47c1-aeca-f4b9080d2954
+
 
 # ╔═╡ 9859ece5-5f79-48f0-9312-382bd4d04533
 md"""
-[그래프신호처리](https://miruetoto.github.io/yechan2/2022-08-15-GraphSignal.html)
+## Graph Signal Processing
+`-` [Test](https://miruetoto.github.io/yechan2/2022-08-15-GraphSignal.html)
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -31,6 +35,7 @@ manifest_format = "2.0"
 
 # ╔═╡ Cell order:
 # ╟─9c5d6224-1c4a-11ed-24aa-895284173cfa
+# ╟─666e205e-53e0-47c1-aeca-f4b9080d2954
 # ╟─9859ece5-5f79-48f0-9312-382bd4d04533
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
