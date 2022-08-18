@@ -4,31 +4,301 @@
 using Markdown
 using InteractiveUtils
 
-# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
-macro bind(def, element)
-    quote
-        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
-        local el = $(esc(element))
-        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
-        el
-    end
-end
+# ╔═╡ 7fa052b9-0b1a-4070-8df7-c6383479c7f9
+using LinearAlgebra, PlutoUI
 
-# ╔═╡ 0e2c5942-29d9-45bf-a635-299273e07c43
-using PlutoUI
+# ╔═╡ 64384752-cc4c-4741-a70c-ccdf9e0b6124
+md"""
+# Statistical Graph Signal Processing
+"""
 
-# ╔═╡ b7cc045e-1c4a-11ed-33d5-97aad6776dc2
-1+1
+# ╔═╡ 6f7665b8-81c3-400e-a839-f8671afcb0fc
+md"""
+## usings
+"""
 
-# ╔═╡ 9287ccbd-4e8e-4ac8-bd79-6f3aef420d62
-@bind x Slider(50:100,show_value=true)
+# ╔═╡ f1e0f4b9-0fb3-4f16-9d3f-9fc630f8082b
+PlutoUI.TableOfContents()
 
-# ╔═╡ 80ac69b6-707d-490b-aaf6-a70d8ce445c4
-print(x+1)
+# ╔═╡ 99d440c8-87b3-4111-95b0-428084dc1b69
+md"""
+## I. DSP: A quick represher
+"""
+
+# ╔═╡ 25d669b4-8ebf-433a-9edc-184aa6d56e3e
+md"""
+### Shift invariant operator
+"""
+
+# ╔═╡ f1660382-eeb4-44b5-8153-c4ea42261e63
+md"""
+The matrix ${\bf A}$ representing the periodic shift is 
+"""
+
+# ╔═╡ 336818c3-c856-4972-9d47-2d812ba51672
+A = [
+	0 0 0 0 1
+	1 0 0 0 0
+	0 1 0 0 0
+	0 0 1 0 0
+	0 0 0 1 0
+	]
+
+# ╔═╡ f0f01a0e-097c-4c48-ba01-a78c842ba3ef
+md"""
+This matrix is the cyclic shift.
+"""
+
+# ╔═╡ 70513b25-2bf1-47c0-b768-f1ce1fe147a0
+md"""
+(ex1) Define ${\bf s}$ as 
+"""
+
+# ╔═╡ 8e2553a8-0357-419c-8623-95812388a179
+s = [1,22,333,444,55555]
+
+# ╔═╡ 4d4c7d21-46d3-4cef-8539-9b8b1565d700
+md"""
+Observe that 
+"""
+
+# ╔═╡ 0a4b60a5-b869-4858-b3ab-7bc808b0b7e6
+A*s
+
+# ╔═╡ 5e633002-193a-4507-bab0-237b936eed55
+A^2*s
+
+# ╔═╡ 7c78e64a-4aaa-4b8b-b6b5-e5a3a8bde6c7
+A^3*s
+
+# ╔═╡ ab81a4f7-ff58-45dc-aa37-93db5890d6e0
+md"""
+Thus we can interprete the matrix ${\bf A}$ as "${\bf A}{\bf s}$ = shift all values of ${\bf s}$ to right".
+"""
+
+# ╔═╡ 33e66bcc-2b75-4706-9084-d39a9c6f11a4
+md"""
+---
+"""
+
+# ╔═╡ b9dc7ad7-30cf-467e-8d60-f0091df12069
+md"""
+A generic filter $h$ is given by its $z$-transform 
+
+$$h(z)=h_0z^0+h_1z^{-1}+\cdots +h_{N-1}z^{-(N-1)}.$$
+
+In vector notation, and with respect to the standard basis ${\bf I}$, the filter is represented by the matrix ${\bf H}$, a polynomial in the cyclic shift
+
+$${\bf H}=h({\bf A})=h_0{\bf A}^0+h_1{\bf A}^1+\cdots+h_{N-1}{\bf A}^{N-1}.$$
+"""
+
+# ╔═╡ dbcc9201-20bc-473a-a296-995801dc4c95
+md"""
+Filters are *shift invariant* iff 
+
+$$z\cdot h(z) = h(z)\cdot z$$ 
+
+or 
+
+$${\bf A}h({\bf A})=h({\bf A}){\bf A}.$$
+"""
+
+# ╔═╡ cf5f696a-25b5-4b01-92c7-a2bfbba8fd48
+md"""
+---
+"""
+
+# ╔═╡ 01fd47fc-d08f-4bb4-9c41-51dc4326d41b
+md""" 
+(ex2) Define ${\bf h}$ as 
+"""
+
+# ╔═╡ ae3250b3-74bb-4ee2-b549-d0844d1aaed5
+h = [0.1,0.5,1,0.5,0.1]
+
+# ╔═╡ 8fea2331-3740-439d-9954-daaf4ebc72ba
+H = 0.1*A^0 + 0.5*A^1 + 1*A^2 + 0.5*A^3 + 0.1*A^4
+
+# ╔═╡ cde6afe5-5f94-4829-816c-6e1ee7cee9fa
+md"""
+Oberseve following:
+"""
+
+# ╔═╡ f1f18b21-e1dd-4d8b-9504-caa5d6fc71ca
+A*H == H*A
+
+# ╔═╡ 61ae80c8-3d38-49d4-81ef-85fed8dfe9b9
+md"""
+Thus, filter $h$ is shift invariant filter and matrix ${\bf H}$ is shift invariant operator. 
+"""
+
+# ╔═╡ 23a4064f-423c-49ff-8f6f-6b6d3a6d3025
+md"""
+---
+"""
+
+# ╔═╡ 93043488-296d-49d6-8c66-856fed48f04a
+md"""
+Finally, we observe that, from the Cayley-Hamilton Theorem, ${\bf A}$ satisfies its characteristic polynomial $\Delta({\bf A})$, where $\Delta(\lambda)$ is the determinant of $\lambda{\bf I}-{\bf A}$. The characteristic polynomial $\Delta({\bf A})$ has degree $N$, so, in DSP, as described so far, linear filters are (matrix) polynomial with degree at most $N-1$.
+"""
+
+# ╔═╡ d47ea67a-cb96-479d-9762-d84502b0f431
+md"""
+### Fourier Transform
+"""
+
+# ╔═╡ 4f963338-e4ba-4a75-95fc-d922fcb19703
+md"""
+The matrix ${\bf A}$ can be expressed as 
+
+${\bf A}={\bf DFT}^\ast \cdot {\bf \Lambda} \cdot {\bf DFT}$
+
+where ${\bf DFT}$ is unitary and symmetric matrix and $\bf \Lambda$ is diagonal matrix.
+"""
+
+# ╔═╡ 9fc34b04-d894-479f-a409-e7991d1e499a
+md"""
+---
+"""
+
+# ╔═╡ ce41d970-2ae8-415b-9d88-b4a184816465
+md"""
+(ex3)
+"""
+
+# ╔═╡ 5528b4db-dede-45f0-bf24-953f8003ee8a
+λ, Ψ = eigen(A)
+
+# ╔═╡ f1883704-061d-4e2e-a0e1-09a22441cb1c
+A ≈ Ψ * Diagonal(λ) * Ψ'
+
+# ╔═╡ 54716489-287d-4339-97e0-ccc95f05391f
+md"""
+Define $\boldsymbol \Psi^\ast$ as ${\bf DFT}$, i.e., ${\boldsymbol \Psi}^\ast={\bf DFT}$.
+"""
+
+# ╔═╡ 37beb89b-1e0e-48ce-9801-5347ee8b2b2c
+DFT = Ψ'
+
+# ╔═╡ 4ccee892-cb05-4460-bf68-491add5da4f3
+md"""
+Note that the eigenvalues are not ordered in julia.
+"""
+
+# ╔═╡ 2777a2e8-a205-45c9-9b02-ffa5c523fece
+λ[5], exp(-im* 2π/5 * 0)
+
+# ╔═╡ de676d2f-de07-4eb8-9dc5-db2bc8eff945
+λ[3], exp(-im* 2π/5 * 1)
+
+# ╔═╡ 54521037-8d5e-4d50-bc87-bdd43ca5bbdd
+λ[1], exp(-im* 2π/5 * 2)
+
+# ╔═╡ 3d9a7d76-ba90-4d4c-9281-72bc9dac48fe
+λ[2], exp(-im* 2π/5 * 3)
+
+# ╔═╡ a780b46b-2bac-4ec6-b908-a370e3fd9947
+λ[4], exp(-im* 2π/5 * 4)
+
+# ╔═╡ 0eada776-35be-4c39-8365-047d7b9c4e80
+md"""
+---
+"""
+
+# ╔═╡ da090e74-6e1a-40b3-997c-660f2529a8bf
+md"""
+We remark: 
+"""
+
+# ╔═╡ 1a5bccd8-d5e0-4522-81fa-f41e493d50e4
+md"""
+**(1) Spectral components**: For $\ell = 0,1,2,\dots, N-1$, the $\ell$-th column of ${\bf DFT}^\ast$ is defined by 
+
+$\Psi_\ell:=\frac{1}{\sqrt{N}}\begin{bmatrix} 1 \\ e^{j\frac{2\pi}{N}\ell} \\ e^{j\frac{2\pi}{N}2\ell} \\ e^{j\frac{2\pi}{N}3\ell} \\  \dots \\ e^{j\frac{2\pi}{N}(N-1)\ell} \end{bmatrix}.$
+
+Note that $\Psi_\ell$ can be also interpreted as $\ell$-th eigenvector of ${\bf A}$ correspoding $\lambda_\ell = e^{-j\frac{2\pi}{N}\ell}$. Those eigenvectors 
+
+$$\big\{{\bf 1},\Psi_1,\Psi_2, \dots, \Psi_{N-1}\big\}$$
+
+form a complete orthonomal basis of $\mathbb{C}^N$. These vectors are called spectral components. 
+"""
+
+# ╔═╡ 0dc15924-1ef5-4ab1-ad4b-f1d3ba64d0e3
+md"""
+**(2) Frequencies:** The diagonal entries of ${\bf \Lambda}$ are the eigenvalues of the time shift ${\bf A}$. In Physics and in operator theory, these eigenvalues are the frequencies of the signal. In DSP it is more common to call frequencies 
+
+$$\Omega_\ell=\frac{-1}{2\pi j}\ln\lambda_\ell=\frac{-1}{2\pi j}\ln e^{-j \frac{2\pi}{N}\ell}=\frac{\ell}{N}, \quad \ell=0,1,2,\dots,N-1.$$
+"""
+
+# ╔═╡ 6d13c41f-d38a-4c10-8e50-5dfb24af4fa2
+md"""
+---
+"""
+
+# ╔═╡ 1a0a19ab-7cd6-4c9f-9d1d-736dec2de52c
+md"""
+The $N$ (time) frequencies $\Omega_\ell$ are all distinct, positive, equally spaced, and increasing from $0$ to $\frac{N-1}{N}$. The spectral components are the complex exponential sinusiodal functions. For example, corresponding to the zero frequency is the DC spectral component (a vector whose entries are constant and all equal to $\frac{1}{\sqrt{N}}$).
+"""
+
+# ╔═╡ 86f4e42a-b5e8-4d85-91c5-daf92bf70581
+md"""
+## II. GSP: 
+"""
+
+# ╔═╡ f3dd42dc-e8f8-43f2-9136-5e2290e11d53
+md"""
+### Notation
+"""
+
+# ╔═╡ 20e39dfc-f56d-490c-b2c0-24ea5e72386a
+
+
+# ╔═╡ 670bf2bd-18cc-45aa-8a52-def4160dc72d
+md"""
+### Weakly stationary graph process
+"""
+
+# ╔═╡ ea2030fc-2a03-4021-b950-0303eb3e366b
+
+
+# ╔═╡ fcd02b3a-e54c-4b0e-9046-21bd786d64fb
+md"""
+### Power spectral density
+"""
+
+# ╔═╡ 078a43e3-8f0d-40a3-8ac7-38a8ee21e30e
+
+
+# ╔═╡ d2037fba-d6b2-439d-96f1-9076715e5072
+md"""
+## III. Estimation of PSD
+"""
+
+# ╔═╡ 05d86c9a-a1e8-4b02-a015-4e4c30dfac60
+md"""
+### Nonparametric PSD estimators
+"""
+
+# ╔═╡ 5512bac0-d460-44f7-8f7e-24c065bca17b
+
+
+# ╔═╡ 4809cf5a-4ca0-461f-8660-f743cab63df2
+md"""
+### Parametric PSD estimators
+"""
+
+# ╔═╡ 2005d096-da25-4776-8b80-afa1e167d15f
+
+
+# ╔═╡ 691df32f-ccbc-48dc-bd76-5ce308f17eb2
+md"""
+### Node subsampling for PSD estimation
+"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 
 [compat]
@@ -248,9 +518,66 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 """
 
 # ╔═╡ Cell order:
-# ╠═b7cc045e-1c4a-11ed-33d5-97aad6776dc2
-# ╠═0e2c5942-29d9-45bf-a635-299273e07c43
-# ╠═9287ccbd-4e8e-4ac8-bd79-6f3aef420d62
-# ╠═80ac69b6-707d-490b-aaf6-a70d8ce445c4
+# ╟─64384752-cc4c-4741-a70c-ccdf9e0b6124
+# ╟─6f7665b8-81c3-400e-a839-f8671afcb0fc
+# ╠═7fa052b9-0b1a-4070-8df7-c6383479c7f9
+# ╠═f1e0f4b9-0fb3-4f16-9d3f-9fc630f8082b
+# ╟─99d440c8-87b3-4111-95b0-428084dc1b69
+# ╟─25d669b4-8ebf-433a-9edc-184aa6d56e3e
+# ╟─f1660382-eeb4-44b5-8153-c4ea42261e63
+# ╟─336818c3-c856-4972-9d47-2d812ba51672
+# ╟─f0f01a0e-097c-4c48-ba01-a78c842ba3ef
+# ╟─70513b25-2bf1-47c0-b768-f1ce1fe147a0
+# ╟─8e2553a8-0357-419c-8623-95812388a179
+# ╟─4d4c7d21-46d3-4cef-8539-9b8b1565d700
+# ╠═0a4b60a5-b869-4858-b3ab-7bc808b0b7e6
+# ╠═5e633002-193a-4507-bab0-237b936eed55
+# ╠═7c78e64a-4aaa-4b8b-b6b5-e5a3a8bde6c7
+# ╟─ab81a4f7-ff58-45dc-aa37-93db5890d6e0
+# ╟─33e66bcc-2b75-4706-9084-d39a9c6f11a4
+# ╟─b9dc7ad7-30cf-467e-8d60-f0091df12069
+# ╟─dbcc9201-20bc-473a-a296-995801dc4c95
+# ╟─cf5f696a-25b5-4b01-92c7-a2bfbba8fd48
+# ╟─01fd47fc-d08f-4bb4-9c41-51dc4326d41b
+# ╟─ae3250b3-74bb-4ee2-b549-d0844d1aaed5
+# ╠═8fea2331-3740-439d-9954-daaf4ebc72ba
+# ╟─cde6afe5-5f94-4829-816c-6e1ee7cee9fa
+# ╠═f1f18b21-e1dd-4d8b-9504-caa5d6fc71ca
+# ╟─61ae80c8-3d38-49d4-81ef-85fed8dfe9b9
+# ╟─23a4064f-423c-49ff-8f6f-6b6d3a6d3025
+# ╟─93043488-296d-49d6-8c66-856fed48f04a
+# ╟─d47ea67a-cb96-479d-9762-d84502b0f431
+# ╟─4f963338-e4ba-4a75-95fc-d922fcb19703
+# ╟─9fc34b04-d894-479f-a409-e7991d1e499a
+# ╟─ce41d970-2ae8-415b-9d88-b4a184816465
+# ╠═5528b4db-dede-45f0-bf24-953f8003ee8a
+# ╠═f1883704-061d-4e2e-a0e1-09a22441cb1c
+# ╟─54716489-287d-4339-97e0-ccc95f05391f
+# ╠═37beb89b-1e0e-48ce-9801-5347ee8b2b2c
+# ╟─4ccee892-cb05-4460-bf68-491add5da4f3
+# ╠═2777a2e8-a205-45c9-9b02-ffa5c523fece
+# ╠═de676d2f-de07-4eb8-9dc5-db2bc8eff945
+# ╠═54521037-8d5e-4d50-bc87-bdd43ca5bbdd
+# ╠═3d9a7d76-ba90-4d4c-9281-72bc9dac48fe
+# ╟─a780b46b-2bac-4ec6-b908-a370e3fd9947
+# ╟─0eada776-35be-4c39-8365-047d7b9c4e80
+# ╟─da090e74-6e1a-40b3-997c-660f2529a8bf
+# ╟─1a5bccd8-d5e0-4522-81fa-f41e493d50e4
+# ╟─0dc15924-1ef5-4ab1-ad4b-f1d3ba64d0e3
+# ╟─6d13c41f-d38a-4c10-8e50-5dfb24af4fa2
+# ╟─1a0a19ab-7cd6-4c9f-9d1d-736dec2de52c
+# ╟─86f4e42a-b5e8-4d85-91c5-daf92bf70581
+# ╟─f3dd42dc-e8f8-43f2-9136-5e2290e11d53
+# ╠═20e39dfc-f56d-490c-b2c0-24ea5e72386a
+# ╟─670bf2bd-18cc-45aa-8a52-def4160dc72d
+# ╠═ea2030fc-2a03-4021-b950-0303eb3e366b
+# ╟─fcd02b3a-e54c-4b0e-9046-21bd786d64fb
+# ╠═078a43e3-8f0d-40a3-8ac7-38a8ee21e30e
+# ╟─d2037fba-d6b2-439d-96f1-9076715e5072
+# ╟─05d86c9a-a1e8-4b02-a015-4e4c30dfac60
+# ╠═5512bac0-d460-44f7-8f7e-24c065bca17b
+# ╟─4809cf5a-4ca0-461f-8660-f743cab63df2
+# ╠═2005d096-da25-4776-8b80-afa1e167d15f
+# ╟─691df32f-ccbc-48dc-bd76-5ce308f17eb2
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
