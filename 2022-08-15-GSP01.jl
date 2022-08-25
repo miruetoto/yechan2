@@ -174,7 +174,7 @@ A ≈ Ψ * Diagonal(λ) * Ψ'
 
 # ╔═╡ 54716489-287d-4339-97e0-ccc95f05391f
 md"""
-Define $\boldsymbol \Psi^\ast$ as ${\bf DFT}$, i.e., ${\boldsymbol \Psi}^\ast={\bf DFT}$.
+Define ${\boldsymbol \Psi}^\ast={\bf DFT}$.
 """
 
 # ╔═╡ 37beb89b-1e0e-48ce-9801-5347ee8b2b2c
@@ -250,7 +250,76 @@ md"""
 ### Notation
 """
 
-# ╔═╡ 20e39dfc-f56d-490c-b2c0-24ea5e72386a
+# ╔═╡ 604c7f84-6b5b-42ba-a428-eb039d5c740d
+md"""
+##### *GSO*
+"""
+
+# ╔═╡ 0f4049d4-32bb-41f2-8047-b5492fdd7d24
+md"""
+Let ${\cal G}=({\cal N},{\cal E})$ be a directed graph or network with a set of $N$ nodes ${\cal N}$ directed edges ${\cal E}$ such that $(i,j) \in {\cal E}$ if there exists an edge from node $i$ to node $j$. We associate with ${\cal G}$ the graph shift operator (GSO) ${\bf S}$, defined as an $N\times N$ matrix whose entry $S_{ij}\neq 0$ only if $i\neq j$ or if $(i,j)\in {\cal E}$. 
+"""
+
+# ╔═╡ f7ab6491-5832-41d9-b541-20ec1c38fd4d
+md"""
+The sparsity pattern of ${\bf S}$ captures the local structure of ${\cal G}$, but we make no specific assumptions on the values of the nonzero entries of ${\bf S}$; hence GSO can represent the adjacency matrix, the Laplacian, or other graph-related matrices. 
+"""
+
+# ╔═╡ 04b7797a-9813-4307-b58c-e9d4fa6f615d
+md"""
+##### *Normal GSO, GFT*
+"""
+
+# ╔═╡ a5d6146e-3ea4-4191-b1bc-fc6ea2f5697f
+md"""
+We say ${\bf S}$ is normal iff there exist unitary matrix ${\bf V}$ and diagonal matrix $\bf \Lambda$ such that 
+
+${\bf S}={\bf \Psi}{\bf \Lambda}{\bf \Psi}^*.$
+"""
+
+# ╔═╡ de6a8316-6802-470c-a1fd-6c6d74021be0
+md"""
+Futhermore we say $\Psi^*$ as GFT with respect to $\bf S$.
+"""
+
+# ╔═╡ 02b77d6d-761d-430b-951f-7fe61a1e7d1c
+md"""
+##### *Frequency representation of graph signal $\bf x$ with respect to $\bf \Psi^\ast$*
+"""
+
+# ╔═╡ f7ea05cc-9147-4b95-aaa2-7519a5ae3046
+md"""
+Let ${\bf x}$ be graph siganl and ${\bf \Psi}^*$ is GFT with respect to ${\bf S}$. We say 
+
+${\bf \tilde x}:={\bf \Psi}^* {\bf x}$
+
+as frequency response of ${\bf x}$ with respect to $\bf \Psi^*$.
+"""
+
+# ╔═╡ d8fa0e25-cf19-43c2-89c1-ac5a2724bcf7
+md"""
+##### *Linear shift-invariant graph filter*
+"""
+
+# ╔═╡ 802fde53-f155-463f-b1b8-262b294e44db
+md"""
+Let ${\bf S}$ be the normal GSO such that ${\bf S}={\bf \Psi}{\bf \Lambda}{\bf \Psi}^\ast$. Defince ${\bf H}:\mathbb{R}^N \to \mathbb{R}^N$ as linear shift-invariant graph filter of the form 
+
+${\bf H}=\sum_{\ell =0}^{L-1}h_\ell {\bf S}^\ell={\bf \Psi}\text{diag}({\bf \tilde h}){\bf \Psi}^*={\bf \Psi}\text{diag}({\bf V}_L {\bf h}){\bf \Psi}^*$
+
+where ${\bf \tilde h}$ denotes the frequency response of the filter ${\bf H}$, ${\bf V}_L$ is an $N \times L$ Vandermonde matrix such that 
+
+${\bf V}_L=\begin{bmatrix} 1 & \lambda_1 & \dots & \lambda_1^{L-1} \\ \dots & \dots & \dots & \dots \\ 1 & \lambda_N & \dots & \lambda_N^{L-1}\end{bmatrix}$
+
+, and ${\bf h}$ is a vector collecting the polynomial coefficients. Note that $\lambda_1\dots, \lambda_N$ are eigenvalues of normal GSO ${\bf S}$.
+"""
+
+# ╔═╡ 562f8511-cd84-41c9-9ef1-5516ffbd4ad0
+md"""
+(ex1)
+"""
+
+# ╔═╡ 18b27a70-ce68-474b-a26e-b427be7e49bb
 
 
 # ╔═╡ 670bf2bd-18cc-45aa-8a52-def4160dc72d
@@ -259,6 +328,45 @@ md"""
 """
 
 # ╔═╡ ea2030fc-2a03-4021-b950-0303eb3e366b
+md"""
+##### *Definition 1: Weakly Stationary Graph Process*
+"""
+
+# ╔═╡ 5deb558a-a69d-4b1b-826d-bf285f26f533
+md"""
+**DEFINITION** Given a normal shift operator ${\bf S}$, a zero-mean random process ${\bf x}$ is weakly stationary with respect to ${\bf S}$ if it can be written as the response of a linear shift-invariant graph filter ${\bf H}=\sum_{\ell=0}^{N-1}h_\ell {\bf S}^\ell$ to a zero-mean white input ${\bf n}$.
+"""
+
+# ╔═╡ 9c87564b-0c92-4402-b066-ca388ec93981
+md"""
+The definition generalizes the well-known fact that stationary processes in time can be expressed as the output of linear time-invariant systems with white noise as input. We can think of above as a constructive definition of stationary because it describes how a stationary process can be generated. 
+"""
+
+# ╔═╡ 9379e232-5086-48f3-875f-6a9f6a23c042
+md"""
+##### *Covariance Matrix of ${\bf x}$*
+"""
+
+# ╔═╡ 21622fe6-d2aa-4d5c-ac32-ad0abc614aae
+md"""
+The covariance matrix of ${\bf x}$ is defined as 
+
+$${\bf C}_{\bf x}=\mathbb{E}[{\bf x}{\bf x}^H].$$
+
+If we assume the ${\bf x}$ is weakly stationary process, we can write 
+
+$${\bf C}_{\bf x}=\mathbb{E}[({\bf Hn})({\bf Hn})^H]={\bf H}\mathbb{E}({\bf n n^H}){\bf H}={\bf H}{\bf H}^H$$
+
+which shows that the color of ${\bf x}$ is determined by the filter ${\bf H}$.
+
+"""
+
+# ╔═╡ f5ff9bdb-ebbd-4775-8aa6-eff7364f2183
+md"""
+##### *Definition 2: Weakly Stationary Graph Process*
+"""
+
+# ╔═╡ 96b7ed2d-46e7-4001-b796-edddcad9e35b
 
 
 # ╔═╡ fcd02b3a-e54c-4b0e-9046-21bd786d64fb
@@ -568,9 +676,26 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─1a0a19ab-7cd6-4c9f-9d1d-736dec2de52c
 # ╟─86f4e42a-b5e8-4d85-91c5-daf92bf70581
 # ╟─f3dd42dc-e8f8-43f2-9136-5e2290e11d53
-# ╠═20e39dfc-f56d-490c-b2c0-24ea5e72386a
+# ╟─604c7f84-6b5b-42ba-a428-eb039d5c740d
+# ╟─0f4049d4-32bb-41f2-8047-b5492fdd7d24
+# ╟─f7ab6491-5832-41d9-b541-20ec1c38fd4d
+# ╟─04b7797a-9813-4307-b58c-e9d4fa6f615d
+# ╟─a5d6146e-3ea4-4191-b1bc-fc6ea2f5697f
+# ╟─de6a8316-6802-470c-a1fd-6c6d74021be0
+# ╟─02b77d6d-761d-430b-951f-7fe61a1e7d1c
+# ╟─f7ea05cc-9147-4b95-aaa2-7519a5ae3046
+# ╟─d8fa0e25-cf19-43c2-89c1-ac5a2724bcf7
+# ╟─802fde53-f155-463f-b1b8-262b294e44db
+# ╟─562f8511-cd84-41c9-9ef1-5516ffbd4ad0
+# ╠═18b27a70-ce68-474b-a26e-b427be7e49bb
 # ╟─670bf2bd-18cc-45aa-8a52-def4160dc72d
-# ╠═ea2030fc-2a03-4021-b950-0303eb3e366b
+# ╟─ea2030fc-2a03-4021-b950-0303eb3e366b
+# ╟─5deb558a-a69d-4b1b-826d-bf285f26f533
+# ╟─9c87564b-0c92-4402-b066-ca388ec93981
+# ╟─9379e232-5086-48f3-875f-6a9f6a23c042
+# ╟─21622fe6-d2aa-4d5c-ac32-ad0abc614aae
+# ╟─f5ff9bdb-ebbd-4775-8aa6-eff7364f2183
+# ╠═96b7ed2d-46e7-4001-b796-edddcad9e35b
 # ╟─fcd02b3a-e54c-4b0e-9046-21bd786d64fb
 # ╠═078a43e3-8f0d-40a3-8ac7-38a8ee21e30e
 # ╟─d2037fba-d6b2-439d-96f1-9076715e5072
