@@ -29,6 +29,8 @@ md"""
 - 신유정, 김대위: 시안 수신 
 - 김대위: 디자인컴펌
 - 김대위: 수량컨펌 -- 골든벨 (현수막2,배너2), 체육대회 (현수막2), 학생파티 (현수막2)
+- 김명훈: 대형현수막 시안 수신 + 최종컨펌
+- 디자인정원: 대중강연(신유정) 시안 수신
 """
 
 # ╔═╡ e0e83565-d166-46a8-8c9f-a23f58c7b0ba
@@ -112,18 +114,18 @@ md"""
 ### 5~7. 대중강연 (신유정)
 
 ##### 현수막
-- [시안(0919): 전북대 $\to$ 디자인정원 // 1,2,3페이지 참고](https://github.com/miruetoto/yechan2/blob/main/%E1%84%83%E1%85%A2%E1%84%8C%E1%85%AE%E1%86%BC%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%A7%E1%86%AB_%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%AE%E1%84%86%E1%85%A1%E1%86%A8(123)_%E1%84%85%E1%85%B5%E1%84%91%E1%85%B3%E1%86%AF%E1%84%85%E1%85%A6%E1%86%BA(4)_%E1%84%91%E1%85%A9%E1%84%89%E1%85%B3%E1%84%90%E1%85%A5(56)_%E1%84%87%E1%85%A2%E1%84%82%E1%85%A5(7).pdf)  (logo1은 [여기](https://github.com/miruetoto/yechan2/blob/main/logo.jpeg) 참고)
+- 시안(0919): [전북대](https://github.com/miruetoto/yechan2/blob/main/%E1%84%83%E1%85%A2%E1%84%8C%E1%85%AE%E1%86%BC%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%A7%E1%86%AB_%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%AE%E1%84%86%E1%85%A1%E1%86%A8(123)_%E1%84%85%E1%85%B5%E1%84%91%E1%85%B3%E1%86%AF%E1%84%85%E1%85%A6%E1%86%BA(4)_%E1%84%91%E1%85%A9%E1%84%89%E1%85%B3%E1%84%90%E1%85%A5(56)_%E1%84%87%E1%85%A2%E1%84%82%E1%85%A5(7).pdf)  $\to$ 디자인정원 // 1,2,3페이지 참고(logo1은 [여기](https://github.com/miruetoto/yechan2/blob/main/logo.jpeg) 참고)
 
 ##### 팜플렛
-- [시안(0919): 전북대 $\to$ 디자인정원 // 4페이지 참고](https://github.com/miruetoto/yechan2/blob/main/%E1%84%83%E1%85%A2%E1%84%8C%E1%85%AE%E1%86%BC%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%A7%E1%86%AB_%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%AE%E1%84%86%E1%85%A1%E1%86%A8(123)_%E1%84%85%E1%85%B5%E1%84%91%E1%85%B3%E1%86%AF%E1%84%85%E1%85%A6%E1%86%BA(4)_%E1%84%91%E1%85%A9%E1%84%89%E1%85%B3%E1%84%90%E1%85%A5(56)_%E1%84%87%E1%85%A2%E1%84%82%E1%85%A5(7).pdf) (logo1은 [여기](https://github.com/miruetoto/yechan2/blob/main/logo.jpeg) 참고)
+- 시안(0919): [전북대](https://github.com/miruetoto/yechan2/blob/main/%E1%84%83%E1%85%A2%E1%84%8C%E1%85%AE%E1%86%BC%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%A7%E1%86%AB_%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%AE%E1%84%86%E1%85%A1%E1%86%A8(123)_%E1%84%85%E1%85%B5%E1%84%91%E1%85%B3%E1%86%AF%E1%84%85%E1%85%A6%E1%86%BA(4)_%E1%84%91%E1%85%A9%E1%84%89%E1%85%B3%E1%84%90%E1%85%A5(56)_%E1%84%87%E1%85%A2%E1%84%82%E1%85%A5(7).pdf) $\to$ 디자인정원 // 4페이지 참고] (logo1은 [여기](https://github.com/miruetoto/yechan2/blob/main/logo.jpeg) 참고)
 
 
 ##### 포스터
-- [시안(0919): 전북대 $\to$ 디자인정원 // 5,6페이지 참고](https://github.com/miruetoto/yechan2/blob/main/%E1%84%83%E1%85%A2%E1%84%8C%E1%85%AE%E1%86%BC%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%A7%E1%86%AB_%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%AE%E1%84%86%E1%85%A1%E1%86%A8(123)_%E1%84%85%E1%85%B5%E1%84%91%E1%85%B3%E1%86%AF%E1%84%85%E1%85%A6%E1%86%BA(4)_%E1%84%91%E1%85%A9%E1%84%89%E1%85%B3%E1%84%90%E1%85%A5(56)_%E1%84%87%E1%85%A2%E1%84%82%E1%85%A5(7).pdf) (logo1은 [여기](https://github.com/miruetoto/yechan2/blob/main/logo.jpeg) 참고)
+- 시안(0919): [전북대](https://github.com/miruetoto/yechan2/blob/main/%E1%84%83%E1%85%A2%E1%84%8C%E1%85%AE%E1%86%BC%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%A7%E1%86%AB_%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%AE%E1%84%86%E1%85%A1%E1%86%A8(123)_%E1%84%85%E1%85%B5%E1%84%91%E1%85%B3%E1%86%AF%E1%84%85%E1%85%A6%E1%86%BA(4)_%E1%84%91%E1%85%A9%E1%84%89%E1%85%B3%E1%84%90%E1%85%A5(56)_%E1%84%87%E1%85%A2%E1%84%82%E1%85%A5(7).pdf) $\to$ 디자인정원 // 5,6페이지 참고 (logo1은 [여기](https://github.com/miruetoto/yechan2/blob/main/logo.jpeg) 참고)
 
 
 ##### 배너
-- [시안(0919): 전북대 $\to$ 디자인정원 // 7페이지 참고](https://github.com/miruetoto/yechan2/blob/main/%E1%84%83%E1%85%A2%E1%84%8C%E1%85%AE%E1%86%BC%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%A7%E1%86%AB_%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%AE%E1%84%86%E1%85%A1%E1%86%A8(123)_%E1%84%85%E1%85%B5%E1%84%91%E1%85%B3%E1%86%AF%E1%84%85%E1%85%A6%E1%86%BA(4)_%E1%84%91%E1%85%A9%E1%84%89%E1%85%B3%E1%84%90%E1%85%A5(56)_%E1%84%87%E1%85%A2%E1%84%82%E1%85%A5(7).pdf) (logo1은 [여기](https://github.com/miruetoto/yechan2/blob/main/logo.jpeg) 참고)
+- 시안(0919): [전북대](https://github.com/miruetoto/yechan2/blob/main/%E1%84%83%E1%85%A2%E1%84%8C%E1%85%AE%E1%86%BC%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%A7%E1%86%AB_%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%AE%E1%84%86%E1%85%A1%E1%86%A8(123)_%E1%84%85%E1%85%B5%E1%84%91%E1%85%B3%E1%86%AF%E1%84%85%E1%85%A6%E1%86%BA(4)_%E1%84%91%E1%85%A9%E1%84%89%E1%85%B3%E1%84%90%E1%85%A5(56)_%E1%84%87%E1%85%A2%E1%84%82%E1%85%A5(7).pdf) $\to$ 디자인정원 // 7페이지 참고 (logo1은 [여기](https://github.com/miruetoto/yechan2/blob/main/logo.jpeg) 참고)
 """
 
 # ╔═╡ 8430cd75-cebd-4ec3-92c2-d4c05d70a76a
@@ -202,33 +204,33 @@ md"""
 
 # ╔═╡ 816fcb2f-0a6f-4e3c-8dca-7058849b0d69
 md"""
-## 대형현수막
-- 시안: [전북대 $\to$ 디자인정원]() 
-> [전북대로고1](), [전북대로고2](), [교육부로고](), [UN세계기초과학의해 로고]()
+## 대형현수막 (김명훈)
+- 시안(0919): [전북대](https://github.com/miruetoto/yechan2/blob/main/%E1%84%83%E1%85%A2%E1%84%92%E1%85%A7%E1%86%BC%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%AE%E1%84%86%E1%85%A1%E1%86%A8.pptx) $\to$ 디자인정원
+> 참고자료들: [전북대로고1](https://github.com/miruetoto/yechan2/blob/main/JBNU1.png), [전북대로고2](https://github.com/miruetoto/yechan2/blob/main/JBNU2.ai), [교육부로고](https://github.com/miruetoto/yechan2/blob/main/%E1%84%80%E1%85%AD%E1%84%8B%E1%85%B2%E1%86%A8%E1%84%87%E1%85%AE.ai), [UN세계기초과학의해 로고](https://github.com/miruetoto/yechan2/blob/main/UN.jpg)
 -
 """
 
 # ╔═╡ 7eb4d67d-5990-4b99-ac63-3b437a96fe4a
 md"""
-## 초대장 
+## 초대장 (김명훈)
 
 - 정리중
 """
 
 # ╔═╡ 55560e76-aaef-446e-bcd0-c0aeafca51d9
 md"""
-## 전체행사 홍보물
+## 전체행사 홍보물 (김명훈)
 
 - 정리중
 """
 
 # ╔═╡ 6732f336-8259-4b2a-b41b-25bcdeed2a0f
 md"""
-### 각종 기념품
+### 각종 기념품 (김명훈)
 
 - 우산
 - 티셔츠
-- 추첨경품 (이것도 홍보팀에서?)
+- 추첨경품 (신유정: 이것도 홍보팀에서??)
 """
 
 # ╔═╡ c8e1d15f-b70c-4616-b9ca-ef78fca4db39
@@ -493,7 +495,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─2f24d89c-e70a-4fa2-ae15-f1d4456ffc45
 # ╟─c2ade213-657d-4b8a-b098-f7bd19f3dad3
 # ╟─243d4b3f-22d2-45dc-8c64-11677528d4b0
-# ╠═816fcb2f-0a6f-4e3c-8dca-7058849b0d69
+# ╟─816fcb2f-0a6f-4e3c-8dca-7058849b0d69
 # ╟─7eb4d67d-5990-4b99-ac63-3b437a96fe4a
 # ╟─55560e76-aaef-446e-bcd0-c0aeafca51d9
 # ╟─6732f336-8259-4b2a-b41b-25bcdeed2a0f
