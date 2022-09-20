@@ -249,6 +249,8 @@ md"""
 > 참고자료들: [전북대로고1](https://github.com/miruetoto/yechan2/blob/main/JBNU1.png), [전북대로고2](https://github.com/miruetoto/yechan2/blob/main/JBNU2.ai), [교육부로고](https://github.com/miruetoto/yechan2/blob/main/%E1%84%80%E1%85%AD%E1%84%8B%E1%85%B2%E1%86%A8%E1%84%87%E1%85%AE.ai), [UN세계기초과학의해 로고](https://github.com/miruetoto/yechan2/blob/main/UN.jpg)
 
 - 시안(0920): 전북대 $\leftarrow$ [디자인정원(A타입)](https://github.com/miruetoto/yechan2/blob/main/%E1%84%83%E1%85%A2%E1%84%92%E1%85%A7%E1%86%BC%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%AE%E1%84%86%E1%85%A1%E1%86%A80920_A.jpg), [디자인정원(B타입)](https://github.com/miruetoto/yechan2/blob/main/%E1%84%83%E1%85%A2%E1%84%92%E1%85%A7%E1%86%BC%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%AE%E1%84%86%E1%85%A1%E1%86%A80920_B.jpg)
+
+- 수정요청(0920): [전북대]() $\leftarrow$ 디자인정원
 """
 
 # ╔═╡ 7eb4d67d-5990-4b99-ac63-3b437a96fe4a
