@@ -61,6 +61,12 @@ md"""
 - From 김명훈: 포스터시안수신, QR은 추후 수정할 예정
 - From 디자인정원: 대현현수막 수정사항 수신 
 - From 디자인정원: 초대장 수정사항 수신 
+- From 디자인정원: 기 수정사항과 유사한 내용들 일괄업데이트 여부 컨펌필요 (김명훈 교수님!) // ckeck 1,2,3,4 를 확인해야함 // [이해를 위한 예시](https://github.com/miruetoto/yechan2/blob/main/%E1%84%8B%E1%85%B5%E1%84%92%E1%85%A2%E1%84%85%E1%85%B3%E1%86%AF%E1%84%8B%E1%85%B1%E1%84%92%E1%85%A1%E1%86%AB%E1%84%8B%E1%85%A8%E1%84%89%E1%85%B5.png): 좌측이 초대장의 수정내용인데, 같은 일정이 표로 들어가는 포스터에서도 '행사' 글씨를 지워야할지, 아니면 포스터는 그냥 두어도 되는지? 
+
+1. [check1](https://github.com/miruetoto/yechan2/blob/main/%E1%84%8E%E1%85%A6%E1%84%8F%E1%85%B31.jpeg)
+2. [check2](https://github.com/miruetoto/yechan2/blob/main/%E1%84%8E%E1%85%A6%E1%84%8F%E1%85%B32.jpeg)
+3. [check3](https://github.com/miruetoto/yechan2/blob/main/%E1%84%8E%E1%85%A6%E1%84%8F%E1%85%B33.jpeg)
+4. [check4](https://github.com/miruetoto/yechan2/blob/main/%E1%84%8E%E1%85%A6%E1%84%8F%E1%85%B34.jpeg)
 """
 
 # ╔═╡ e0e83565-d166-46a8-8c9f-a23f58c7b0ba
@@ -300,9 +306,9 @@ md"""
 
 - 대형현수막 디자인(0920): 전북대 $\leftarrow$ [디자인정원](https://github.com/miruetoto/yechan2/blob/main/%E1%84%83%E1%85%A2%E1%84%92%E1%85%A7%E1%86%BC%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%AE%E1%84%86%E1%85%A1%E1%86%A80920%E1%84%89%E1%85%AE%E1%84%8C%E1%85%A5%E1%86%BC.jpg)
 
-- 대형현수막 디자인 수정요청(0921): [전북대]() $\to$ 디자인정원 
+- 대형현수막 디자인 수정요청(0921): [전북대](https://github.com/miruetoto/yechan2/blob/main/%E1%84%83%E1%85%A2%E1%84%92%E1%85%A7%E1%86%BC%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%AE%E1%84%86%E1%85%A1%E1%86%A8_%E1%84%89%E1%85%AE%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%8B%E1%85%AD%E1%84%8E%E1%85%A5%E1%86%BC_0921.pptx) $\to$ 디자인정원 
 
-- 대형현수막 디자인(0922): 전북대 $\leftarrow$ 디자인정원 
+- 대형현수막 디자인(0922): 전북대 $\leftarrow$ [디자인정원](https://github.com/miruetoto/yechan2/blob/main/%E1%84%83%E1%85%A2%E1%84%92%E1%85%A7%E1%86%BC%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%AE%E1%84%86%E1%85%A1%E1%86%A8_%E1%84%83%E1%85%B5%E1%84%8C%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%AB_0922.jpeg)
 
 |아이템|단가|수량|총액|비고|진행도|
 |:-:|:-:|:-:|:-:|:-:|:-:|
@@ -328,7 +334,7 @@ md"""
 
 - 초대장 디자인 수정요청(0922): [전북대](https://github.com/miruetoto/yechan2/blob/main/%E1%84%8C%E1%85%A5%E1%86%AB%E1%84%8E%E1%85%A6%E1%84%92%E1%85%A2%E1%86%BC%E1%84%89%E1%85%A1_%E1%84%8E%E1%85%A9%E1%84%83%E1%85%A2%E1%84%8C%E1%85%A1%E1%86%BC%E1%84%8C%E1%85%A2%E1%84%89%E1%85%AE%E1%84%8C%E1%85%A5%E1%86%BC_0922.pptx) $\to$ 디자인정원 
 
-- 초대장 디자인(0922): 전북대 $\leftarrow$ [디자인정원]
+- 초대장 디자인(0922): 전북대 $\leftarrow$ [디자인정원](https://github.com/miruetoto/yechan2/blob/main/%E1%84%8C%E1%85%A5%E1%86%AB%E1%84%8E%E1%85%A6%E1%84%92%E1%85%A2%E1%86%BC%E1%84%89%E1%85%A1_%E1%84%8E%E1%85%A9%E1%84%83%E1%85%A2%E1%84%8C%E1%85%A1%E1%86%BC%E1%84%83%E1%85%B5%E1%84%8C%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%AB_0922.jpeg)
 """
 
 # ╔═╡ 3e7c44e1-79a5-4ee0-864a-6f3cff1cb451
@@ -665,8 +671,8 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─c2ade213-657d-4b8a-b098-f7bd19f3dad3
 # ╟─243d4b3f-22d2-45dc-8c64-11677528d4b0
 # ╟─0a699bb4-8fc6-4ac1-96b8-0a2297fab238
-# ╠═55560e76-aaef-446e-bcd0-c0aeafca51d9
-# ╠═9bca04e5-f06d-4371-8fb4-b617882c83bc
+# ╟─55560e76-aaef-446e-bcd0-c0aeafca51d9
+# ╟─9bca04e5-f06d-4371-8fb4-b617882c83bc
 # ╟─3e7c44e1-79a5-4ee0-864a-6f3cff1cb451
 # ╟─68ef53ac-4ea1-4f88-8c5a-99957f37d835
 # ╟─74263ad5-07cb-4a72-9b29-379bd8ea27a6
