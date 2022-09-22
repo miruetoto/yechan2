@@ -61,12 +61,12 @@ md"""
 - From 김명훈: 포스터시안수신, QR은 추후 수정할 예정
 - From 디자인정원: 대현현수막 수정사항 수신 
 - From 디자인정원: 초대장 수정사항 수신 
-- From 디자인정원: 기 수정사항과 유사한 내용들 일괄업데이트 여부 컨펌필요 (김명훈 교수님!) // ckeck 1,2,3,4 를 확인해야함 // [이해를 위한 예시](): 좌측이 초대장의 수정내용인데, 같은 일정이 표로 들어가는 포스터에서도 '행사' 글씨를 지워야할지, 아니면 포스터는 그냥 두어도 되는지? 
+- From 디자인정원: 기 수정사항과 유사한 내용들 일괄업데이트 여부 컨펌필요 (김명훈 교수님!) // ckeck 1,2,3,4 를 확인해야함 // [이해를 위한 예시](https://github.com/miruetoto/yechan2/blob/main/%E1%84%8B%E1%85%B5%E1%84%92%E1%85%A2%E1%84%85%E1%85%B3%E1%86%AF%E1%84%8B%E1%85%B1%E1%84%92%E1%85%A1%E1%86%AB%E1%84%8B%E1%85%A8%E1%84%89%E1%85%B5.png): 좌측이 초대장의 수정내용인데, 같은 일정이 표로 들어가는 포스터에서도 '행사' 글씨를 지워야할지, 아니면 포스터는 그냥 두어도 되는지? 
 
-1. [check1]()
-2. [check2]()
-3. [check3]()
-4. [check4]()
+1. [check1](https://github.com/miruetoto/yechan2/blob/main/%E1%84%8E%E1%85%A6%E1%84%8F%E1%85%B31.jpeg)
+2. [check2](https://github.com/miruetoto/yechan2/blob/main/%E1%84%8E%E1%85%A6%E1%84%8F%E1%85%B32.jpeg)
+3. [check3](https://github.com/miruetoto/yechan2/blob/main/%E1%84%8E%E1%85%A6%E1%84%8F%E1%85%B33.jpeg)
+4. [check4](https://github.com/miruetoto/yechan2/blob/main/%E1%84%8E%E1%85%A6%E1%84%8F%E1%85%B34.jpeg)
 """
 
 # ╔═╡ e0e83565-d166-46a8-8c9f-a23f58c7b0ba
@@ -648,7 +648,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═0bf00a57-45ca-4f06-89b8-93c997995c30
 # ╟─9c5d6224-1c4a-11ed-24aa-895284173cfa
 # ╟─49ba5aff-6dd2-4179-9d86-f0071dd293ac
-# ╠═84504a4d-09d9-4149-a665-6369e9c52763
+# ╟─84504a4d-09d9-4149-a665-6369e9c52763
 # ╟─e0e83565-d166-46a8-8c9f-a23f58c7b0ba
 # ╟─23a2b6ee-3d29-4183-b59c-088eeb61360b
 # ╟─9f5fec8f-ce3d-4271-a586-f164761e2844
