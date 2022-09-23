@@ -5,7 +5,7 @@ using Markdown
 using InteractiveUtils
 
 # ╔═╡ fb981bbc-93b3-4d58-ae12-68374b3ff51d
-using PlutoUI
+using PlutoUI,DataFrames
 
 # ╔═╡ 0bf00a57-45ca-4f06-89b8-93c997995c30
 PlutoUI.TableOfContents()
@@ -96,6 +96,40 @@ md"""
 - From 디자인정원: 대중강연 수정사항 수신
 - From 디자인정원: 리서치페어 수정사항 수신
 - From 디자인정원: 전체행사 (팡플렛, 포스터, 소형현수막) 수정사항 수신
+"""
+
+# ╔═╡ 8b84c99d-4fdd-4ae7-a676-f92e2a5950a9
+md"""
+## 진행사항정리 
+"""
+
+# ╔═╡ 2e9d4ba1-a043-494b-846e-80f16f2528fd
+md"""
+|분류|아이템|수량|비고|수량확인|디자인최종확정|
+|:-:|:-:|:-:|:-:|:-:|:-:|
+|골든벨+체육대회|현수막(골든벨)|2|.|O|O|
+|골든벨+체육대회|현수막(체육대회)|2|.|O|O|
+|골든벨+체육대회|현수막(학생파티)|2|.|O|O|
+|골든벨+체육대회|배너(골든벨)|2|.|O|O|
+|대중강연|현수막(김상욱)|2|.|O|???[^1]|
+|대중강연|현수막(하리하라)|2|.|O|O|
+|대중강연|현수막(송민령)|2|.|O|O|
+|대중강연|팜플렛|300|.|O|X|
+|대중강연|포스터|10??|.|O|X|
+|대중강연|배너(김상욱)|2|.|O|X|
+|대중강연|배너(하리하라)|2|.|O|X|
+|대중강연|배너(송민령)|2|.|O|X|
+|리서치페어+간담회|현수막(리서치페어)|2|.|O|X|
+|리서치페어+간담회|현수막(대학원생간담회)|1|.|O|O|
+|전체행사|대형현수막|1|.|O|O|
+|전체행사|초대장|100|.|O|X|
+|전체행사|초대장봉투|100|.|O|X|
+|전체행사|팜플렛|200|.|O|???|
+|전체행사|포스터|10??|.|???|???|
+|전체행사|기념식카드|???|.|X|X|
+|전체행사|소형현수막|???|.|X|X|
+
+[^1] 현수막(김상욱)은 신유정 교수님이 디자인 최종확인하였으나 시안이 다시 도착
 """
 
 # ╔═╡ e0e83565-d166-46a8-8c9f-a23f58c7b0ba
@@ -329,7 +363,7 @@ md"""
 # ╔═╡ 55560e76-aaef-446e-bcd0-c0aeafca51d9
 md"""
 ### 1. 전체행사 홍보물 (김명훈)
-##### 대형현수막 (김명훈)
+##### 대형현수막 (김명훈/컨펌완료)
 - 대형현수막 시안(0919): [전북대](https://github.com/miruetoto/yechan2/blob/main/%E1%84%83%E1%85%A2%E1%84%92%E1%85%A7%E1%86%BC%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%AE%E1%84%86%E1%85%A1%E1%86%A8.pptx) $\to$ 디자인정원
 > 참고자료들: [전북대로고1](https://github.com/miruetoto/yechan2/blob/main/JBNU1.png), [전북대로고2](https://github.com/miruetoto/yechan2/blob/main/JBNU2.ai), [교육부로고](https://github.com/miruetoto/yechan2/blob/main/%E1%84%80%E1%85%AD%E1%84%8B%E1%85%B2%E1%86%A8%E1%84%87%E1%85%AE.ai), [UN세계기초과학의해 로고](https://github.com/miruetoto/yechan2/blob/main/UN.jpg)
 
@@ -343,10 +377,6 @@ md"""
 
 - 대형현수막 디자인(0922): 전북대 $\leftarrow$ [디자인정원](https://github.com/miruetoto/yechan2/blob/main/%E1%84%83%E1%85%A2%E1%84%92%E1%85%A7%E1%86%BC%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%AE%E1%84%86%E1%85%A1%E1%86%A8_%E1%84%83%E1%85%B5%E1%84%8C%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%AB_0922.jpeg)
 
-|아이템|단가|수량|총액|비고|진행도|
-|:-:|:-:|:-:|:-:|:-:|:-:|
-|대형현수막|1,100,000|1|1,100,000|실크로드센터|디자인컨펌필요|
-|설치비|400,000|1|400,000| | |
 
 """
 
@@ -385,6 +415,8 @@ md"""
 
 - 포스터시안(0922): [전북대](https://github.com/miruetoto/yechan2/blob/main/%E1%84%8C%E1%85%A5%E1%86%AB%E1%84%8E%E1%85%A6%E1%84%92%E1%85%A2%E1%86%BC%E1%84%89%E1%85%A1_%E1%84%91%E1%85%A9%E1%84%89%E1%85%B3%E1%84%90%E1%85%A5%E1%84%89%E1%85%AE%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%8B%E1%85%AD%E1%84%8E%E1%85%A5%E1%86%BC_0922.pptx) $\to$ 디자인정원 // *QR코드는 추후 재수정 할 예정임.*
 
+- 포스터디자인(0922): 전북대 $\leftarrow$ [디자인정원01](https://github.com/miruetoto/yechan2/blob/main/%E1%84%8C%E1%85%A5%E1%86%AB%E1%84%8E%E1%85%A6%E1%84%92%E1%85%A2%E1%86%BC%E1%84%89%E1%85%A1_%E1%84%91%E1%85%A9%E1%84%89%E1%85%B3%E1%84%90%E1%85%A501_%E1%84%83%E1%85%B5%E1%84%8C%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%AB_0922.jpg), [디자인정원02](https://github.com/miruetoto/yechan2/blob/main/%E1%84%8C%E1%85%A5%E1%86%AB%E1%84%8E%E1%85%A6%E1%84%92%E1%85%A2%E1%86%BC%E1%84%89%E1%85%A1_%E1%84%91%E1%85%A9%E1%84%89%E1%85%B3%E1%84%90%E1%85%A502_%E1%84%83%E1%85%B5%E1%84%8C%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%AB_0922.jpg)
+
 """
 
 # ╔═╡ 68ef53ac-4ea1-4f88-8c5a-99957f37d835
@@ -398,6 +430,8 @@ md"""
 - 봉투디자인(0921): 전북대 $\leftarrow$ [디자인정원](https://github.com/miruetoto/yechan2/blob/main/%E1%84%8C%E1%85%A5%E1%86%AB%E1%84%8E%E1%85%A6%E1%84%92%E1%85%A2%E1%86%BC%E1%84%89%E1%85%A1_%E1%84%87%E1%85%A9%E1%86%BC%E1%84%90%E1%85%AE0920.jpg)
 
 - 팜플렛디자인(0921): 전북대 $\leftarrow$ [디자인정원](https://github.com/miruetoto/yechan2/blob/main/%E1%84%8C%E1%85%A5%E1%86%AB%E1%84%8E%E1%85%A6%E1%84%92%E1%85%A2%E1%86%BC%E1%84%89%E1%85%A1_%E1%84%91%E1%85%A1%E1%86%B7%E1%84%91%E1%85%B3%E1%86%AF%E1%84%85%E1%85%A6%E1%86%BA%E1%84%83%E1%85%B5%E1%84%8C%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%AB_0921.jpg)
+
+- 팜플렛디자인(0922): 전북대 $\leftarrow$ [디자인정원](https://github.com/miruetoto/yechan2/blob/main/%E1%84%8C%E1%85%A5%E1%86%AB%E1%84%8E%E1%85%A6%E1%84%92%E1%85%A2%E1%86%BC%E1%84%89%E1%85%A1_%E1%84%91%E1%85%A1%E1%86%B7%E1%84%91%E1%85%B3%E1%86%AF%E1%84%85%E1%85%A6%E1%86%BA_%E1%84%83%E1%85%B5%E1%84%8C%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%AB_0922.jpg)
 
 """
 
@@ -421,6 +455,7 @@ md"""
 
 - 현수막시안(0922): [전북대](https://github.com/miruetoto/yechan2/blob/main/%E1%84%8C%E1%85%A5%E1%86%AB%E1%84%8E%E1%85%A6%E1%84%92%E1%85%A2%E1%86%BC%E1%84%89%E1%85%A1_%E1%84%89%E1%85%A9%E1%84%92%E1%85%A7%E1%86%BC%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%AE%E1%84%86%E1%85%A1%E1%86%A8(500x70)_0922.pptx) $\to$ 디자인정원 // *사이즈는 500x70 으로 진행하시면됩니다.*
 
+- 현수막디자인(0922) 전북대 $\leftarrow$ [디자인정원](https://github.com/miruetoto/yechan2/blob/main/%E1%84%8C%E1%85%A5%E1%86%AB%E1%84%8E%E1%85%A6%E1%84%92%E1%85%A2%E1%86%BC%E1%84%89%E1%85%A1_%E1%84%89%E1%85%A9%E1%84%92%E1%85%A7%E1%86%BC%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%AE%E1%84%86%E1%85%A1%E1%86%A8_0922_%E1%84%83%E1%85%B5%E1%84%8C%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%AB.jpg)
 """
 
 # ╔═╡ 8ccb68f8-37aa-49f9-b80e-179d967c088a
@@ -458,9 +493,11 @@ md"""
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 
 [compat]
+DataFrames = "~1.3.6"
 PlutoUI = "~0.7.40"
 """
 
@@ -492,9 +529,42 @@ git-tree-sha1 = "eb7f0f8307f71fac7c606984ea5fb2817275d6e4"
 uuid = "3da002f7-5984-5a60-b8a6-cbb66c0b333f"
 version = "0.11.4"
 
+[[deps.Compat]]
+deps = ["Dates", "LinearAlgebra", "UUIDs"]
+git-tree-sha1 = "5856d3031cdb1f3b2b6340dfdc66b6d9a149a374"
+uuid = "34da2185-b29b-5c13-b0c7-acf172513d20"
+version = "4.2.0"
+
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
+
+[[deps.Crayons]]
+git-tree-sha1 = "249fe38abf76d48563e2f4556bebd215aa317e15"
+uuid = "a8cc5b0e-0ffa-5ad4-8c14-923d3ee1735f"
+version = "4.1.1"
+
+[[deps.DataAPI]]
+git-tree-sha1 = "1106fa7e1256b402a86a8e7b15c00c85036fef49"
+uuid = "9a962f9c-6df0-11e9-0e5d-c546b8b5ee8a"
+version = "1.11.0"
+
+[[deps.DataFrames]]
+deps = ["Compat", "DataAPI", "Future", "InvertedIndices", "IteratorInterfaceExtensions", "LinearAlgebra", "Markdown", "Missings", "PooledArrays", "PrettyTables", "Printf", "REPL", "Reexport", "SortingAlgorithms", "Statistics", "TableTraits", "Tables", "Unicode"]
+git-tree-sha1 = "db2a9cb664fcea7836da4b414c3278d71dd602d2"
+uuid = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+version = "1.3.6"
+
+[[deps.DataStructures]]
+deps = ["Compat", "InteractiveUtils", "OrderedCollections"]
+git-tree-sha1 = "d1fff3a548102f48987a52a2e0d114fa97d730f0"
+uuid = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
+version = "0.18.13"
+
+[[deps.DataValueInterfaces]]
+git-tree-sha1 = "bfc1187b79289637fa0ef6d4436ebdfe6905cbd6"
+uuid = "e2d170a0-9d28-54be-80f0-106bbe20a464"
+version = "1.0.0"
 
 [[deps.Dates]]
 deps = ["Printf"]
@@ -509,6 +579,16 @@ deps = ["Statistics"]
 git-tree-sha1 = "335bfdceacc84c5cdf16aadc768aa5ddfc5383cc"
 uuid = "53c48c17-4a7d-5ca2-90c5-79b7896eea93"
 version = "0.8.4"
+
+[[deps.Formatting]]
+deps = ["Printf"]
+git-tree-sha1 = "8339d61043228fdd3eb658d86c926cb282ae72a8"
+uuid = "59287772-0a20-5a39-b81b-1366585eb4c0"
+version = "0.4.2"
+
+[[deps.Future]]
+deps = ["Random"]
+uuid = "9fa8497b-333b-5362-9e8d-4d0656e87820"
 
 [[deps.Hyperscript]]
 deps = ["Test"]
@@ -531,6 +611,16 @@ version = "0.2.2"
 [[deps.InteractiveUtils]]
 deps = ["Markdown"]
 uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
+
+[[deps.InvertedIndices]]
+git-tree-sha1 = "bee5f1ef5bf65df56bdd2e40447590b272a5471f"
+uuid = "41ab1584-1d38-5bbf-9106-f11c6c58b48f"
+version = "1.1.0"
+
+[[deps.IteratorInterfaceExtensions]]
+git-tree-sha1 = "a3f24677c21f5bbe9d2a714f95dcd58337fb2856"
+uuid = "82899510-4779-5014-852e-03e436cf321d"
+version = "1.0.0"
 
 [[deps.JSON]]
 deps = ["Dates", "Mmap", "Parsers", "Unicode"]
@@ -572,6 +662,12 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 deps = ["Artifacts", "Libdl"]
 uuid = "c8ffd9c3-330d-5841-b78e-0817d7145fa1"
 
+[[deps.Missings]]
+deps = ["DataAPI"]
+git-tree-sha1 = "bf210ce90b6c9eed32d25dbcae1ebc565df2687f"
+uuid = "e1d29d7a-bbdc-5cf2-9ac0-f12de2c33e28"
+version = "1.0.2"
+
 [[deps.Mmap]]
 uuid = "a63ad114-7e13-5084-954f-fe012c677804"
 
@@ -584,6 +680,11 @@ uuid = "ca575930-c2e3-43a9-ace4-1e988b2c1908"
 [[deps.OpenBLAS_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
+
+[[deps.OrderedCollections]]
+git-tree-sha1 = "85f8e6578bf1f9ee0d11e7bb1b1456435479d47c"
+uuid = "bac558e1-5e72-5ebc-8fee-abe8a469f55d"
+version = "1.4.1"
 
 [[deps.Parsers]]
 deps = ["Dates"]
@@ -600,6 +701,18 @@ deps = ["AbstractPlutoDingetjes", "Base64", "ColorTypes", "Dates", "Hyperscript"
 git-tree-sha1 = "a602d7b0babfca89005da04d89223b867b55319f"
 uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 version = "0.7.40"
+
+[[deps.PooledArrays]]
+deps = ["DataAPI", "Future"]
+git-tree-sha1 = "a6062fe4063cdafe78f4a0a81cfffb89721b30e7"
+uuid = "2dfb63ee-cc39-5dd5-95bd-886bf059d720"
+version = "1.4.2"
+
+[[deps.PrettyTables]]
+deps = ["Crayons", "Formatting", "Markdown", "Reexport", "Tables"]
+git-tree-sha1 = "dfb54c4e414caa595a1f2ed759b160f5a3ddcba5"
+uuid = "08abe8d2-0d0c-5749-adfa-8a2ac140af0d"
+version = "1.3.1"
 
 [[deps.Printf]]
 deps = ["Unicode"]
@@ -627,6 +740,12 @@ uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
 [[deps.Sockets]]
 uuid = "6462fe0b-24de-5631-8697-dd941f90decc"
 
+[[deps.SortingAlgorithms]]
+deps = ["DataStructures"]
+git-tree-sha1 = "b3363d7460f7d098ca0912c69b082f75625d7508"
+uuid = "a2af1166-a08f-5f64-846c-94a0d3cef48c"
+version = "1.0.1"
+
 [[deps.SparseArrays]]
 deps = ["LinearAlgebra", "Random"]
 uuid = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
@@ -638,6 +757,18 @@ uuid = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 [[deps.TOML]]
 deps = ["Dates"]
 uuid = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
+
+[[deps.TableTraits]]
+deps = ["IteratorInterfaceExtensions"]
+git-tree-sha1 = "c06b2f539df1c6efa794486abfb6ed2022561a39"
+uuid = "3783bdb8-4a98-5b6b-af9a-565f29a5fe9c"
+version = "1.0.1"
+
+[[deps.Tables]]
+deps = ["DataAPI", "DataValueInterfaces", "IteratorInterfaceExtensions", "LinearAlgebra", "OrderedCollections", "TableTraits", "Test"]
+git-tree-sha1 = "7149a60b01bf58787a1b83dad93f90d4b9afbe5d"
+uuid = "bd369af6-aec1-5ad0-b16a-f7cc5008161c"
+version = "1.8.1"
 
 [[deps.Tar]]
 deps = ["ArgTools", "SHA"]
@@ -685,6 +816,8 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─d73d2a79-fbfd-4056-a5f0-5833dea8cede
 # ╟─8b7eba6f-255d-40c6-8058-0ab54f21b026
 # ╟─328f854a-af2e-4c84-bf70-dd10e3fddf50
+# ╟─8b84c99d-4fdd-4ae7-a676-f92e2a5950a9
+# ╟─2e9d4ba1-a043-494b-846e-80f16f2528fd
 # ╟─e0e83565-d166-46a8-8c9f-a23f58c7b0ba
 # ╟─23a2b6ee-3d29-4183-b59c-088eeb61360b
 # ╟─9f5fec8f-ce3d-4271-a586-f164761e2844
@@ -709,10 +842,10 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─0a699bb4-8fc6-4ac1-96b8-0a2297fab238
 # ╟─55560e76-aaef-446e-bcd0-c0aeafca51d9
 # ╟─9bca04e5-f06d-4371-8fb4-b617882c83bc
-# ╠═3e7c44e1-79a5-4ee0-864a-6f3cff1cb451
-# ╠═68ef53ac-4ea1-4f88-8c5a-99957f37d835
+# ╟─3e7c44e1-79a5-4ee0-864a-6f3cff1cb451
+# ╟─68ef53ac-4ea1-4f88-8c5a-99957f37d835
 # ╟─74263ad5-07cb-4a72-9b29-379bd8ea27a6
-# ╠═5f7f4043-3313-4136-bf22-a34daa502942
+# ╟─5f7f4043-3313-4136-bf22-a34daa502942
 # ╟─8ccb68f8-37aa-49f9-b80e-179d967c088a
 # ╟─6732f336-8259-4b2a-b41b-25bcdeed2a0f
 # ╟─c8e1d15f-b70c-4616-b9ca-ef78fca4db39
