@@ -81,7 +81,7 @@ A^3*s
 
 # ╔═╡ ab81a4f7-ff58-45dc-aa37-93db5890d6e0
 md"""
-Thus we can interprete the matrix ${\bf A}$ as "${\bf A}{\bf s}$ = shift all values of ${\bf s}$ to right".
+Thus we can interprete the matrix ${\bf A}{\bf s}$ as "shift all values of ${\bf s}$ to right".
 """
 
 # ╔═╡ 33e66bcc-2b75-4706-9084-d39a9c6f11a4
@@ -122,10 +122,17 @@ md"""
 """
 
 # ╔═╡ ae3250b3-74bb-4ee2-b549-d0844d1aaed5
-h = [0.1,0.5,1,0.5,0.1]
+begin
+	h₀=0.1
+	h₁=0.5
+	h₂=1.0
+	h₃=0.5
+	h₄=0.1
+	h = [h₀,h₁,h₂,h₃,h₄]
+end
 
 # ╔═╡ 8fea2331-3740-439d-9954-daaf4ebc72ba
-H = 0.1*A^0 + 0.5*A^1 + 1*A^2 + 0.5*A^3 + 0.1*A^4
+H = h₀*A^0 + h₁*A^1 + h₂*A^2 + h₃*A^3 + h₄*A^4
 
 # ╔═╡ cde6afe5-5f94-4829-816c-6e1ee7cee9fa
 md"""
@@ -266,6 +273,25 @@ md"""
 # ╔═╡ 0f4049d4-32bb-41f2-8047-b5492fdd7d24
 md"""
 Let ${\cal G}=({\cal N},{\cal E})$ be a directed graph or network with a set of $N$ nodes ${\cal N}$ directed edges ${\cal E}$ such that $(i,j) \in {\cal E}$ if there exists an edge from node $i$ to node $j$. We associate with ${\cal G}$ the graph shift operator (GSO) ${\bf S}$, defined as an $N\times N$ matrix whose entry $S_{ij}\neq 0$ only if $i\neq j$ or if $(i,j)\in {\cal E}$. 
+"""
+
+# ╔═╡ 1720c4b6-93cd-4ea1-86a3-036ae8c56e9c
+md"""
+결국 $i=j$ 일 경우 $S_{ij}=0$ 이고 $(i,j) \notin {\cal E}$ 일 경우 $S_{ij}=0$이라는 의미이다. 따라서 GSO를 만들기 위해서는 (1) 대각선의 원소는 모두 0으로 설정하고 (2) 엣지가 아닌 경우는 0으로 설정하기만 하면 된다. 
+"""
+
+# ╔═╡ 278b2a97-15b3-465f-a443-498d49172c0a
+md"""
+(ex1) Let ${\cal N} = \{v_1,v_2,v_3\}$ and ${\cal E}=\{(v_1,v_2),(v_2,v_3),(v_3,v_1)\}$. Then the matrix 
+
+$${\bf S}=\begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & \frac{1}{2} \\ \frac{1}{3} & 0 & 0 \end{bmatrix}$$ 
+
+is GSO of ${\cal G}=({\cal V},{\cal E})$.
+"""
+
+# ╔═╡ 2f2508c2-6210-45a3-9da1-c4a6dfcbaed9
+md"""
+(ex2) Note that for all ${\cal G}=({\cal V},{\cal E})$, the matrix ${\bf E}$ is always GSO of ${\cal G}$. (Here, ${\bf E}$ is a matrix whose element $E_{ij}$ is one if $(v_i,v_j) \in {\cal E}$ else zero.)
 """
 
 # ╔═╡ f7ab6491-5832-41d9-b541-20ec1c38fd4d
@@ -665,7 +691,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─dbcc9201-20bc-473a-a296-995801dc4c95
 # ╟─cf5f696a-25b5-4b01-92c7-a2bfbba8fd48
 # ╟─01fd47fc-d08f-4bb4-9c41-51dc4326d41b
-# ╟─ae3250b3-74bb-4ee2-b549-d0844d1aaed5
+# ╠═ae3250b3-74bb-4ee2-b549-d0844d1aaed5
 # ╠═8fea2331-3740-439d-9954-daaf4ebc72ba
 # ╟─cde6afe5-5f94-4829-816c-6e1ee7cee9fa
 # ╠═f1f18b21-e1dd-4d8b-9504-caa5d6fc71ca
@@ -696,6 +722,9 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─f3dd42dc-e8f8-43f2-9136-5e2290e11d53
 # ╟─604c7f84-6b5b-42ba-a428-eb039d5c740d
 # ╟─0f4049d4-32bb-41f2-8047-b5492fdd7d24
+# ╟─1720c4b6-93cd-4ea1-86a3-036ae8c56e9c
+# ╟─278b2a97-15b3-465f-a443-498d49172c0a
+# ╟─2f2508c2-6210-45a3-9da1-c4a6dfcbaed9
 # ╟─f7ab6491-5832-41d9-b541-20ec1c38fd4d
 # ╟─04b7797a-9813-4307-b58c-e9d4fa6f615d
 # ╟─a5d6146e-3ea4-4191-b1bc-fc6ea2f5697f
