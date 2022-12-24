@@ -275,9 +275,29 @@ md"""
 Let ${\cal G}=({\cal N},{\cal E})$ be a directed graph or network with a set of $N$ nodes ${\cal N}$ directed edges ${\cal E}$ such that $(i,j) \in {\cal E}$ if there exists an edge from node $i$ to node $j$. We associate with ${\cal G}$ the graph shift operator (GSO) ${\bf S}$, defined as an $N\times N$ matrix whose entry $S_{ij}\neq 0$ only if $i=j$ or if $(i,j)\in {\cal E}$. 
 """
 
+# ╔═╡ f7ab6491-5832-41d9-b541-20ec1c38fd4d
+md"""
+The sparsity pattern of ${\bf S}$ captures the local structure of ${\cal G}$, but we make no specific assumptions on the values of the nonzero entries of ${\bf S}$; hence GSO can represent the adjacency matrix, the Laplacian, or other graph-related matrices. 
+"""
+
+# ╔═╡ 2dc32151-85a3-4c6e-9fba-9208b294294e
+md"""
+---
+"""
+
 # ╔═╡ 1720c4b6-93cd-4ea1-86a3-036ae8c56e9c
 md"""
-결국 $S_{ij}\neq 0$ 이 아니기 위해서는 (1) 대각선의 원소이거나 (2) 엣지인 경우이면 된다. 이 정의에 따르면 임의의 그래프 ${\cal G}=({\cal N},{\cal E})$에 대하여 adjacency matrix ${\bf A}$, in-degree matrix ${\bf D}$, Laplacian ${\bf L}$은 모두 GSO이다. 
+결국 $S_{ij}\neq 0$ 이 아니기 위해서는 (1) 대각선의 원소이거나 (2) 엣지인 경우이면 된다. 이 정의에 따르면 임의의 그래프 ${\cal G}=({\cal N},{\cal E})$에 대하여 adjacency matrix ${\bf A}$, weight matrix ${\bf W}$, in-degree matrix ${\bf D}$, Laplacian ${\bf L}$은 모두 GSO이다. 좀 더 확실한 이해를 위하여 아래의 그림을 참고하자.
+"""
+
+# ╔═╡ 84b79c3e-4d15-46f6-913a-7ffe9e6c39d3
+md"""
+![](https://github.com/miruetoto/yechan2/blob/main/img/GSO.png?raw=true)
+"""
+
+# ╔═╡ be4e6a69-27e1-49ef-b89d-b099e0d44765
+md"""
+왼쪽과 같은 그래프에서 오른쪽과 같은 매트릭스는 모두 GSO이다.
 """
 
 # ╔═╡ 278b2a97-15b3-465f-a443-498d49172c0a
@@ -287,16 +307,6 @@ md"""
 $${\bf S}=\begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & \frac{1}{2} \\ \frac{1}{3} & 0 & 0 \end{bmatrix}$$ 
 
 is GSO of ${\cal G}=({\cal V},{\cal E})$.
-"""
-
-# ╔═╡ f7ab6491-5832-41d9-b541-20ec1c38fd4d
-md"""
-The sparsity pattern of ${\bf S}$ captures the local structure of ${\cal G}$, but we make no specific assumptions on the values of the nonzero entries of ${\bf S}$; hence GSO can represent the adjacency matrix, the Laplacian, or other graph-related matrices. 
-"""
-
-# ╔═╡ 2f2508c2-6210-45a3-9da1-c4a6dfcbaed9
-md"""
-(ex2) Note that for all ${\cal G}=({\cal V},{\cal E})$, the adjacency matrix ${\bf E}$ is always GSO of ${\cal G}$. 
 """
 
 # ╔═╡ 04b7797a-9813-4307-b58c-e9d4fa6f615d
@@ -1362,10 +1372,12 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─f3dd42dc-e8f8-43f2-9136-5e2290e11d53
 # ╟─604c7f84-6b5b-42ba-a428-eb039d5c740d
 # ╟─0f4049d4-32bb-41f2-8047-b5492fdd7d24
-# ╟─1720c4b6-93cd-4ea1-86a3-036ae8c56e9c
-# ╟─278b2a97-15b3-465f-a443-498d49172c0a
 # ╟─f7ab6491-5832-41d9-b541-20ec1c38fd4d
-# ╟─2f2508c2-6210-45a3-9da1-c4a6dfcbaed9
+# ╟─2dc32151-85a3-4c6e-9fba-9208b294294e
+# ╟─1720c4b6-93cd-4ea1-86a3-036ae8c56e9c
+# ╟─84b79c3e-4d15-46f6-913a-7ffe9e6c39d3
+# ╟─be4e6a69-27e1-49ef-b89d-b099e0d44765
+# ╟─278b2a97-15b3-465f-a443-498d49172c0a
 # ╟─04b7797a-9813-4307-b58c-e9d4fa6f615d
 # ╟─a5d6146e-3ea4-4191-b1bc-fc6ea2f5697f
 # ╟─de6a8316-6802-470c-a1fd-6c6d74021be0
