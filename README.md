@@ -1,3 +1,6 @@
+
+https://miruetoto.github.io/yechan2/
+
 # static-export-template
 
 This is a demo repository containing two [Pluto](https://github.com/fonsp/Pluto.jl) notebooks that are **automatically converted to HTML** by a github action, and published to github pages! 🌝
