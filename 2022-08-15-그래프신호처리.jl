@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.9
+# v0.19.20
 
 using Markdown
 using InteractiveUtils
@@ -79,9 +79,9 @@ A^2*s
 # ╔═╡ 7c78e64a-4aaa-4b8b-b6b5-e5a3a8bde6c7
 A^3*s
 
-# ╔═╡ ab81a4f7-ff58-45dc-aa37-93db5890d6e0
+# ╔═╡ ea20193b-184d-42c1-9323-5f88f2e483fc
 md"""
-Thus we can interprete the matrix ${\bf A}{\bf s}$ as "shift all values of ${\bf s}$ to right".
+Thus we can interprete the matrix ${\bf A}{\bf s}$ as "shift all values of ${\bf s}$ to right"
 """
 
 # ╔═╡ 33e66bcc-2b75-4706-9084-d39a9c6f11a4
@@ -98,6 +98,11 @@ $$h(z)=h_0z^0+h_1z^{-1}+\cdots +h_{N-1}z^{-(N-1)}.$$
 In vector notation, and with respect to the standard basis ${\bf I}$, the filter is represented by the matrix ${\bf H}$, a polynomial in the cyclic shift
 
 $${\bf H}=h({\bf A})=h_0{\bf A}^0+h_1{\bf A}^1+\cdots+h_{N-1}{\bf A}^{N-1}.$$
+"""
+
+# ╔═╡ ab81a4f7-ff58-45dc-aa37-93db5890d6e0
+md"""
+Thus we can interprete the matrix ${\bf A}{\bf s}$ as "shift all values of ${\bf s}$ to right".
 """
 
 # ╔═╡ dbcc9201-20bc-473a-a296-995801dc4c95
@@ -121,15 +126,11 @@ md"""
 (ex2) Define ${\bf h}$ as 
 """
 
-# ╔═╡ ae3250b3-74bb-4ee2-b549-d0844d1aaed5
-begin
-	h₀=0.1
-	h₁=0.2
-	h₂=0.3
-	h₃=0.2
-	h₄=0.1
-	h = [h₀,h₁,h₂,h₃,h₄]
-end
+# ╔═╡ 42c698cc-d84b-426a-af3f-d752c4e1ee41
+h = [0.1,0.2,0.3,0.2,0.1]
+
+# ╔═╡ a97dc2ca-1e7f-447d-9739-1492e8fd9990
+h₀,h₁,h₂,h₃,h₄ = h
 
 # ╔═╡ 8fea2331-3740-439d-9954-daaf4ebc72ba
 H = h₀*A^0 + h₁*A^1 + h₂*A^2 + h₃*A^3 + h₄*A^4
@@ -280,14 +281,9 @@ md"""
 The sparsity pattern of ${\bf S}$ captures the local structure of ${\cal G}$, but we make no specific assumptions on the values of the nonzero entries of ${\bf S}$; hence GSO can represent the adjacency matrix, the Laplacian, or other graph-related matrices. 
 """
 
-# ╔═╡ 2dc32151-85a3-4c6e-9fba-9208b294294e
+# ╔═╡ 8b09b2f3-fe6d-4f6c-9610-db1bbb2db9ad
 md"""
 ---
-"""
-
-# ╔═╡ 1720c4b6-93cd-4ea1-86a3-036ae8c56e9c
-md"""
-결국 $S_{ij}\neq 0$ 이 아니기 위해서는 (1) 대각선의 원소이거나 (2) 엣지인 경우이면 된다. 이 정의에 따르면 임의의 그래프 ${\cal G}=({\cal N},{\cal E})$에 대하여 adjacency matrix ${\bf A}$, weight matrix ${\bf W}$, in-degree matrix ${\bf D}$, Laplacian ${\bf L}$은 모두 GSO이다. 좀 더 확실한 이해를 위하여 아래의 그림을 참고하자.
 """
 
 # ╔═╡ 84b79c3e-4d15-46f6-913a-7ffe9e6c39d3
@@ -297,7 +293,17 @@ md"""
 
 # ╔═╡ be4e6a69-27e1-49ef-b89d-b099e0d44765
 md"""
-왼쪽과 같은 그래프에서 오른쪽과 같은 매트릭스는 모두 GSO이다.
+*Figure*: (left) undirected graph (right) The format of GSO corresponding to left 
+"""
+
+# ╔═╡ 0952c263-4f48-4f6e-9846-7075e80e38a0
+md"""
+*note:* 매트릭스가 ${\bf S}$가 그래프 ${\cal G}=({\cal V},{\cal E})$에 대한 GSO이기 위해서는 (1) 대각선 혹은 (2) 엣지가 아닌 곳에서 모든 값이 0 이기만 하면 된다. 
+"""
+
+# ╔═╡ 1d5d11b1-82ca-4478-97b6-e61f9b4e5002
+md"""
+---
 """
 
 # ╔═╡ 278b2a97-15b3-465f-a443-498d49172c0a
@@ -324,6 +330,11 @@ ${\bf S}={\bf \Psi}{\bf \Lambda}{\bf \Psi}^*.$
 # ╔═╡ de6a8316-6802-470c-a1fd-6c6d74021be0
 md"""
 Futhermore we say $\Psi^*$ as GFT with respect to $\bf S$.
+"""
+
+# ╔═╡ 758e6479-692e-454f-a031-7b2c46830df2
+md"""
+*note*: ${\bf V}$ is unitray matrix iff ${\bf V}^*{\bf V}={\bf I}$
 """
 
 # ╔═╡ 02b77d6d-761d-430b-951f-7fe61a1e7d1c
@@ -471,8 +482,9 @@ PlutoUI = "~0.7.39"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.7.2"
+julia_version = "1.8.5"
 manifest_format = "2.0"
+project_hash = "540bf86dec3258399898629c79f39ec907d3e8c2"
 
 [[deps.AbstractFFTs]]
 deps = ["ChainRulesCore", "LinearAlgebra"]
@@ -494,6 +506,7 @@ version = "3.4.0"
 
 [[deps.ArgTools]]
 uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
+version = "1.1.1"
 
 [[deps.ArnoldiMethod]]
 deps = ["LinearAlgebra", "Random", "StaticArrays"]
@@ -575,6 +588,7 @@ version = "4.5.0"
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
+version = "1.0.1+0"
 
 [[deps.ComputationalResources]]
 git-tree-sha1 = "52cb3ec90e8a8bea0e62e275ba577ad0f74821f7"
@@ -624,8 +638,9 @@ uuid = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
 version = "0.9.3"
 
 [[deps.Downloads]]
-deps = ["ArgTools", "LibCURL", "NetworkOptions"]
+deps = ["ArgTools", "FileWatching", "LibCURL", "NetworkOptions"]
 uuid = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
+version = "1.6.0"
 
 [[deps.FFTViews]]
 deps = ["CustomUnitRanges", "FFTW"]
@@ -650,6 +665,9 @@ deps = ["Pkg", "Requires", "UUIDs"]
 git-tree-sha1 = "7be5f99f7d15578798f338f5433b6c432ea8037b"
 uuid = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
 version = "1.16.0"
+
+[[deps.FileWatching]]
+uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
 
 [[deps.FixedPointNumbers]]
 deps = ["Statistics"]
@@ -891,10 +909,12 @@ version = "0.3.1"
 [[deps.LibCURL]]
 deps = ["LibCURL_jll", "MozillaCACerts_jll"]
 uuid = "b27032c2-a3e7-50c8-80cd-2d36dbcbfd21"
+version = "0.6.3"
 
 [[deps.LibCURL_jll]]
 deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll", "Zlib_jll", "nghttp2_jll"]
 uuid = "deac9b47-8bc7-5906-a0fe-35ac56dc84c0"
+version = "7.84.0+0"
 
 [[deps.LibGit2]]
 deps = ["Base64", "NetworkOptions", "Printf", "SHA"]
@@ -903,6 +923,7 @@ uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
 [[deps.LibSSH2_jll]]
 deps = ["Artifacts", "Libdl", "MbedTLS_jll"]
 uuid = "29816b5a-b9ab-546f-933c-edad1886dfa8"
+version = "1.10.2+0"
 
 [[deps.Libdl]]
 uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
@@ -950,6 +971,7 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 [[deps.MbedTLS_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "c8ffd9c3-330d-5841-b78e-0817d7145fa1"
+version = "2.28.0+0"
 
 [[deps.MetaGraphs]]
 deps = ["Graphs", "JLD2", "Random"]
@@ -974,6 +996,7 @@ version = "0.3.4"
 
 [[deps.MozillaCACerts_jll]]
 uuid = "14a3606d-f60d-562e-9121-12d972cd8159"
+version = "2022.2.1"
 
 [[deps.NaNMath]]
 deps = ["OpenLibm_jll"]
@@ -995,6 +1018,7 @@ version = "1.1.0"
 
 [[deps.NetworkOptions]]
 uuid = "ca575930-c2e3-43a9-ace4-1e988b2c1908"
+version = "1.2.0"
 
 [[deps.OffsetArrays]]
 deps = ["Adapt"]
@@ -1005,6 +1029,7 @@ version = "1.12.8"
 [[deps.OpenBLAS_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
+version = "0.3.20+0"
 
 [[deps.OpenEXR]]
 deps = ["Colors", "FileIO", "OpenEXR_jll"]
@@ -1021,6 +1046,7 @@ version = "3.1.1+0"
 [[deps.OpenLibm_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "05823500-19ac-5b8b-9628-191a04bc5112"
+version = "0.8.1+0"
 
 [[deps.OpenSpecFun_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "Libdl", "Pkg"]
@@ -1060,6 +1086,7 @@ version = "2.3.2"
 [[deps.Pkg]]
 deps = ["Artifacts", "Dates", "Downloads", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Serialization", "TOML", "Tar", "UUIDs", "p7zip_jll"]
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
+version = "1.8.0"
 
 [[deps.PkgVersion]]
 deps = ["Pkg"]
@@ -1145,6 +1172,7 @@ version = "1.3.3"
 
 [[deps.SHA]]
 uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
+version = "0.7.0"
 
 [[deps.Serialization]]
 uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
@@ -1226,10 +1254,12 @@ version = "0.33.21"
 [[deps.TOML]]
 deps = ["Dates"]
 uuid = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
+version = "1.0.0"
 
 [[deps.Tar]]
 deps = ["ArgTools", "SHA"]
 uuid = "a4e569a6-e804-4fa4-b0f3-eef7a1d5b13e"
+version = "1.10.1"
 
 [[deps.TensorCore]]
 deps = ["LinearAlgebra"]
@@ -1285,6 +1315,7 @@ version = "0.5.5"
 [[deps.Zlib_jll]]
 deps = ["Libdl"]
 uuid = "83775a58-1f1d-513f-b197-d71354ab007a"
+version = "1.2.12+3"
 
 [[deps.Zstd_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1295,6 +1326,7 @@ version = "1.5.2+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl", "OpenBLAS_jll"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
+version = "5.1.1+0"
 
 [[deps.libpng_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg", "Zlib_jll"]
@@ -1311,10 +1343,12 @@ version = "1.10.3+0"
 [[deps.nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850ede-7688-5339-a07c-302acd2aaf8d"
+version = "1.48.0+0"
 
 [[deps.p7zip_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
+version = "17.4.0+0"
 """
 
 # ╔═╡ Cell order:
@@ -1325,7 +1359,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─99d440c8-87b3-4111-95b0-428084dc1b69
 # ╟─25d669b4-8ebf-433a-9edc-184aa6d56e3e
 # ╟─f1660382-eeb4-44b5-8153-c4ea42261e63
-# ╠═336818c3-c856-4972-9d47-2d812ba51672
+# ╟─336818c3-c856-4972-9d47-2d812ba51672
 # ╟─f0f01a0e-097c-4c48-ba01-a78c842ba3ef
 # ╟─30be8e3f-03e6-456a-8683-bf46cd063490
 # ╠═f0ec6157-2527-4bf5-8b9a-963de94ce1b3
@@ -1335,13 +1369,15 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═0a4b60a5-b869-4858-b3ab-7bc808b0b7e6
 # ╠═5e633002-193a-4507-bab0-237b936eed55
 # ╠═7c78e64a-4aaa-4b8b-b6b5-e5a3a8bde6c7
-# ╟─ab81a4f7-ff58-45dc-aa37-93db5890d6e0
+# ╟─ea20193b-184d-42c1-9323-5f88f2e483fc
 # ╟─33e66bcc-2b75-4706-9084-d39a9c6f11a4
 # ╟─b9dc7ad7-30cf-467e-8d60-f0091df12069
+# ╟─ab81a4f7-ff58-45dc-aa37-93db5890d6e0
 # ╟─dbcc9201-20bc-473a-a296-995801dc4c95
 # ╟─cf5f696a-25b5-4b01-92c7-a2bfbba8fd48
-# ╟─01fd47fc-d08f-4bb4-9c41-51dc4326d41b
-# ╠═ae3250b3-74bb-4ee2-b549-d0844d1aaed5
+# ╠═01fd47fc-d08f-4bb4-9c41-51dc4326d41b
+# ╠═42c698cc-d84b-426a-af3f-d752c4e1ee41
+# ╠═a97dc2ca-1e7f-447d-9739-1492e8fd9990
 # ╠═8fea2331-3740-439d-9954-daaf4ebc72ba
 # ╟─cde6afe5-5f94-4829-816c-6e1ee7cee9fa
 # ╠═f1f18b21-e1dd-4d8b-9504-caa5d6fc71ca
@@ -1356,7 +1392,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═f1883704-061d-4e2e-a0e1-09a22441cb1c
 # ╟─54716489-287d-4339-97e0-ccc95f05391f
 # ╠═37beb89b-1e0e-48ce-9801-5347ee8b2b2c
-# ╟─4ccee892-cb05-4460-bf68-491add5da4f3
+# ╠═4ccee892-cb05-4460-bf68-491add5da4f3
 # ╠═2777a2e8-a205-45c9-9b02-ffa5c523fece
 # ╠═de676d2f-de07-4eb8-9dc5-db2bc8eff945
 # ╠═54521037-8d5e-4d50-bc87-bdd43ca5bbdd
@@ -1373,14 +1409,16 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─604c7f84-6b5b-42ba-a428-eb039d5c740d
 # ╟─0f4049d4-32bb-41f2-8047-b5492fdd7d24
 # ╟─f7ab6491-5832-41d9-b541-20ec1c38fd4d
-# ╟─2dc32151-85a3-4c6e-9fba-9208b294294e
-# ╟─1720c4b6-93cd-4ea1-86a3-036ae8c56e9c
+# ╟─8b09b2f3-fe6d-4f6c-9610-db1bbb2db9ad
 # ╟─84b79c3e-4d15-46f6-913a-7ffe9e6c39d3
 # ╟─be4e6a69-27e1-49ef-b89d-b099e0d44765
+# ╟─0952c263-4f48-4f6e-9846-7075e80e38a0
+# ╟─1d5d11b1-82ca-4478-97b6-e61f9b4e5002
 # ╟─278b2a97-15b3-465f-a443-498d49172c0a
 # ╟─04b7797a-9813-4307-b58c-e9d4fa6f615d
 # ╟─a5d6146e-3ea4-4191-b1bc-fc6ea2f5697f
 # ╟─de6a8316-6802-470c-a1fd-6c6d74021be0
+# ╟─758e6479-692e-454f-a031-7b2c46830df2
 # ╟─02b77d6d-761d-430b-951f-7fe61a1e7d1c
 # ╟─f7ea05cc-9147-4b95-aaa2-7519a5ae3046
 # ╟─d8fa0e25-cf19-43c2-89c1-ac5a2724bcf7
