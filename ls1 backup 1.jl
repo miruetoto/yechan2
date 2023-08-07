@@ -7,8 +7,14 @@ using InteractiveUtils
 # ╔═╡ 2df1ecc8-3690-470c-a295-178a19a7a57b
 using PlutoUI,LinearAlgebra
 
-# ╔═╡ bafe974b-4678-49c6-bb0f-5d6943f40f62
-using Pipe
+# ╔═╡ 4cce08e2-2948-4628-a28a-3153d21baf53
+begin 
+	using GLMakie
+	using GraphMakie
+	using Graphs
+	g = complete_graph(10)
+	graphplot(g)
+end
 
 # ╔═╡ 02f15a5f-c552-4651-804c-727439808aa6
 md"""
@@ -942,45 +948,23 @@ md"""
 let 
 	A = [1 2 3
  		 3 4 5]
-	sum(A,dims=1) # (2,3) -> (1,3)
+	sum(A,dims=1)
+	A |> sum(_,dims=1)
 end
 
-# ╔═╡ 557f821c-b05c-4cfd-a9f8-7fd9e654b8c2
+# ╔═╡ 1df9a273-7ddf-4d75-b5e5-ac7ff88bd411
 let 
-	A = [1 2 3
- 		 3 4 5]
-	sum(A,dims=2) # (2,3) -> (2,1)
+	A = reshape(1:25,(5,5))
+	A[[false,false,false,false,true],:]
 end
-
-# ╔═╡ 9189959b-4324-4a79-afc1-d94efffdae1a
-let 
-	A = [1 2 3
- 		 3 4 5]
-	sum(A,dims=(1,2)) # (2,3) -> (1,1)
-end
-
-# ╔═╡ 522eb334-9d1f-4917-8fce-9e1a5b2d57bf
-let 
-	A = [1 2 3
- 		 3 4 5]
-	sum(A) # (2,3) -> (1,1)
-end
-
-# ╔═╡ 23bd4610-1052-488c-ba05-7b506a2c05a8
-graphplot(complete_graph(10))
-
-# ╔═╡ 5b475e9a-5a8e-4adf-a4a3-70d196695b6f
-
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
-Pipe = "b98c9c47-44ae-5843-9183-064241ee97a0"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 
 [compat]
-Pipe = "~1.3.0"
 PlutoUI = "~0.7.52"
 """
 
@@ -990,7 +974,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.8.5"
 manifest_format = "2.0"
-project_hash = "9504f042b75ecace3ceb790f70ab70e63ed519d6"
+project_hash = "3e48676228c1009f50ec07ed3ee9194e7d94b55d"
 
 [[deps.AbstractPlutoDingetjes]]
 deps = ["Pkg"]
@@ -1129,11 +1113,6 @@ deps = ["Dates", "PrecompileTools", "UUIDs"]
 git-tree-sha1 = "4b2e829ee66d4218e0cef22c0a64ee37cf258c29"
 uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
 version = "2.7.1"
-
-[[deps.Pipe]]
-git-tree-sha1 = "6842804e7867b115ca9de748a0cf6b364523c16d"
-uuid = "b98c9c47-44ae-5843-9183-064241ee97a0"
-version = "1.3.0"
 
 [[deps.Pkg]]
 deps = ["Artifacts", "Dates", "Downloads", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Serialization", "TOML", "Tar", "UUIDs", "p7zip_jll"]
@@ -1453,13 +1432,9 @@ version = "17.4.0+0"
 # ╠═4026d756-9a60-415a-acff-fb13719f61a7
 # ╟─39990bea-ac81-4dde-aac9-b713eb48ecb6
 # ╠═6f38a35e-524c-40ab-8f0f-e6910e16e1ff
-# ╟─9bccd65f-51ee-44de-b7ce-3d6f6b358da9
+# ╠═9bccd65f-51ee-44de-b7ce-3d6f6b358da9
 # ╠═f84ef9c8-c5b5-4edc-8e36-a435142f483c
-# ╠═557f821c-b05c-4cfd-a9f8-7fd9e654b8c2
-# ╠═9189959b-4324-4a79-afc1-d94efffdae1a
-# ╠═522eb334-9d1f-4917-8fce-9e1a5b2d57bf
-# ╠═bafe974b-4678-49c6-bb0f-5d6943f40f62
-# ╠═23bd4610-1052-488c-ba05-7b506a2c05a8
-# ╠═5b475e9a-5a8e-4adf-a4a3-70d196695b6f
+# ╠═1df9a273-7ddf-4d75-b5e5-ac7ff88bd411
+# ╠═4cce08e2-2948-4628-a28a-3153d21baf53
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
